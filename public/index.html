@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivage M.E.S - Gestion Documentaire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- NOUVEAU DESIGN - Seulement pour Header, Menu et Formulaire d'ajout -->
+    <link rel="stylesheet" href="/css/new-design.css">
+
+    <!-- Bibliothèques pour la prévisualisation -->
+    <!-- PDF.js pour prévisualiser les PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Configuration PDF.js
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+
+    <!-- Mammoth.js pour prévisualiser les documents Word -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+    <!-- SheetJS pour prévisualiser les fichiers Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Cacher le contenu par défaut pour éviter le flash avec login.html -->
+    <div id="app" style="display: none;"></div>
+    
+    <!-- Scripts chargés dans l'ordre -->
+    <script src="/js/utils.js?v=2025112902"></script>
+    <script src="/js/custom-modals.js?v=2025112902"></script>
+    <script src="/js/api.js?v=2025112902"></script>
+    <script src="/js/auth.js?v=2025112902"></script>
+    <!-- Système de logging centralisé (doit être chargé EN PREMIER) -->
+    <script src="/js/logger.js?v=20250104"></script>
+
+    <script src="/js/categories.js?v=2025112902"></script>
+    <script src="/js/documents.js?v=2025112902"></script>
+    <script src="/js/preview.js?v=2025112902"></script>
+    <script src="/js/editor.js?v=2025112902"></script>
+    <script src="/js/onlyoffice-editor.js?v=2025112902"></script>
+    <script src="/js/multi-editor.js?v=2025112902"></script>
+    <script src="/js/messaging.js?v=2025112902"></script>
+    <script src="/js/admin-management.js?v=2025122401"></script>
+    <script src="/js/profile-functions.js?v=2025122701"></script>
+    <script src="/js/app.js?v=2025122504"></script>
+
+    <!-- 🔐 Déconnexion automatique après 30 minutes d'inactivité (TOUS les utilisateurs) -->
+    <script src="/js/auto-logout.js?v=20251228"></script>
+</body>
+</html>

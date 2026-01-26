@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveau Dashboard - GED CERER</title>
+    <link rel="stylesheet" href="/css/new-dashboard.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-logo">
+            <div class="topbar-logo-icon">🎓</div>
+            <div class="topbar-logo-text">
+                <h2>GED CERER</h2>
+                <p>Gestion Électronique Documents</p>
+            </div>
+        </div>
+
+        <div class="topbar-user">
+            <button onclick="window.location.href='/'"
+                    class="version-switch-btn"
+                    title="Retour à la version classique">
+                📊 Version Classique
+            </button>
+            <button id="messagesBtn"
+                    onclick="openMessagesModal()"
+                    class="version-switch-btn"
+                    title="Mes messages avec le Super Admin"
+                    style="display: none;">
+                💬 Messages
+                <span id="unreadMessagesCountUser" style="background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; margin-left: 4px; display: none;"></span>
+            </button>
+            <div class="user-info">
+                <div class="user-name" id="userName">Chargement...</div>
+                <div class="user-role">
+                    <span id="userDepartment">-</span>
+                    <span class="role-badge" id="userLevel">-</span>
+                </div>
+            </div>
+            <div class="user-avatar" onclick="toggleUserMenu()" id="userAvatar" style="position: relative; overflow: hidden;">
+                <img id="avatarPhoto" src="" alt="Photo de profil"
+                     onerror="this.style.display='none'; document.getElementById('avatarInitials').style.display='flex';"
+                     style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; display: none;">
+                <div id="avatarInitials" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                    --
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Beta Banner -->
+    <div class="beta-banner">
+        <div class="beta-banner-content">
+            <span class="beta-badge">BETA</span>
+            <span class="beta-text">🎨 Vous utilisez le nouveau design ! Testez les nouvelles fonctionnalités et donnez-nous votre avis.</span>
+        </div>
+    </div>
+
+    <!-- User Menu Dropdown -->
+    <div id="userMenu" class="user-menu">
+        <div class="user-menu-header">
+            <div class="user-menu-name" id="menuUserName">-</div>
+            <div class="user-menu-email" id="menuUserEmail">-</div>
+        </div>
+        <div class="user-menu-item" onclick="openProfileModalBeta()">
+            <span>👤</span>
+            <span>Mon Profil</span>
+        </div>
+        <div class="user-menu-item" onclick="customAlert('Cette fonctionnalité sera bientôt disponible !', 'Paramètres', '⚙️')">
+            <span>⚙️</span>
+            <span>Paramètres</span>
+        </div>
+        <div class="user-menu-item" onclick="customAlert('Cette fonctionnalité sera bientôt disponible !', 'Notifications', '🔔')">
+            <span>🔔</span>
+            <span>Notifications</span>
+        </div>
+        <!-- ❌ "Déconnexion" SUPPRIMÉ - Ne pas se déconnecter depuis la version beta -->
+    </div>
+
+    <div class="container">
+        <!-- HOME VIEW -->
+        <div id="homeView">
+            <!-- Header -->
+            <div class="header">
+                <h1>📊 Tableau de Bord</h1>
+                <p>Bienvenue dans votre espace de gestion documentaire</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview" id="statsOverview">
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-info">
+                        <h3>Départements</h3>
+                        <p id="statDepts">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-info">
+                        <h3>Services</h3>
+                        <p id="statServices">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-info">
+                        <h3>Documents</h3>
+                        <p id="statDocuments">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="globalSearchInput" class="search-input"
+                           placeholder="🔍 Rechercher par titre, ID, département, service, catégorie..."
+                           onkeyup="if(event.key === 'Enter') performGlobalSearch()">
+                    <button class="search-btn" onclick="performGlobalSearch()">Rechercher</button>
+                </div>
+                <div class="search-filters">
+                    <span class="filter-label">Filtrer par:</span>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterServices" checked>
+                        <span>Services</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterCategories" checked>
+                        <span>Catégories</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterDocuments" checked>
+                        <span>Documents</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Search Results (Hidden by default) -->
+            <div id="searchResults" class="search-results hidden">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+
+            <!-- Section Title -->
+            <div class="section-title">
+                <h2>🏢 Départements</h2>
+            </div>
+
+            <!-- Departments Grid -->
+            <div class="departments-grid" id="departmentsGrid">
+                <!-- Departments will be dynamically loaded here -->
+                <div class="loading">Chargement des départements...</div>
+            </div>
+        </div>
+
+        <!-- DEPARTMENT VIEW (Hidden by default) -->
+        <div id="departmentView" class="department-view">
+            <button class="back-btn" onclick="showHome()">← Retour à l'accueil</button>
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a onclick="showHome()">Accueil</a>
+                <span>›</span>
+                <strong id="currentDeptName">-</strong>
+            </div>
+
+            <!-- Department Header -->
+            <div class="header">
+                <h1 id="deptTitle">📊 Chargement...</h1>
+                <p>Explorez les services et documents de ce département</p>
+            </div>
+
+            <!-- Department Stats -->
+            <div class="stats-overview" id="deptStats">
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-info">
+                        <h3>Services</h3>
+                        <p id="deptStatServices">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-info">
+                        <h3>Documents</h3>
+                        <p id="deptStatDocuments">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Accordion with Add Service Button -->
+            <div class="section-title">
+                <h2>📂 Services du département</h2>
+                <button class="add-btn" onclick="openAddServiceModal()">
+                    ➕ Ajouter un service
+                </button>
+            </div>
+
+            <div class="accordion" id="servicesAccordion">
+                <!-- Services will be dynamically loaded here -->
+                <div class="loading">Chargement des services...</div>
+            </div>
+
+            <!-- Documents Section (Hidden until category clicked) -->
+            <div id="documentsSection" class="hidden" style="margin-top: 30px;">
+                <div class="breadcrumb">
+                    <a onclick="showHome()">Accueil</a>
+                    <span>›</span>
+                    <a onclick="hideDocuments()"><span id="breadcrumbDept">-</span></a>
+                    <span>›</span>
+                    <span id="currentServiceName">-</span>
+                    <span>›</span>
+                    <strong id="currentCategoryName">-</strong>
+                </div>
+
+                <div class="section-title">
+                    <h2>📄 <span id="categoryTitle">-</span> (<span id="docCount">0</span> documents)</h2>
+                    <button class="add-btn" onclick="openAddDocumentModal()">
+                        ➕ Ajouter un document
+                    </button>
+                </div>
+
+                <!-- Document Filter -->
+                <div class="document-filter">
+                    <input type="text" id="documentFilterInput" class="filter-input"
+                           placeholder="🔍 Filtrer les documents par titre, auteur, date..."
+                           oninput="debounceFilter()">
+                </div>
+
+                <!-- Document Controls (Tri et Pagination) -->
+                <div class="document-controls">
+                    <div class="control-group">
+                        <span class="control-label">Trier par:</span>
+                        <select class="control-select" id="sortSelect" onchange="sortDocuments()">
+                            <option value="date-desc">Date (Plus récent)</option>
+                            <option value="date-asc">Date (Plus ancien)</option>
+                            <option value="name-asc">Nom (A-Z)</option>
+                            <option value="name-desc">Nom (Z-A)</option>
+                            <option value="size-desc">Taille (Plus grand)</option>
+                            <option value="size-asc">Taille (Plus petit)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">Afficher:</span>
+                        <select class="control-select" id="perPageSelect" onchange="changePerPage()">
+                            <option value="20">20 par page</option>
+                            <option value="50">50 par page</option>
+                            <option value="100">100 par page</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="documents-grid" id="documentsGrid">
+                    <!-- Documents will be dynamically loaded here -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container" id="paginationContainer">
+                    <div class="pagination-info" id="paginationInfo">
+                        Affichage 0-0 sur 0 documents
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Pagination buttons will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Department Modal -->
+
+    <!-- Add Service Modal -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="serviceModalTitle">📂 Ajouter un service</h2>
+                <span class="modal-close" onclick="closeAddServiceModal()">×</span>
+            </div>
+            <form onsubmit="submitService(event)">
+                <input type="hidden" id="serviceId" value="">
+                <div class="form-group">
+                    <label class="form-label">Nom du service *</label>
+                    <input type="text" class="form-input" id="serviceName" placeholder="Ex: Biologie Moléculaire" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Icône (emoji)</label>
+                    <input type="text" class="form-input" id="serviceIcon" placeholder="Ex: 🧬" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="serviceDescription" placeholder="Description du service..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddServiceModal()">Annuler</button>
+                    <button type="submit" class="btn-submit" id="serviceSubmitBtn">Créer le service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Document Modal -->
+    <div id="addDocumentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📤 Ajouter un document</h2>
+                <span class="modal-close" onclick="closeAddDocumentModal()">×</span>
+            </div>
+            <form onsubmit="submitDocument(event)">
+                <!-- Contexte d'ajout -->
+                <div id="contextInfo" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Titre du document *</label>
+                    <input type="text" class="form-input" id="docTitle" placeholder="Ex: Mémoire de Master 2024" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Catégorie * <span style="color: #ef4444; font-size: 12px;">(Obligatoire)</span></label>
+                    <select class="form-select" id="docCategory" required onchange="updateArchivePath(); checkUploadAreaState();">
+                        <option value="">-- Sélectionner une catégorie --</option>
+                    </select>
+                    <div id="archivePath" style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-left: 3px solid #3b82f6; border-radius: 4px; display: none;">
+                        <div style="font-size: 12px; color: #1e40af; font-weight: 600; margin-bottom: 5px;">📁 Chemin d'archivage :</div>
+                        <div id="archivePathText" style="font-size: 13px; color: #1e3a8a;"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📄 Date du document *</label>
+                    <input type="date" class="form-input" id="docDate" required>
+                    <div style="margin-top: 5px; font-size: 12px; color: #6b7280;">
+                        La date du document doit être égale ou antérieure à aujourd'hui
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="docDescription" placeholder="Description du document (optionnelle)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Fichier *</label>
+                    <div id="fileUploadArea" class="file-upload" onclick="checkBeforeFileSelect()">
+                        <div class="file-upload-icon">📁</div>
+                        <div class="file-upload-text" id="fileUploadText">Cliquez pour sélectionner un fichier</div>
+                        <div class="file-upload-text" style="margin-top: 5px; font-size: 12px; color: #999;">
+                            PDF, Word, Excel, PowerPoint - Max 50 MB
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" style="display: none;"
+                           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" required>
+                    <div id="fileInfo" style="margin-top: 10px; color: #666; font-size: 14px;"></div>
+                    <div id="fileUploadWarning" style="display: none; margin-top: 10px; padding: 12px; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px;">
+                        <p style="font-size: 13px; font-weight: 600; color: #92400e; margin: 0 0 8px 0;">⚠️ Veuillez d'abord sélectionner :</p>
+                        <ul id="missingFieldsList" style="font-size: 12px; color: #78350f; margin: 0; padding-left: 20px;"></ul>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddDocumentModal()">Annuler</button>
+                    <button type="submit" class="btn-submit">📤 Téléverser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏷️ Ajouter une catégorie</h2>
+                <span class="modal-close" onclick="closeAddCategoryModal()">×</span>
+            </div>
+            <form onsubmit="submitCategory(event)">
+                <div class="form-group">
+                    <label class="form-label">Nom de la catégorie *</label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="Ex: Mémoires" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Icône (emoji)</label>
+                    <input type="text" class="form-input" id="categoryIcon" placeholder="Ex: 📚" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="categoryDescription" placeholder="Description de la catégorie..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddCategoryModal()">Annuler</button>
+                    <button type="submit" class="btn-submit">Créer la catégorie</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE PROFIL UTILISATEUR ===== -->
+    <div id="profileModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);" onclick="event.stopPropagation()">
+            <!-- Header -->
+            <div style="padding: 30px 30px 20px; border-bottom: 1px solid #e5e7eb;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0; font-size: 24px; font-weight: 600; color: #1f2937;">👤 Mon Profil</h2>
+                    <button onclick="closeProfileModal()" style="background: none; border: none; font-size: 32px; color: #6b7280; cursor: pointer; line-height: 1; padding: 0; width: 32px; height: 32px;">&times;</button>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div style="padding: 30px;">
+                <!-- Photo de profil -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="position: relative; display: inline-block;">
+                        <img id="profilePhotoPreview"
+                             src=""
+                             alt="Photo de profil"
+                             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #e5e7eb; display: none;">
+                        <div id="profilePhotoPlaceholder"
+                             style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px; font-weight: 600; border: 4px solid #e5e7eb;">
+                            --
+                        </div>
+                        <label for="photoUpload" style="position: absolute; bottom: 10px; right: 10px; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 2px solid #e5e7eb;">
+                            📷
+                        </label>
+                        <input type="file"
+                               id="photoUpload"
+                               accept="image/*"
+                               onchange="handlePhotoUpload(event)"
+                               style="display: none;">
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px; color: #6b7280;">
+                        Cliquez sur 📷 pour changer votre photo
+                    </div>
+                </div>
+
+                <!-- Formulaire de profil -->
+                <div style="display: grid; gap: 20px;">
+                    <!-- Avertissement contrainte de modification -->
+                    <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 16px; border-radius: 12px; border-left: 4px solid #f59e0b; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);">
+                        <div style="display: flex; align-items: start; gap: 12px;">
+                            <div style="font-size: 24px;">⚠️</div>
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 6px; color: #92400e;">
+                                    Limitation importante
+                                </div>
+                                <div style="font-size: 13px; color: #78350f; line-height: 1.5;">
+                                    Vous ne pouvez modifier votre <strong>nom</strong> et votre <strong>nom d'utilisateur</strong> qu'<strong>une seule fois</strong> chacun.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Nom <span style="color: #ef4444;">*</span>
+                        </label>
+                        <input type="text"
+                               id="profile_nom"
+                               placeholder="Votre nom"
+                               required
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        <div style="margin-top: 6px; font-size: 12px; color: #6b7280;">
+                            ⚠️ Modification autorisée <strong>une seule fois</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Nom d'utilisateur <span style="color: #ef4444;">*</span>
+                        </label>
+                        <input type="text"
+                               id="profile_username"
+                               placeholder="Votre identifiant"
+                               required
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                        <div style="margin-top: 6px; font-size: 12px; color: #6b7280;">
+                            💡 Si vous changez votre nom d'utilisateur, vous devrez vous reconnecter
+                            <br>
+                            ⚠️ Modification autorisée <strong>une seule fois</strong>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Email
+                        </label>
+                        <input type="email"
+                               id="profile_email"
+                               placeholder="votre.email@exemple.com"
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+                    </div>
+
+                    <!-- Informations non modifiables -->
+                    <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 600; margin-bottom: 12px; color: #1f2937;">
+                            📋 Informations du compte
+                        </div>
+                        <div style="display: grid; gap: 8px; font-size: 14px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6b7280;">Niveau :</span>
+                                <span id="profile_niveau" style="font-weight: 500; color: #1f2937;">N/A</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6b7280;">Département :</span>
+                                <span id="profile_departement" style="font-weight: 500; color: #1f2937;">N/A</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="display: flex; gap: 12px; justify-content: flex-end; padding: 20px 30px; border-top: 1px solid #e5e7eb;">
+                <button onclick="closeProfileModal()"
+                        style="padding: 12px 24px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; font-weight: 500; color: #374151;">
+                    Annuler
+                </button>
+                <button onclick="saveProfile()"
+                        style="padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                    💾 Sauvegarder
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales personnalisées UI/UX -->
+    <div id="customAlertModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px 12px 0 0;">
+                <h2 id="customAlertTitle" style="margin: 0; font-size: 20px; font-weight: 600;">ℹ️ Information</h2>
+            </div>
+            <div style="padding: 30px; text-align: center;">
+                <div id="customAlertIcon" style="font-size: 64px; margin-bottom: 20px;">ℹ️</div>
+                <p id="customAlertMessage" style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0;"></p>
+            </div>
+            <div style="padding: 0 30px 30px; text-align: center;">
+                <button onclick="closeCustomAlert()" style="padding: 12px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customConfirmModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 20px; border-radius: 12px 12px 0 0;">
+                <h2 id="customConfirmTitle" style="margin: 0; font-size: 20px; font-weight: 600;">⚠️ Confirmation</h2>
+            </div>
+            <div style="padding: 30px; text-align: center;">
+                <div id="customConfirmIcon" style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                <p id="customConfirmMessage" style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0; white-space: pre-line;"></p>
+            </div>
+            <div style="display: flex; gap: 12px; padding: 0 30px 30px; justify-content: center;">
+                <button onclick="resolveCustomConfirm(false)" style="padding: 12px 32px; background: #e5e7eb; color: #374151; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                    Annuler
+                </button>
+                <button onclick="resolveCustomConfirm(true)" style="padding: 12px 32px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customPromptModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 20px; border-radius: 12px 12px 0 0;">
+                <h2 id="customPromptTitle" style="margin: 0; font-size: 20px; font-weight: 600;">✏️ Saisie</h2>
+            </div>
+            <div style="padding: 30px;">
+                <p id="customPromptMessage" style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0 0 20px 0;"></p>
+                <input type="text" id="customPromptInput" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px; box-sizing: border-box;" placeholder="Entrez votre réponse...">
+            </div>
+            <div style="display: flex; gap: 12px; padding: 0 30px 30px; justify-content: center;">
+                <button onclick="resolveCustomPrompt(null)" style="padding: 12px 32px; background: #e5e7eb; color: #374151; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                    Annuler
+                </button>
+                <button onclick="resolveCustomPrompt(document.getElementById('customPromptInput').value)" style="padding: 12px 32px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px;">
+                    Valider
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Messagerie (Niveau 1 uniquement) -->
+    <div id="messagesModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 80vh; display: flex; flex-direction: column;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px 12px 0 0; position: relative;">
+                <h2 style="margin: 0; font-size: 20px; font-weight: 600;">💬 Messages avec le Super Admin</h2>
+                <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 8px;">
+                    <button onclick="deleteAllMessages()" style="background: rgba(239, 68, 68, 0.9); color: white; border: none; border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 4px;" title="Supprimer tous les messages">
+                        🗑️ Tout supprimer
+                    </button>
+                    <button onclick="closeMessagesModal()" style="background: rgba(255, 255, 255, 0.2); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                        ×
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liste des messages -->
+            <div id="messagesConversation" style="flex: 1; overflow-y: auto; padding: 20px; background: #f8fafc;">
+                <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                    📭 Chargement de vos messages...
+                </div>
+            </div>
+
+            <!-- Zone d'envoi de message -->
+            <div style="padding: 20px; border-top: 2px solid #e2e8f0; background: white;">
+                <div style="margin-bottom: 12px;">
+                    <textarea id="newMessageText"
+                              placeholder="Écrivez votre message au Super Admin..."
+                              style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 80px; box-sizing: border-box; font-family: inherit;"></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button onclick="sendMessageToAdmin()" style="padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">
+                        📤 Envoyer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Système de logging centralisé (doit être chargé EN PREMIER) -->
+    <script src="/js/logger.js?v=20250104"></script>
+
+    <script src="/js/profile-functions.js?v=2025122701"></script>
+    <script src="/js/new-dashboard.js?v=20251227e"></script>
+    <script src="/js/user-messaging.js?v=20250103"></script>
+
+    <!-- 🔐 Déconnexion automatique après 30 minutes d'inactivité (TOUS les utilisateurs) -->
+    <script src="/js/auto-logout.js?v=20251228"></script>
+</body>
+</html>

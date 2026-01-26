@@ -1,0 +1,78 @@
+# Dépendances
+node_modules/
+package-lock.json
+
+# Variables d'environnement (CRITIQUE - NE JAMAIS COMMITER)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# Certificats SSL/TLS (SÉCURITÉ)
+ssl/
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# Fichiers temporaires
+nul
+*.tmp
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sauvegardes MongoDB
+backups/
+*.dump
+
+# Fichiers Windows
+*.bat
+Thumbs.db
+Desktop.ini
+
+# Scripts d'archive
+scripts_archive/
+
+# Fichiers IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude settings
+.claude/settings.local.json
+
+# Fichiers de backup
+*.backup
+server.js.backup
+
+# Fichiers temporaires/invalides
+cookies.txt
+{
+
+# Documentation des comptes de test (SENSIBLE)
+COMPTES_TEST.md
+
+# Scripts de test et vérification (peuvent contenir des données sensibles)
+check-users.js
+check-deleted-field.js
+check-document-sizes.js
+test-index-usage.js
+test-final-performance.js
+test-mongo-latency.js
+fix-deleted-field.js
+
+# Scripts de migration (peuvent contenir des credentials)
+migrate-to-new-cluster.js
+
+node_modules/  .env  *.log 
+storage/ 

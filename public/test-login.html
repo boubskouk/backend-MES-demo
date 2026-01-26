@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Login - idDepartement</title>
+</head>
+<body>
+    <h1>Test de Login</h1>
+    <button onclick="testLogin()">Tester Login test2</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:4000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: 'test2',
+                        password: 'test2'
+                    })
+                });
+
+                const result = await response.json();
+
+                document.getElementById('result').textContent =
+                    '=== RÉPONSE DU SERVEUR ===\n\n' +
+                    JSON.stringify(result, null, 2);
+
+                console.log('✅ Réponse login:', result);
+                console.log('📍 idDepartement présent?', result.user?.idDepartement ? 'OUI ✅' : 'NON ❌');
+
+                if (result.user?.idDepartement) {
+                    console.log('📍 Valeur idDepartement:', result.user.idDepartement);
+                }
+            } catch (error) {
+                document.getElementById('result').textContent =
+                    'ERREUR:\n' + error.message;
+                console.error('❌ Erreur:', error);
+            }
+        }
+    </script>
+</body>
+</html>

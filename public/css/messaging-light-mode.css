@@ -1,0 +1,500 @@
+/**
+ * MESSAGERIE INTERNE - MODE CLAIR ACCESSIBLE
+ * Design clair avec contraste WCAG AA optimal
+ * Fond blanc, texte noir, couleurs vives pour différenciation
+ */
+
+/* ============================================
+   CONTENEUR PRINCIPAL DE MESSAGERIE
+   ============================================ */
+
+#messagingSection,
+.messaging-container,
+[id*="messaging"],
+[class*="messaging"] {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 1.5rem !important;
+    border-radius: 1rem !important;
+    border: 3px solid #3b82f6 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   BOUTONS DE NAVIGATION
+   ============================================ */
+
+.messaging-nav button,
+button[onclick*="showInbox"],
+button[onclick*="showSent"],
+button[onclick*="showShared"],
+button[onclick*="composeMessage"] {
+    background: #ffffff !important;
+    color: #1e40af !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 1rem 1.5rem !important;
+    margin: 0.25rem !important;
+    border: 2px solid #3b82f6 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+}
+
+.messaging-nav button:hover {
+    background: #eff6ff !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Bouton actif */
+.messaging-nav button.active,
+button[onclick*="showInbox"].active,
+button[onclick*="showSent"].active {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #1e40af !important;
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4) !important;
+    font-weight: 800 !important;
+}
+
+/* Badge de notification */
+.messaging-nav button .badge,
+.message-count,
+.unread-count {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 9999px !important;
+    margin-left: 0.5rem !important;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* ============================================
+   LISTE DES MESSAGES
+   ============================================ */
+
+.messages-list,
+.inbox-container,
+.sent-container {
+    background: #f9fafb !important;
+    border-radius: 0.75rem !important;
+    padding: 1rem !important;
+    border: 2px solid #e5e7eb !important;
+}
+
+/* En-tête de la liste */
+.messages-header {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
+    padding: 1rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    margin-bottom: 1rem !important;
+    border: 2px solid #3b82f6 !important;
+}
+
+.messages-header h2,
+.messages-header h3 {
+    color: #1e40af !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+}
+
+/* ============================================
+   CARTE DE MESSAGE INDIVIDUEL
+   ============================================ */
+
+.message-item,
+.message-card,
+[class*="message-"][class*="item"] {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 1.25rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 0.75rem !important;
+    border: 2px solid #e5e7eb !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.message-item:hover {
+    background: #f9fafb !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2) !important;
+    transform: translateX(4px) !important;
+}
+
+/* Message non lu - bordure bleue épaisse */
+.message-item.unread,
+.message-card.unread,
+.message-item[data-read="false"] {
+    background: #eff6ff !important;
+    border-color: #3b82f6 !important;
+    border-width: 3px !important;
+    border-left-width: 6px !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2) !important;
+}
+
+.message-item.unread::before {
+    content: '🆕' !important;
+    position: absolute !important;
+    left: 0.5rem !important;
+    top: 0.5rem !important;
+    font-size: 1.25rem !important;
+}
+
+/* Expéditeur/Destinataire */
+.message-from,
+.message-to,
+.message-sender {
+    color: #1e40af !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Sujet du message */
+.message-subject {
+    color: #111827 !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.4 !important;
+}
+
+/* Aperçu du message */
+.message-preview,
+.message-excerpt {
+    color: #374151 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0.75rem !important;
+}
+
+/* Date du message */
+.message-date,
+.message-time {
+    color: #6b7280 !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+}
+
+/* ============================================
+   CONTENU COMPLET DU MESSAGE
+   ============================================ */
+
+.message-content,
+.message-body,
+.message-full {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 2rem !important;
+    border-radius: 0.75rem !important;
+    border: 2px solid #e5e7eb !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    line-height: 1.8 !important;
+    font-size: 1rem !important;
+}
+
+.message-content p,
+.message-body p,
+.message-text {
+    color: #111827 !important;
+    font-size: 1rem !important;
+    line-height: 1.8 !important;
+    margin-bottom: 1rem !important;
+    font-weight: 400 !important;
+}
+
+/* ============================================
+   FORMULAIRE DE COMPOSITION - MODE CLAIR
+   ============================================ */
+
+.compose-form,
+.new-message-form,
+form[id*="compose"],
+form[id*="message"] {
+    background: #ffffff !important;
+    padding: 2rem !important;
+    border-radius: 1rem !important;
+    border: 3px solid #3b82f6 !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Labels du formulaire */
+.compose-form label,
+.new-message-form label {
+    color: #111827 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
+}
+
+/* Inputs du formulaire - FOND BLANC, TEXTE NOIR */
+.compose-form input,
+.compose-form select,
+.compose-form textarea,
+.new-message-form input,
+.new-message-form select,
+.new-message-form textarea {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    padding: 0.875rem 1rem !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    width: 100% !important;
+}
+
+/* Placeholder */
+.compose-form input::placeholder,
+.compose-form textarea::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+}
+
+/* Focus */
+.compose-form input:focus,
+.compose-form select:focus,
+.compose-form textarea:focus {
+    background: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+    outline: none !important;
+    color: #111827 !important;
+}
+
+/* Textarea */
+.compose-form textarea,
+.message-textarea {
+    min-height: 200px !important;
+    resize: vertical !important;
+    line-height: 1.6 !important;
+}
+
+/* ============================================
+   DROPDOWN SÉLECTION UTILISATEUR - CLAIR
+   ============================================ */
+
+/* Container du dropdown */
+.compose-form div[style*="z-index: 10000"],
+.new-message-form div[style*="z-index: 10000"],
+div[style*="position: absolute"][style*="z-index: 10000"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: 3px solid #3b82f6 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* En-tête sticky du dropdown */
+.compose-form div[style*="position: sticky"],
+.new-message-form div[style*="position: sticky"],
+div[style*="position: sticky"][style*="background: #2563eb"] {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Items utilisateurs */
+.compose-form div[onclick*="selectUser"],
+.new-message-form div[onclick*="selectUser"],
+div[onclick*="selectUser"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+.compose-form div[onclick*="selectUser"]:hover,
+.new-message-form div[onclick*="selectUser"]:hover,
+div[onclick*="selectUser"]:hover {
+    background-color: #eff6ff !important;
+    color: #111827 !important;
+}
+
+/* Tous les textes dans le dropdown */
+.compose-form div[style*="z-index: 10000"] *,
+.new-message-form div[style*="z-index: 10000"] *,
+div[style*="z-index: 10000"] * {
+    color: inherit !important;
+}
+
+.compose-form div[style*="z-index: 10000"],
+.new-message-form div[style*="z-index: 10000"],
+div[style*="z-index: 10000"] {
+    color: #111827 !important;
+}
+
+/* Noms et infos utilisateurs */
+.compose-form div[onclick*="selectUser"] div,
+.compose-form div[onclick*="selectUser"] span,
+.new-message-form div[onclick*="selectUser"] div,
+.new-message-form div[onclick*="selectUser"] span {
+    color: #111827 !important;
+}
+
+/* ============================================
+   BOUTONS D'ACTION
+   ============================================ */
+
+/* Bouton Envoyer */
+.compose-form button[type="submit"],
+.send-button,
+button[onclick*="send"] {
+    background: #10b981 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 1.1rem !important;
+    padding: 1rem 2.5rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.compose-form button[type="submit"]:hover,
+.send-button:hover {
+    background: #059669 !important;
+    box-shadow: 0 6px 12px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Bouton Répondre */
+.reply-button,
+button[onclick*="reply"] {
+    background: #3b82f6 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 0.75rem 1.5rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3) !important;
+}
+
+.reply-button:hover {
+    background: #2563eb !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Bouton Supprimer */
+.delete-button,
+button[onclick*="delete"],
+button[onclick*="Delete"] {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 0.75rem 1.5rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3) !important;
+}
+
+.delete-button:hover {
+    background: #dc2626 !important;
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Bouton Annuler */
+.cancel-button,
+button[onclick*="cancel"],
+button[onclick*="close"] {
+    background: #ffffff !important;
+    color: #374151 !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1.5rem !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 0.5rem !important;
+}
+
+.cancel-button:hover {
+    background: #f9fafb !important;
+    border-color: #9ca3af !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ============================================
+   ÉTAT VIDE
+   ============================================ */
+
+.no-messages,
+.empty-state {
+    background: #f9fafb !important;
+    color: #6b7280 !important;
+    padding: 3rem 2rem !important;
+    text-align: center !important;
+    border-radius: 0.75rem !important;
+    border: 2px dashed #d1d5db !important;
+}
+
+.no-messages p,
+.empty-state p {
+    color: #6b7280 !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+}
+
+/* ============================================
+   PARTAGE DE DOCUMENTS
+   ============================================ */
+
+.shared-documents-section {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+    padding: 1.5rem !important;
+    border-radius: 0.75rem !important;
+    border: 2px solid #3b82f6 !important;
+}
+
+.shared-documents-section h3 {
+    color: #1e40af !important;
+    font-weight: 700 !important;
+}
+
+.shared-document-item {
+    background: #ffffff !important;
+    color: #111827 !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #e5e7eb !important;
+    margin-bottom: 0.75rem !important;
+}
+
+.shared-document-item:hover {
+    background: #f9fafb !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ============================================
+   TEXTES - FORCE MODE CLAIR
+   ============================================ */
+
+.messaging-container *,
+.message-item *,
+.message-content *,
+.compose-form * {
+    color: inherit !important;
+}
+
+.messaging-container h1,
+.messaging-container h2,
+.messaging-container h3 {
+    color: #1e40af !important;
+}
+
+.messaging-container p {
+    color: #111827 !important;
+}
+
+/* ============================================
+   FIN - MODE CLAIR ACCESSIBLE
+   ============================================ */

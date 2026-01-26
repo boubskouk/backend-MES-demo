@@ -1,0 +1,53 @@
+# ============================================
+# CONFIGURATION RENDER - ARCHIVAGE C.E.R.E.R
+# ============================================
+# Ce fichier configure automatiquement votre application sur Render
+
+services:
+  # Service Web - Application Node.js
+  - type: web
+    name: cerer-archivage
+    runtime: node
+    plan: free  # Plan gratuit - Changez en "starter" pour éviter les mises en veille
+    region: frankfurt  # Europe - Plus proche du Sénégal
+    branch: main
+    buildCommand: npm install
+    startCommand: node server.js
+
+    # Variables d'environnement
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: 4000
+
+      # MongoDB Atlas - À CONFIGURER sur Render Dashboard
+      - key: MONGODB_URI
+        sync: false  # Vous devrez le configurer manuellement
+
+      - key: MONGODB_DB_NAME
+        value: cerer_archivage
+
+      # Session - À GÉNÉRER (voir instructions)
+      - key: SESSION_SECRET
+        generateValue: true  # Render génère automatiquement
+
+    # Détection de santé
+    healthCheckPath: /
+
+    # Auto-déploiement
+    autoDeploy: true
+
+    # Disque persistant pour les uploads (optionnel)
+    # disk:
+    #   name: uploads
+    #   mountPath: /opt/render/project/src/uploads
+    #   sizeGB: 1
+
+# ============================================
+# NOTES IMPORTANTES
+# ============================================
+# 1. Après le premier déploiement, configurez MONGODB_URI dans le Dashboard Render
+# 2. Le plan FREE se met en veille après 15 min d'inactivité
+# 3. Pour un service 24/7, passez au plan STARTER (7$/mois)

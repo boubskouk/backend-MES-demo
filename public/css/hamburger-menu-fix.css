@@ -1,0 +1,184 @@
+/* ============================================
+   FIX MENU HAMBURGER - ULTRA VISIBLE
+   Tous les sélecteurs possibles pour l'icône menu
+   ============================================ */
+
+/* Bouton menu hamburger - Toutes les variantes */
+button[class*="menu"],
+button[id*="menu"],
+button[onclick*="menu"],
+button[aria-label*="menu"],
+button[aria-label*="Menu"],
+.menu-toggle,
+.menu-btn,
+.menu-button,
+#menuButton,
+#menu-button,
+.hamburger-menu,
+.nav-toggle {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(16, 185, 129, 0.25) 100%) !important;
+    padding: 0.75rem !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid rgba(14, 165, 233, 0.6) !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4) !important;
+    transition: all 0.3s ease !important;
+    min-width: 3rem !important;
+    min-height: 3rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+button[class*="menu"]:hover,
+button[id*="menu"]:hover,
+.menu-toggle:hover,
+.hamburger-menu:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.4) 0%, rgba(16, 185, 129, 0.4) 100%) !important;
+    border-color: rgba(14, 165, 233, 0.9) !important;
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.6) !important;
+    transform: scale(1.1) !important;
+}
+
+/* SVG du hamburger - Maximum de visibilité */
+button[class*="menu"] svg,
+button[id*="menu"] svg,
+button[onclick*="menu"] svg,
+.menu-toggle svg,
+.hamburger-menu svg,
+.menu-btn svg {
+    stroke: white !important;
+    stroke-width: 3px !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    fill: none !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) !important;
+}
+
+/* Lignes du hamburger (si c'est des divs/spans) */
+.hamburger-line,
+.menu-line,
+button[class*="menu"] > div,
+button[class*="menu"] > span:not([class]) {
+    background: white !important;
+    height: 3px !important;
+    width: 24px !important;
+    display: block !important;
+    margin: 4px 0 !important;
+    border-radius: 2px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Animation des lignes au hover */
+button[class*="menu"]:hover > div,
+button[class*="menu"]:hover > span {
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.8) !important;
+}
+
+/* Paths SVG du menu */
+button[class*="menu"] svg path,
+button[id*="menu"] svg path,
+.menu-toggle svg path,
+.hamburger-menu svg path {
+    stroke: white !important;
+    stroke-width: 3px !important;
+    fill: none !important;
+}
+
+/* Lines SVG du menu */
+button[class*="menu"] svg line,
+button[id*="menu"] svg line,
+.menu-toggle svg line,
+.hamburger-menu svg line {
+    stroke: white !important;
+    stroke-width: 3px !important;
+    stroke-linecap: round !important;
+}
+
+/* Icône Heroicons ou Font Awesome */
+button[class*="menu"] svg.heroicon,
+button[class*="menu"] svg.fa,
+button[class*="menu"] i {
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+
+/* Menu hamburger dans le header spécifiquement */
+header button[class*="menu"],
+header .menu-toggle,
+header .hamburger {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(16, 185, 129, 0.3) 100%) !important;
+    border: 2px solid rgba(14, 165, 233, 0.7) !important;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.5) !important;
+}
+
+/* Texte à côté de l'icône hamburger s'il existe */
+button[class*="menu"] span[class*="text"],
+.menu-toggle span,
+.hamburger span {
+    color: white !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* État actif du menu */
+button[class*="menu"].active,
+button[class*="menu"][aria-expanded="true"],
+.menu-toggle.active {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.5) 0%, rgba(16, 185, 129, 0.5) 100%) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+/* Variante pour écrans mobiles */
+@media (max-width: 768px) {
+    button[class*="menu"],
+    .menu-toggle,
+    .hamburger-menu {
+        min-width: 3.5rem !important;
+        min-height: 3.5rem !important;
+        padding: 1rem !important;
+    }
+
+    button[class*="menu"] svg,
+    .menu-toggle svg {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+}
+
+/* Support pour différentes bibliothèques d'icônes */
+
+/* Material Icons */
+button[class*="menu"] .material-icons {
+    color: white !important;
+    font-size: 2rem !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Feather Icons */
+button[class*="menu"] .feather {
+    stroke: white !important;
+    stroke-width: 3px !important;
+}
+
+/* Ionicons */
+button[class*="menu"] ion-icon {
+    color: white !important;
+    font-size: 1.75rem !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) !important;
+}
+
+/* Lucide Icons */
+button[class*="menu"] .lucide {
+    stroke: white !important;
+    stroke-width: 3px !important;
+}
+
+/* Toute icône avec la classe 'icon' */
+button[class*="menu"] .icon,
+.menu-toggle .icon {
+    color: white !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) !important;
+}

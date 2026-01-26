@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOTYPE COMPLET - Nouveau Dashboard GED CERER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Top Navigation Bar */
+        .topbar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .topbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topbar-logo-icon {
+            font-size: 36px;
+        }
+
+        .topbar-logo-text h2 {
+            font-size: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2px;
+        }
+
+        .topbar-logo-text p {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: flex-end;
+        }
+
+        .role-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .user-menu {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .user-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-menu-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .user-menu-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .user-menu-email {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .user-menu-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: #333;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-menu-item:hover {
+            background: #f8f9fa;
+        }
+
+        .user-menu-item.danger {
+            color: #e74c3c;
+        }
+
+        .user-menu-item.danger:hover {
+            background: #fee;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 20px 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-info h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-info p {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .filter-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Search Results */
+        .search-results {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .search-results h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-group {
+            margin-bottom: 25px;
+        }
+
+        .result-group h3 {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .result-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .result-breadcrumb {
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .result-meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .result-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Quick Access */
+        .quick-access {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quick-btn {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .quick-btn-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .quick-btn-text {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Section Title */
+        .section-title {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Departments Grid */
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dept-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .dept-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .dept-header h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dept-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .dept-stats {
+            padding: 20px 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .dept-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dept-stat-icon {
+            font-size: 24px;
+        }
+
+        .dept-stat-info {
+            flex: 1;
+        }
+
+        .dept-stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .dept-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .dept-footer {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .dept-activity {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .dept-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .dept-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Department View (Hidden by default) */
+        .department-view {
+            display: none;
+        }
+
+        .department-view.active {
+            display: block;
+        }
+
+        .breadcrumb {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #999;
+        }
+
+        /* Accordion */
+        .accordion {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, #0f8576 0%, #2dd968 100%);
+        }
+
+        .accordion-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .accordion-badge {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .accordion-icon {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+        }
+
+        .category-list {
+            padding: 20px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .category-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .category-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .category-count {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Document Filter */
+        .document-filter {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Document Controls */
+        .document-controls {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .control-select {
+            padding: 10px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .control-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Pagination */
+        .pagination-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .pagination-info {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            padding: 10px 18px;
+            border: 2px solid #e1e8ed;
+            background: white;
+            color: #333;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 45px;
+            text-align: center;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .pagination-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-ellipsis {
+            padding: 10px;
+            color: #999;
+        }
+
+        /* Documents Grid */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .doc-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .doc-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .doc-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .doc-meta {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            font-size: 32px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .file-upload:hover {
+            background: #e9ecef;
+            border-color: #764ba2;
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            padding: 12px 30px;
+            background: #e1e8ed;
+            color: #666;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #d1d8dd;
+        }
+
+        .btn-submit {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Back Button */
+        .back-btn {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .no-results-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .departments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-access {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-logo">
+            <div class="topbar-logo-icon">🎓</div>
+            <div class="topbar-logo-text">
+                <h2>GED CERER</h2>
+                <p>Gestion Électronique Documents</p>
+            </div>
+        </div>
+
+        <div class="topbar-user">
+            <div class="user-info">
+                <div class="user-name">Amadou Diallo</div>
+                <div class="user-role">
+                    <span>Département Informatique</span>
+                    <span class="role-badge">NIVEAU 1</span>
+                </div>
+            </div>
+            <div class="user-avatar" onclick="toggleUserMenu()">
+                AD
+            </div>
+        </div>
+    </div>
+
+    <!-- User Menu Dropdown -->
+    <div id="userMenu" class="user-menu">
+        <div class="user-menu-header">
+            <div class="user-menu-name">Amadou Diallo</div>
+            <div class="user-menu-email">amadou.diallo@ucad.edu.sn</div>
+        </div>
+        <div class="user-menu-item" onclick="alert('Navigation vers le profil')">
+            <span>👤</span>
+            <span>Mon Profil</span>
+        </div>
+        <div class="user-menu-item" onclick="alert('Navigation vers les paramètres')">
+            <span>⚙️</span>
+            <span>Paramètres</span>
+        </div>
+        <div class="user-menu-item" onclick="alert('Navigation vers les notifications')">
+            <span>🔔</span>
+            <span>Notifications</span>
+        </div>
+        <div class="user-menu-item danger" onclick="alert('Déconnexion...')">
+            <span>🚪</span>
+            <span>Déconnexion</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- HOME VIEW -->
+        <div id="homeView">
+            <!-- Header -->
+            <div class="header">
+                <h1>📊 Tableau de Bord</h1>
+                <p>Bienvenue dans votre espace de gestion documentaire</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-info">
+                        <h3>Départements</h3>
+                        <p>15</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-info">
+                        <h3>Services</h3>
+                        <p>78</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-info">
+                        <h3>Documents</h3>
+                        <p>3,247</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-info">
+                        <h3>Stockage</h3>
+                        <p>1.4 TB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="globalSearchInput" class="search-input" placeholder="🔍 Rechercher par titre, ID, département, service, catégorie..." onkeyup="if(event.key === 'Enter') performGlobalSearch()">
+                    <button class="search-btn" onclick="performGlobalSearch()">Rechercher</button>
+                </div>
+                <div class="search-filters">
+                    <span class="filter-label">Filtrer par:</span>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterServices" checked>
+                        <span>Services</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterCategories" checked>
+                        <span>Catégories</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" id="filterDocuments" checked>
+                        <span>Documents</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Search Results (Hidden by default) -->
+            <div id="searchResults" class="search-results hidden">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+
+            <!-- Quick Access -->
+            <div class="quick-access">
+                <div class="quick-btn">
+                    <div class="quick-btn-icon">📄</div>
+                    <div class="quick-btn-text">Mes Documents</div>
+                </div>
+                <div class="quick-btn">
+                    <div class="quick-btn-icon">🕒</div>
+                    <div class="quick-btn-text">Récents</div>
+                </div>
+                <div class="quick-btn">
+                    <div class="quick-btn-icon">⭐</div>
+                    <div class="quick-btn-text">Favoris</div>
+                </div>
+                <div class="quick-btn">
+                    <div class="quick-btn-icon">🔔</div>
+                    <div class="quick-btn-text">Nouveaux</div>
+                </div>
+                <div class="quick-btn" onclick="openAddDocumentModal()" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
+                    <div class="quick-btn-icon">➕</div>
+                    <div class="quick-btn-text">Ajouter un document</div>
+                </div>
+            </div>
+
+            <!-- Section Title with Add Department Button -->
+            <div class="section-title">
+                <h2>🏢 Départements</h2>
+                <button class="add-btn" onclick="openAddDepartmentModal()">
+                    ➕ Ajouter un département
+                </button>
+            </div>
+
+            <!-- Departments Grid -->
+            <div class="departments-grid">
+                <!-- Département 1 -->
+                <div class="dept-card" onclick="showDepartment('Sciences et Technologies')">
+                    <div class="dept-header">
+                        <h3>🔬 Sciences et Technologies</h3>
+                        <p>Département scientifique et technique</p>
+                    </div>
+                    <div class="dept-stats">
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📂</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Services</div>
+                                <div class="dept-stat-value">8</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📄</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Documents</div>
+                                <div class="dept-stat-value">347</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">💾</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Espace</div>
+                                <div class="dept-stat-value">124 GB</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">👥</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Utilisateurs</div>
+                                <div class="dept-stat-value">45</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-footer">
+                        <div class="dept-activity">📊 Dernière activité: Il y a 15 min</div>
+                        <button class="dept-btn">Explorer →</button>
+                    </div>
+                </div>
+
+                <!-- Département 2 -->
+                <div class="dept-card" onclick="showDepartment('Administration')">
+                    <div class="dept-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🏛️ Administration</h3>
+                        <p>Gestion administrative et financière</p>
+                    </div>
+                    <div class="dept-stats">
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📂</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Services</div>
+                                <div class="dept-stat-value">6</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📄</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Documents</div>
+                                <div class="dept-stat-value">289</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">💾</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Espace</div>
+                                <div class="dept-stat-value">87 GB</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">👥</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Utilisateurs</div>
+                                <div class="dept-stat-value">32</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-footer">
+                        <div class="dept-activity">📊 Dernière activité: Il y a 1h</div>
+                        <button class="dept-btn">Explorer →</button>
+                    </div>
+                </div>
+
+                <!-- Département 3 -->
+                <div class="dept-card" onclick="showDepartment('Ressources Humaines')">
+                    <div class="dept-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>👥 Ressources Humaines</h3>
+                        <p>Gestion du personnel et recrutement</p>
+                    </div>
+                    <div class="dept-stats">
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📂</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Services</div>
+                                <div class="dept-stat-value">5</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📄</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Documents</div>
+                                <div class="dept-stat-value">234</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">💾</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Espace</div>
+                                <div class="dept-stat-value">65 GB</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">👥</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Utilisateurs</div>
+                                <div class="dept-stat-value">28</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-footer">
+                        <div class="dept-activity">📊 Dernière activité: Il y a 30 min</div>
+                        <button class="dept-btn">Explorer →</button>
+                    </div>
+                </div>
+
+                <!-- Département 4 -->
+                <div class="dept-card">
+                    <div class="dept-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📚 Bibliothèque</h3>
+                        <p>Documentation et archives</p>
+                    </div>
+                    <div class="dept-stats">
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📂</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Services</div>
+                                <div class="dept-stat-value">4</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">📄</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Documents</div>
+                                <div class="dept-stat-value">456</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">💾</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Espace</div>
+                                <div class="dept-stat-value">156 GB</div>
+                            </div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-icon">👥</div>
+                            <div class="dept-stat-info">
+                                <div class="dept-stat-label">Utilisateurs</div>
+                                <div class="dept-stat-value">15</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dept-footer">
+                        <div class="dept-activity">📊 Dernière activité: Il y a 2h</div>
+                        <button class="dept-btn">Explorer →</button>
+                    </div>
+                </div>
+
+                <!-- ... 11 autres départements similaires -->
+            </div>
+        </div>
+
+        <!-- DEPARTMENT VIEW (Hidden by default) -->
+        <div id="departmentView" class="department-view">
+            <button class="back-btn" onclick="showHome()">← Retour à l'accueil</button>
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a onclick="showHome()">Accueil</a>
+                <span>›</span>
+                <strong id="currentDeptName">Sciences et Technologies</strong>
+            </div>
+
+            <!-- Department Header -->
+            <div class="header">
+                <h1 id="deptTitle">🔬 Sciences et Technologies</h1>
+                <p>Explorez les services et documents de ce département</p>
+            </div>
+
+            <!-- Department Stats -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">📂</div>
+                    <div class="stat-info">
+                        <h3>Services</h3>
+                        <p>8</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-info">
+                        <h3>Documents</h3>
+                        <p>347</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-info">
+                        <h3>Espace</h3>
+                        <p>124 GB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Accordion with Add Service Button -->
+            <div class="section-title">
+                <h2>📂 Services du département</h2>
+                <button class="add-btn" onclick="openAddServiceModal()">
+                    ➕ Ajouter un service
+                </button>
+            </div>
+
+            <div class="accordion">
+                <!-- Service 1: Physique -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span>📂</span>
+                            <span>Physique Appliquée</span>
+                            <span class="accordion-badge">52 documents • 8.2 GB</span>
+                        </div>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="category-list">
+                            <div class="category-item" onclick="showDocuments('Mémoires', 'Physique Appliquée')">
+                                <div class="category-info">
+                                    <span class="category-icon">📄</span>
+                                    <span class="category-name">Mémoires</span>
+                                </div>
+                                <span class="category-count">23 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Thèses', 'Physique Appliquée')">
+                                <div class="category-info">
+                                    <span class="category-icon">📚</span>
+                                    <span class="category-name">Thèses</span>
+                                </div>
+                                <span class="category-count">15 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Articles', 'Physique Appliquée')">
+                                <div class="category-info">
+                                    <span class="category-icon">📰</span>
+                                    <span class="category-name">Articles</span>
+                                </div>
+                                <span class="category-count">8 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Rapports TP', 'Physique Appliquée')">
+                                <div class="category-info">
+                                    <span class="category-icon">📋</span>
+                                    <span class="category-name">Rapports de TP</span>
+                                </div>
+                                <span class="category-count">6 docs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2: Chimie -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span>📂</span>
+                            <span>Chimie</span>
+                            <span class="accordion-badge">67 documents • 12.3 GB</span>
+                        </div>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="category-list">
+                            <div class="category-item" onclick="showDocuments('Mémoires', 'Chimie')">
+                                <div class="category-info">
+                                    <span class="category-icon">📄</span>
+                                    <span class="category-name">Mémoires</span>
+                                </div>
+                                <span class="category-count">30 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Protocoles', 'Chimie')">
+                                <div class="category-info">
+                                    <span class="category-icon">🧪</span>
+                                    <span class="category-name">Protocoles</span>
+                                </div>
+                                <span class="category-count">22 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Résultats Analyses', 'Chimie')">
+                                <div class="category-info">
+                                    <span class="category-icon">📊</span>
+                                    <span class="category-name">Résultats Analyses</span>
+                                </div>
+                                <span class="category-count">15 docs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3: Mathématiques -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title">
+                            <span>📂</span>
+                            <span>Mathématiques</span>
+                            <span class="accordion-badge">41 documents • 5.8 GB</span>
+                        </div>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="category-list">
+                            <div class="category-item" onclick="showDocuments('Cours', 'Mathématiques')">
+                                <div class="category-info">
+                                    <span class="category-icon">📄</span>
+                                    <span class="category-name">Cours</span>
+                                </div>
+                                <span class="category-count">20 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Exercices', 'Mathématiques')">
+                                <div class="category-info">
+                                    <span class="category-icon">📝</span>
+                                    <span class="category-name">Exercices</span>
+                                </div>
+                                <span class="category-count">12 docs</span>
+                            </div>
+                            <div class="category-item" onclick="showDocuments('Examens', 'Mathématiques')">
+                                <div class="category-info">
+                                    <span class="category-icon">🎯</span>
+                                    <span class="category-name">Examens</span>
+                                </div>
+                                <span class="category-count">9 docs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Section (Hidden until category clicked) -->
+            <div id="documentsSection" class="hidden" style="margin-top: 30px;">
+                <div class="breadcrumb">
+                    <a onclick="showHome()">Accueil</a>
+                    <span>›</span>
+                    <a onclick="hideDocuments()">Sciences et Technologies</a>
+                    <span>›</span>
+                    <span id="currentServiceName">Physique Appliquée</span>
+                    <span>›</span>
+                    <strong id="currentCategoryName">Mémoires</strong>
+                </div>
+
+                <div class="section-title">
+                    <h2>📄 <span id="categoryTitle">Mémoires</span> (<span id="docCount">23</span> documents)</h2>
+                    <button class="add-btn" onclick="openAddDocumentModal()">
+                        ➕ Ajouter un document
+                    </button>
+                </div>
+
+                <!-- Document Filter -->
+                <div class="document-filter">
+                    <input type="text" id="documentFilterInput" class="filter-input" placeholder="🔍 Filtrer les documents par titre, auteur, date..." onkeyup="filterDocuments()">
+                </div>
+
+                <!-- Document Controls (Tri et Pagination) -->
+                <div class="document-controls">
+                    <div class="control-group">
+                        <span class="control-label">Trier par:</span>
+                        <select class="control-select" id="sortSelect" onchange="sortDocuments()">
+                            <option value="date-desc">Date (Plus récent)</option>
+                            <option value="date-asc">Date (Plus ancien)</option>
+                            <option value="name-asc">Nom (A-Z)</option>
+                            <option value="name-desc">Nom (Z-A)</option>
+                            <option value="size-desc">Taille (Plus grand)</option>
+                            <option value="size-asc">Taille (Plus petit)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">Afficher:</span>
+                        <select class="control-select" id="perPageSelect" onchange="changePerPage()">
+                            <option value="20">20 par page</option>
+                            <option value="50">50 par page</option>
+                            <option value="100">100 par page</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="documents-grid" id="documentsGrid">
+                    <div class="doc-card">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-title">Mémoire_Physique_Quantique_2024.pdf</div>
+                        <div class="doc-meta">
+                            <div>📅 15/12/2024</div>
+                            <div>💾 2.3 MB</div>
+                            <div>👤 Jean Dupont</div>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-title">Étude_Thermodynamique_2024.pdf</div>
+                        <div class="doc-meta">
+                            <div>📅 10/12/2024</div>
+                            <div>💾 1.8 MB</div>
+                            <div>👤 Marie Martin</div>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-title">Mécanique_des_Fluides.pdf</div>
+                        <div class="doc-meta">
+                            <div>📅 08/12/2024</div>
+                            <div>💾 3.1 MB</div>
+                            <div>👤 Amadou Diop</div>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-title">Optique_Géométrique.pdf</div>
+                        <div class="doc-meta">
+                            <div>📅 05/12/2024</div>
+                            <div>💾 1.5 MB</div>
+                            <div>👤 Fatou Sow</div>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-icon">📄</div>
+                        <div class="doc-title">Électromagnétisme_Avancé.pdf</div>
+                        <div class="doc-meta">
+                            <div>📅 01/12/2024</div>
+                            <div>💾 2.7 MB</div>
+                            <div>👤 Mamadou Ba</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container" id="paginationContainer">
+                    <div class="pagination-info" id="paginationInfo">
+                        Affichage 1-20 sur 347 documents
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <button class="pagination-btn" onclick="goToPage(1)" disabled>
+                            ← Précédent
+                        </button>
+                        <button class="pagination-btn active" onclick="goToPage(1)">1</button>
+                        <button class="pagination-btn" onclick="goToPage(2)">2</button>
+                        <button class="pagination-btn" onclick="goToPage(3)">3</button>
+                        <button class="pagination-btn" onclick="goToPage(4)">4</button>
+                        <button class="pagination-btn" onclick="goToPage(5)">5</button>
+                        <span class="pagination-ellipsis">...</span>
+                        <button class="pagination-btn" onclick="goToPage(18)">18</button>
+                        <button class="pagination-btn" onclick="goToPage(2)">
+                            Suivant →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Department Modal -->
+    <div id="addDepartmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏢 Ajouter un département</h2>
+                <span class="modal-close" onclick="closeAddDepartmentModal()">×</span>
+            </div>
+
+            <form onsubmit="submitDepartment(event)">
+                <div class="form-group">
+                    <label class="form-label">Nom du département *</label>
+                    <input type="text" class="form-input" placeholder="Ex: Génie Civil" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Icône (emoji)</label>
+                    <input type="text" class="form-input" placeholder="Ex: 🏗️" maxlength="2">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Description du département..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Chef de département</label>
+                    <select class="form-select">
+                        <option value="">-- Sélectionner un utilisateur --</option>
+                        <option value="user1">Dr. Amadou Fall</option>
+                        <option value="user2">Pr. Marie Diop</option>
+                        <option value="user3">Dr. Ousmane Sy</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddDepartmentModal()">Annuler</button>
+                    <button type="submit" class="btn-submit">Créer le département</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📂 Ajouter un service</h2>
+                <span class="modal-close" onclick="closeAddServiceModal()">×</span>
+            </div>
+
+            <form onsubmit="submitService(event)">
+                <div class="form-group">
+                    <label class="form-label">Nom du service *</label>
+                    <input type="text" class="form-input" placeholder="Ex: Biologie Moléculaire" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Département *</label>
+                    <select class="form-select" required>
+                        <option value="">-- Sélectionner un département --</option>
+                        <option value="dept1">Sciences et Technologies</option>
+                        <option value="dept2">Administration</option>
+                        <option value="dept3">Ressources Humaines</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Icône (emoji)</label>
+                    <input type="text" class="form-input" placeholder="Ex: 🧬" maxlength="2">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Description du service..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Responsable du service</label>
+                    <select class="form-select">
+                        <option value="">-- Sélectionner un utilisateur --</option>
+                        <option value="user1">Dr. Amadou Fall</option>
+                        <option value="user2">Pr. Marie Diop</option>
+                        <option value="user3">Dr. Ousmane Sy</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddServiceModal()">Annuler</button>
+                    <button type="submit" class="btn-submit">Créer le service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Document Modal -->
+    <div id="addDocumentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📤 Ajouter un document</h2>
+                <span class="modal-close" onclick="closeAddDocumentModal()">×</span>
+            </div>
+
+            <form onsubmit="submitDocument(event)">
+                <div class="form-group">
+                    <label class="form-label">Titre du document *</label>
+                    <input type="text" class="form-input" placeholder="Ex: Mémoire de Master 2024" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Catégorie *</label>
+                    <select class="form-select" required>
+                        <option value="">-- Sélectionner une catégorie --</option>
+                        <option value="memoires">Mémoires</option>
+                        <option value="theses">Thèses</option>
+                        <option value="articles">Articles</option>
+                        <option value="rapports">Rapports de TP</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Description du document (optionnelle)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Fichier *</label>
+                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                        <div class="file-upload-icon">📁</div>
+                        <div class="file-upload-text">Cliquez pour sélectionner un fichier ou glissez-le ici</div>
+                        <div class="file-upload-text" style="margin-top: 5px; font-size: 12px; color: #999;">PDF, Word, Excel, PowerPoint - Max 50 MB</div>
+                    </div>
+                    <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" required>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeAddDocumentModal()">Annuler</button>
+                    <button type="submit" class="btn-submit">📤 Téléverser</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for search
+        const searchData = {
+            services: [
+                { name: 'Physique Appliquée', dept: 'Sciences et Technologies', docs: 52, size: '8.2 GB' },
+                { name: 'Chimie', dept: 'Sciences et Technologies', docs: 67, size: '12.3 GB' },
+                { name: 'Mathématiques', dept: 'Sciences et Technologies', docs: 41, size: '5.8 GB' },
+                { name: 'Comptabilité', dept: 'Administration', docs: 89, size: '15.6 GB' },
+                { name: 'Finances', dept: 'Administration', docs: 73, size: '11.2 GB' },
+                { name: 'Recrutement', dept: 'Ressources Humaines', docs: 45, size: '6.8 GB' },
+            ],
+            categories: [
+                { name: 'Mémoires', service: 'Physique Appliquée', dept: 'Sciences et Technologies', docs: 23 },
+                { name: 'Thèses', service: 'Physique Appliquée', dept: 'Sciences et Technologies', docs: 15 },
+                { name: 'Articles', service: 'Physique Appliquée', dept: 'Sciences et Technologies', docs: 8 },
+                { name: 'Protocoles', service: 'Chimie', dept: 'Sciences et Technologies', docs: 22 },
+                { name: 'Rapports Annuels', service: 'Comptabilité', dept: 'Administration', docs: 34 },
+                { name: 'Budgets', service: 'Finances', dept: 'Administration', docs: 28 },
+            ],
+            documents: [
+                { title: 'Mémoire_Physique_Quantique_2024.pdf', category: 'Mémoires', service: 'Physique Appliquée', dept: 'Sciences et Technologies', author: 'Jean Dupont', date: '15/12/2024', size: '2.3 MB' },
+                { title: 'Étude_Thermodynamique_2024.pdf', category: 'Mémoires', service: 'Physique Appliquée', dept: 'Sciences et Technologies', author: 'Marie Martin', date: '10/12/2024', size: '1.8 MB' },
+                { title: 'Budget_Prévisionnel_2025.xlsx', category: 'Budgets', service: 'Finances', dept: 'Administration', author: 'Amadou Fall', date: '12/12/2024', size: '890 KB' },
+                { title: 'Rapport_Annuel_2024.pdf', category: 'Rapports Annuels', service: 'Comptabilité', dept: 'Administration', author: 'Fatou Sow', date: '18/12/2024', size: '5.4 MB' },
+                { title: 'Protocole_Analyse_Chimique.pdf', category: 'Protocoles', service: 'Chimie', dept: 'Sciences et Technologies', author: 'Ousmane Diallo', date: '14/12/2024', size: '1.2 MB' },
+            ]
+        };
+
+        // User Menu Toggle
+        function toggleUserMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close user menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('userMenu');
+            const avatar = document.querySelector('.user-avatar');
+
+            if (!menu.contains(event.target) && !avatar.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // Global Search Function
+        function performGlobalSearch() {
+            const query = document.getElementById('globalSearchInput').value.toLowerCase().trim();
+            if (!query) {
+                document.getElementById('searchResults').classList.add('hidden');
+                return;
+            }
+
+            const filterServices = document.getElementById('filterServices').checked;
+            const filterCategories = document.getElementById('filterCategories').checked;
+            const filterDocuments = document.getElementById('filterDocuments').checked;
+
+            let resultsHTML = `<h2>🔍 Résultats de recherche pour "${query}"</h2>`;
+
+            // Search Services
+            if (filterServices) {
+                const serviceResults = searchData.services.filter(s =>
+                    s.name.toLowerCase().includes(query) ||
+                    s.dept.toLowerCase().includes(query)
+                );
+
+                if (serviceResults.length > 0) {
+                    resultsHTML += `
+                        <div class="result-group">
+                            <h3>📂 Services (${serviceResults.length})</h3>
+                            ${serviceResults.map(s => `
+                                <div class="result-item" onclick="alert('Navigation vers service: ${s.name}')">
+                                    <div class="result-info">
+                                        <div class="result-title">${s.name}</div>
+                                        <div class="result-breadcrumb">
+                                            📍 ${s.dept}
+                                        </div>
+                                        <div class="result-meta">${s.docs} documents • ${s.size}</div>
+                                    </div>
+                                    <span class="result-badge">Service</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+
+            // Search Categories
+            if (filterCategories) {
+                const categoryResults = searchData.categories.filter(c =>
+                    c.name.toLowerCase().includes(query) ||
+                    c.service.toLowerCase().includes(query) ||
+                    c.dept.toLowerCase().includes(query)
+                );
+
+                if (categoryResults.length > 0) {
+                    resultsHTML += `
+                        <div class="result-group">
+                            <h3>🏷️ Catégories (${categoryResults.length})</h3>
+                            ${categoryResults.map(c => `
+                                <div class="result-item" onclick="alert('Navigation vers catégorie: ${c.name}')">
+                                    <div class="result-info">
+                                        <div class="result-title">${c.name}</div>
+                                        <div class="result-breadcrumb">
+                                            📍 ${c.dept} › ${c.service}
+                                        </div>
+                                        <div class="result-meta">${c.docs} documents</div>
+                                    </div>
+                                    <span class="result-badge">Catégorie</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+
+            // Search Documents
+            if (filterDocuments) {
+                const documentResults = searchData.documents.filter(d =>
+                    d.title.toLowerCase().includes(query) ||
+                    d.author.toLowerCase().includes(query) ||
+                    d.category.toLowerCase().includes(query) ||
+                    d.service.toLowerCase().includes(query) ||
+                    d.dept.toLowerCase().includes(query)
+                );
+
+                if (documentResults.length > 0) {
+                    resultsHTML += `
+                        <div class="result-group">
+                            <h3>📄 Documents (${documentResults.length})</h3>
+                            ${documentResults.map(d => `
+                                <div class="result-item" onclick="alert('Ouverture du document: ${d.title}')">
+                                    <div class="result-info">
+                                        <div class="result-title">${d.title}</div>
+                                        <div class="result-breadcrumb">
+                                            📍 ${d.dept} › ${d.service} › ${d.category}
+                                        </div>
+                                        <div class="result-meta">👤 ${d.author} • 📅 ${d.date} • 💾 ${d.size}</div>
+                                    </div>
+                                    <span class="result-badge">Document</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+
+            // Check if no results
+            const hasResults = resultsHTML.includes('result-item');
+            if (!hasResults) {
+                resultsHTML += `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>Aucun résultat trouvé</h3>
+                        <p>Essayez avec d'autres mots-clés ou vérifiez les filtres</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('searchResults').innerHTML = resultsHTML;
+            document.getElementById('searchResults').classList.remove('hidden');
+        }
+
+        // Filter Documents in Category
+        function filterDocuments() {
+            const query = document.getElementById('documentFilterInput').value.toLowerCase();
+            const docCards = document.querySelectorAll('#documentsGrid .doc-card');
+
+            docCards.forEach(card => {
+                const title = card.querySelector('.doc-title').textContent.toLowerCase();
+                const meta = card.querySelector('.doc-meta').textContent.toLowerCase();
+
+                if (title.includes(query) || meta.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle Accordion
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+
+            // Close all other accordions
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                    h.nextElementSibling.classList.remove('active');
+                }
+            });
+
+            // Toggle current accordion
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        // Show Department View
+        function showDepartment(deptName) {
+            document.getElementById('homeView').style.display = 'none';
+            document.getElementById('departmentView').classList.add('active');
+            document.getElementById('currentDeptName').textContent = deptName;
+            document.getElementById('deptTitle').innerHTML = '🔬 ' + deptName;
+            document.getElementById('documentsSection').classList.add('hidden');
+            document.getElementById('searchResults').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Show Home View
+        function showHome() {
+            document.getElementById('homeView').style.display = 'block';
+            document.getElementById('departmentView').classList.remove('active');
+            document.getElementById('globalSearchInput').value = '';
+            document.getElementById('searchResults').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Show Documents
+        function showDocuments(categoryName, serviceName) {
+            document.getElementById('documentsSection').classList.remove('hidden');
+            document.getElementById('currentServiceName').textContent = serviceName;
+            document.getElementById('currentCategoryName').textContent = categoryName;
+            document.getElementById('categoryTitle').textContent = categoryName;
+            document.getElementById('documentFilterInput').value = '';
+
+            // Reset document visibility
+            document.querySelectorAll('#documentsGrid .doc-card').forEach(card => {
+                card.style.display = 'block';
+            });
+
+            // Scroll to documents
+            setTimeout(() => {
+                document.getElementById('documentsSection').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+
+        // Hide Documents (back to service list)
+        function hideDocuments() {
+            document.getElementById('documentsSection').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Modal Functions - Department
+        function openAddDepartmentModal() {
+            document.getElementById('addDepartmentModal').classList.add('active');
+        }
+
+        function closeAddDepartmentModal() {
+            document.getElementById('addDepartmentModal').classList.remove('active');
+        }
+
+        function submitDepartment(event) {
+            event.preventDefault();
+            alert('🏢 Fonction de création de département\n\nDans l\'application réelle, le département serait créé dans la base de données.');
+            closeAddDepartmentModal();
+        }
+
+        // Modal Functions - Service
+        function openAddServiceModal() {
+            document.getElementById('addServiceModal').classList.add('active');
+        }
+
+        function closeAddServiceModal() {
+            document.getElementById('addServiceModal').classList.remove('active');
+        }
+
+        function submitService(event) {
+            event.preventDefault();
+            alert('📂 Fonction de création de service\n\nDans l\'application réelle, le service serait créé dans la base de données.');
+            closeAddServiceModal();
+        }
+
+        // Modal Functions - Document
+        function openAddDocumentModal() {
+            document.getElementById('addDocumentModal').classList.add('active');
+        }
+
+        function closeAddDocumentModal() {
+            document.getElementById('addDocumentModal').classList.remove('active');
+        }
+
+        function submitDocument(event) {
+            event.preventDefault();
+            alert('📤 Fonction de téléversement de document\n\nDans l\'application réelle, le fichier serait uploadé vers le serveur et ajouté à la base de données.');
+            closeAddDocumentModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = ['addDepartmentModal', 'addServiceModal', 'addDocumentModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+
+        // File input display
+        document.getElementById('fileInput')?.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const fileName = this.files[0].name;
+                const fileSize = (this.files[0].size / (1024 * 1024)).toFixed(2);
+                alert(`Fichier sélectionné:\n${fileName}\nTaille: ${fileSize} MB`);
+            }
+        });
+
+        // Pagination and Sorting System
+        let currentPage = 1;
+        let itemsPerPage = 20;
+        let currentSortOrder = 'date-desc';
+        let allDocuments = []; // In real app, this would come from backend
+
+        // Sort Documents
+        function sortDocuments() {
+            const sortValue = document.getElementById('sortSelect').value;
+            currentSortOrder = sortValue;
+
+            // Simulate sorting (in real app, this would trigger backend request)
+            alert(`📊 Tri appliqué: ${sortValue}\n\nDans l'application réelle, les documents seraient triés côté serveur.`);
+
+            // Reset to page 1 after sorting
+            currentPage = 1;
+            updatePagination();
+        }
+
+        // Change Items Per Page
+        function changePerPage() {
+            const perPage = parseInt(document.getElementById('perPageSelect').value);
+            itemsPerPage = perPage;
+
+            // Reset to page 1
+            currentPage = 1;
+            updatePagination();
+
+            alert(`📄 Affichage modifié: ${perPage} documents par page`);
+        }
+
+        // Go to Specific Page
+        function goToPage(page) {
+            currentPage = page;
+            updatePagination();
+
+            // Scroll to top of documents
+            document.getElementById('documentsSection').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Update Pagination Display
+        function updatePagination() {
+            const totalDocuments = 347; // In real app, from backend
+            const totalPages = Math.ceil(totalDocuments / itemsPerPage);
+
+            // Update info text
+            const start = (currentPage - 1) * itemsPerPage + 1;
+            const end = Math.min(currentPage * itemsPerPage, totalDocuments);
+            document.getElementById('paginationInfo').textContent =
+                `Affichage ${start}-${end} sur ${totalDocuments} documents`;
+
+            // Generate pagination buttons
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})"
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                    ← Précédent
+                </button>
+            `;
+
+            // Page numbers with ellipsis
+            const maxButtons = 7; // Maximum number of page buttons to show
+
+            if (totalPages <= maxButtons) {
+                // Show all pages if total is small
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `
+                        <button class="pagination-btn ${i === currentPage ? 'active' : ''}"
+                                onclick="goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                }
+            } else {
+                // Show first page
+                paginationHTML += `
+                    <button class="pagination-btn ${currentPage === 1 ? 'active' : ''}"
+                            onclick="goToPage(1)">1</button>
+                `;
+
+                // Show ellipsis or pages around current
+                if (currentPage > 3) {
+                    paginationHTML += '<span class="pagination-ellipsis">...</span>';
+                }
+
+                // Show pages around current page
+                const startPage = Math.max(2, currentPage - 1);
+                const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `
+                        <button class="pagination-btn ${i === currentPage ? 'active' : ''}"
+                                onclick="goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                }
+
+                // Show ellipsis or last page
+                if (currentPage < totalPages - 2) {
+                    paginationHTML += '<span class="pagination-ellipsis">...</span>';
+                }
+
+                paginationHTML += `
+                    <button class="pagination-btn ${currentPage === totalPages ? 'active' : ''}"
+                            onclick="goToPage(${totalPages})">
+                        ${totalPages}
+                    </button>
+                `;
+            }
+
+            // Next button
+            paginationHTML += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})"
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                    Suivant →
+                </button>
+            `;
+
+            document.getElementById('pagination').innerHTML = paginationHTML;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "name": "mes-archivage-backend",
+  "version": "3.0.0",
+  "description": "Backend MongoDB pour le système d'archivage M.E.S - Mutuelle de l'Enseignement Supérieur",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "backup": "node scripts/backup-database.js",
+    "restore": "node scripts/restore-database.js",
+    "backup:check": "node scripts/check-atlas-backups.js",
+    "create-superadmin": "node scripts/create-superadmin.js",
+    "delete-superadmin": "node scripts/delete-superadmin.js"
+  },
+  "keywords": [
+    "archivage",
+    "mongodb",
+    "express"
+  ],
+  "author": "M.E.S",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "compression": "^1.8.1",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "docxtemplater": "^3.67.4",
+    "dotenv": "^17.2.3",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.3.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.19.3",
+    "node-cron": "^4.2.1",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.7",
+    "officegen": "^0.6.5",
+    "pizzip": "^3.2.0",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "axios": "^1.13.2",
+    "nodemon": "^3.0.2"
+  }
+}

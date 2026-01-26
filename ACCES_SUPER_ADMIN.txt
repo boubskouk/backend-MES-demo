@@ -1,0 +1,125 @@
+═══════════════════════════════════════════════════════════════
+             🛡️  ACCÈS SUPER ADMIN - NIVEAU 0
+═══════════════════════════════════════════════════════════════
+
+📅 Date de création des accès : 22 décembre 2025
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🔐 IDENTIFIANTS DE CONNEXION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 URL de connexion :
+   http://localhost:4000/super-admin-login.html
+
+👤 Nom d'utilisateur :
+   boubs
+
+🔑 Mot de passe :
+   SuperAdmin2024!
+
+📧 Email :
+   jacquessboubacar.koukoui@ucad.edu.sn
+
+👨 Nom complet :
+   Boubacar Koukoui
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ℹ️  INFORMATIONS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Niveau d'accès : 0 (Super Administrateur)
+✅ Rôle : Supervision et administration système
+✅ Département : Aucun (supervision uniquement)
+✅ Peut archiver : NON (lecture seule sur les documents)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🚀 COMMENT SE CONNECTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Ouvrez votre navigateur (Chrome, Firefox, Edge, etc.)
+
+2. Allez sur l'URL de connexion :
+   http://localhost:4000/super-admin-login.html
+
+3. Entrez vos identifiants :
+   - Nom d'utilisateur : boubs
+   - Mot de passe : SuperAdmin2024!
+
+4. Cliquez sur "Se connecter"
+
+5. Vous serez redirigé vers le dashboard Super Admin
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   📊 FONCTIONNALITÉS DU DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Une fois connecté, vous aurez accès à :
+
+📈 STATISTIQUES EN TEMPS RÉEL
+   • Nombre total d'utilisateurs
+   • Utilisateurs actifs aujourd'hui
+   • Nombre total de documents
+   • Documents créés aujourd'hui
+   • Utilisation CPU et RAM
+   • Alertes de sécurité
+
+📊 GRAPHIQUES DE TENDANCES (24h)
+   • Activité des utilisateurs
+   • Documents créés par heure
+
+💻 MONITORING SYSTÈME
+   • Utilisation processeur (CPU)
+   • Utilisation mémoire (RAM)
+   • Uptime du système
+   • Uptime du processus Node.js
+
+🔒 ÉVÉNEMENTS DE SÉCURITÉ
+   • Tentatives d'accès non autorisées
+   • Échecs de connexion
+   • Dépassements de limites de requêtes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   🔧 COMMANDES UTILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RÉINITIALISER LE MOT DE PASSE :
+   node scripts/reset-password-direct.js boubs NOUVEAU_MOT_DE_PASSE
+
+VÉRIFIER LES COMPTES SUPER ADMIN :
+   node scripts/check-superadmin.js
+
+VOIR LES LOGS D'AUDIT :
+   node scripts/view-audit-logs.js
+
+CRÉER UN NOUVEAU COMPTE SUPER ADMIN :
+   node scripts/init-superadmin.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ⚠️  SÉCURITÉ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ IMPORTANT :
+   • Ne partagez PAS ces identifiants
+   • Changez le mot de passe régulièrement
+   • Toutes vos actions sont loggées dans les audits
+   • Déconnectez-vous après chaque session
+
+🔒 Le Super Admin a un accès LECTURE SEULE aux documents.
+   Il ne peut PAS créer, modifier ou supprimer des documents.
+   Son rôle est uniquement la SUPERVISION du système.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   📚 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pour plus d'informations, consultez :
+   • GUIDE_SUPER_ADMIN.md
+   • ANALYSE_NIVEAU_0_SUPER_ADMIN.md
+   • PLAN_IMPLEMENTATION_NIVEAU_0.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Archivage C.E.R.E.R - Administration Système
+Dernière mise à jour : 22 décembre 2025
+
+═══════════════════════════════════════════════════════════════

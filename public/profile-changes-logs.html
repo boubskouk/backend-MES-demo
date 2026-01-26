@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs Changements de Profil - Super Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .log-content {
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .stat-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-6 shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold">📋 Logs de Traçabilité des Profils</h1>
+                        <p class="text-purple-100 mt-1">Historique des modifications de nom, username et email</p>
+                    </div>
+                    <a href="/super-admin.html" class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-purple-50 transition">
+                        ← Retour Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-8">
+            <!-- Filtres -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">🔍 Filtrer par période</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Date de début</label>
+                        <input type="date" id="startDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Date de fin</label>
+                        <input type="date" id="endDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <button onclick="loadLogs()" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition">
+                            🔍 Afficher
+                        </button>
+                        <button onclick="resetFilters()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">
+                            ↻ Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistiques -->
+            <div id="statsSection" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600" id="totalEntries">0</div>
+                        <div class="text-sm text-gray-600 mt-1">Entrées trouvées</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600" id="fileSize">0 KB</div>
+                        <div class="text-sm text-gray-600 mt-1">Taille</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-sm text-gray-600" id="lastModified">-</div>
+                        <div class="text-sm text-gray-600 mt-1">Dernière modification</div>
+                    </div>
+                    <div class="text-center">
+                        <span id="filteredBadge" class="stat-badge bg-green-100 text-green-800 hidden">Filtré</span>
+                        <span id="allBadge" class="stat-badge bg-blue-100 text-blue-800">Tous les logs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div id="actionsSection" class="hidden bg-white rounded-lg shadow-md p-4 mb-6">
+                <div class="flex gap-3 justify-end">
+                    <button onclick="downloadLogs()" class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition flex items-center gap-2">
+                        <span>💾</span>
+                        <span>Télécharger les logs</span>
+                    </button>
+                    <button onclick="copyToClipboard()" class="bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-700 transition flex items-center gap-2">
+                        <span>📋</span>
+                        <span>Copier</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenu des logs -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">📄 Contenu des logs</h2>
+                    <div id="loadingIndicator" class="hidden">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-600"></div>
+                    </div>
+                </div>
+                <div id="logContent" class="log-content">
+                    <div class="text-center text-gray-500 py-20">
+                        📋 Cliquez sur "Afficher" pour charger les logs
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // VÉRIFICATION DE SÉCURITÉ NIVEAU 0
+        // ============================================
+        (async function() {
+            console.log('🔐 Vérification accès Super Admin (Niveau 0)...');
+
+            try {
+                const response = await fetch('/api/superadmin/test', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    console.error('❌ Accès refusé - redirection...');
+                    alert('⛔ Accès refusé\n\nCette page est réservée aux Super Administrateurs (Niveau 0).\n\nVous allez être redirigé vers la page de connexion.');
+                    window.location.href = '/super-admin-login.html';
+                    return;
+                }
+
+                const data = await response.json();
+                if (!data.success) {
+                    console.error('❌ Session invalide - redirection...');
+                    alert('⛔ Session invalide\n\nVeuillez vous reconnecter en tant que Super Administrateur.');
+                    window.location.href = '/super-admin-login.html';
+                    return;
+                }
+
+                console.log('✅ Accès autorisé - Niveau 0 confirmé');
+            } catch (error) {
+                console.error('❌ Erreur vérification:', error);
+                alert('⛔ Erreur de vérification\n\nImpossible de vérifier vos permissions.');
+                window.location.href = '/super-admin-login.html';
+            }
+        })();
+
+        let currentLogContent = '';
+
+        // Charger les logs
+        async function loadLogs() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const logContent = document.getElementById('logContent');
+
+            // Afficher le loader
+            loadingIndicator.classList.remove('hidden');
+            logContent.innerHTML = '<div class="text-center text-gray-500 py-20">⏳ Chargement des logs...</div>';
+
+            try {
+                // Construire l'URL avec les paramètres
+                let url = '/api/superadmin/profile-changes-log';
+                const params = new URLSearchParams();
+                if (startDate) params.append('startDate', startDate);
+                if (endDate) params.append('endDate', endDate);
+                if (params.toString()) url += '?' + params.toString();
+
+                const response = await fetch(url, {
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Erreur de chargement');
+                }
+
+                // Stocker le contenu pour le téléchargement
+                currentLogContent = data.content;
+
+                // Afficher le contenu
+                logContent.textContent = data.content;
+
+                // Afficher les statistiques
+                document.getElementById('totalEntries').textContent = data.totalEntries || 0;
+                document.getElementById('fileSize').textContent = formatFileSize(data.fileSize || 0);
+                document.getElementById('lastModified').textContent = data.lastModified
+                    ? new Date(data.lastModified).toLocaleString('fr-FR')
+                    : '-';
+
+                // Badge filtré/tous
+                if (data.filtered) {
+                    document.getElementById('filteredBadge').classList.remove('hidden');
+                    document.getElementById('allBadge').classList.add('hidden');
+                } else {
+                    document.getElementById('filteredBadge').classList.add('hidden');
+                    document.getElementById('allBadge').classList.remove('hidden');
+                }
+
+                // Afficher les sections
+                document.getElementById('statsSection').classList.remove('hidden');
+                document.getElementById('actionsSection').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                logContent.innerHTML = `
+                    <div class="text-center text-red-500 py-20">
+                        ❌ ${error.message}
+                    </div>
+                `;
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Télécharger les logs
+        async function downloadLogs() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            let url = '/api/superadmin/profile-changes-log/download';
+            const params = new URLSearchParams();
+            if (startDate) params.append('startDate', startDate);
+            if (endDate) params.append('endDate', endDate);
+            if (params.toString()) url += '?' + params.toString();
+
+            window.location.href = url;
+        }
+
+        // Copier dans le presse-papiers
+        function copyToClipboard() {
+            if (!currentLogContent) {
+                alert('Aucun contenu à copier');
+                return;
+            }
+
+            navigator.clipboard.writeText(currentLogContent).then(() => {
+                alert('✅ Contenu copié dans le presse-papiers !');
+            }).catch(err => {
+                console.error('Erreur copie:', err);
+                alert('❌ Erreur lors de la copie');
+            });
+        }
+
+        // Réinitialiser les filtres
+        function resetFilters() {
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            loadLogs();
+        }
+
+        // Formater la taille du fichier
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Charger automatiquement au démarrage
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLogs();
+        });
+    </script>
+</body>
+</html>

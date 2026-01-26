@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - MES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 50px 45px;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-img {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+            animation: pulse-soft 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+        }
+
+        .logo p {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px 16px 48px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: #3b82f6;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            color: #dc2626;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #dc2626;
+        }
+
+        .error-message.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .loading {
+            text-align: center;
+            color: #64748b;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-text {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 35px 25px;
+            }
+
+            .logo-img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="logo">
+            <img src="/logo_white (2).png" alt="Logo" class="logo-img">
+            <h1>MES</h1>
+            <p>Mutuelle de l'Enseignement Supérieur</p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label">Nom d'utilisateur</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="username" class="form-input" placeholder="Entrez votre identifiant" required autocomplete="username">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mot de passe</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" class="form-input" style="padding-right: 50px;" placeholder="Entrez votre mot de passe" required autocomplete="current-password">
+                    <button type="button" class="password-toggle" onclick="togglePassword()" title="Afficher/Masquer">👁️</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="btnLogin">
+                Se connecter
+            </button>
+        </form>
+
+        <div id="loadingMessage" class="loading">
+            <div class="spinner"></div>
+            <span>Connexion en cours...</span>
+        </div>
+
+        <p class="info-text">
+            Besoin d'un compte ? Contactez votre administrateur.
+        </p>
+    </div>
+
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            const btnLogin = document.getElementById('btnLogin');
+            const loadingMsg = document.getElementById('loadingMessage');
+
+            errorDiv.classList.remove('show');
+            errorDiv.textContent = '';
+
+            btnLogin.disabled = true;
+            loadingMsg.classList.add('show');
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Erreur de connexion');
+                }
+
+                sessionStorage.setItem('username', username);
+                const sessionData = {
+                    username: username,
+                    userInfo: data.user,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem('mes_session', JSON.stringify(sessionData));
+
+                if (data.user && (data.user.firstLogin || data.user.mustChangePassword)) {
+                    btnLogin.disabled = false;
+                    loadingMsg.classList.remove('show');
+                    showFirstLoginPasswordChange(username);
+                    return;
+                }
+
+                window.location.href = '/index.html';
+
+            } catch (error) {
+                errorDiv.innerHTML = '<span>⚠️</span> ' + (error.message || 'Erreur de connexion');
+                errorDiv.classList.add('show');
+                btnLogin.disabled = false;
+                loadingMsg.classList.remove('show');
+            }
+        }
+
+        async function checkIfLoggedIn() {
+            try {
+                const response = await fetch('/api/session-check', { credentials: 'include' });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.authenticated && data.username) {
+                        try {
+                            const userInfoResponse = await fetch('/api/user-info', { credentials: 'include' });
+                            if (userInfoResponse.ok) {
+                                const userInfo = await userInfoResponse.json();
+                                if (userInfo.success) {
+                                    const sessionData = {
+                                        username: data.username,
+                                        userInfo: {
+                                            username: userInfo.username,
+                                            nom: userInfo.nom,
+                                            email: userInfo.email,
+                                            niveau: userInfo.niveau,
+                                            role: userInfo.role,
+                                            departement: userInfo.departement,
+                                            idDepartement: userInfo.idDepartement
+                                        },
+                                        timestamp: Date.now()
+                                    };
+                                    sessionStorage.setItem('mes_session', JSON.stringify(sessionData));
+                                }
+                            }
+                        } catch (err) {}
+                        window.location.href = '/index.html';
+                    }
+                }
+            } catch (error) {}
+        }
+
+        checkIfLoggedIn();
+
+        function showFirstLoginPasswordChange(username) {
+            const modal = document.createElement('div');
+            modal.id = 'firstLoginModal';
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(15, 23, 42, 0.9); display: flex; align-items: center;
+                justify-content: center; z-index: 10000; backdrop-filter: blur(8px);
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white; border-radius: 24px; padding: 50px 45px;
+                    max-width: 480px; width: 90%; box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+                    position: relative;
+                ">
+                    <div style="
+                        position: absolute; top: 0; left: 0; right: 0; height: 5px;
+                        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+                        border-radius: 24px 24px 0 0;
+                    "></div>
+
+                    <div style="text-align: center; margin-bottom: 35px;">
+                        <div style="
+                            width: 80px; height: 80px; margin: 0 auto 20px;
+                            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+                            border-radius: 50%; display: flex; align-items: center;
+                            justify-content: center; font-size: 40px;
+                        ">🔐</div>
+
+                        <h2 style="color: #1e293b; font-size: 24px; margin-bottom: 10px;">Bienvenue !</h2>
+                        <p style="color: #64748b; font-size: 15px; line-height: 1.6;">
+                            Bonjour <strong style="color: #3b82f6;">${username}</strong><br>
+                            Veuillez définir votre nouveau mot de passe.
+                        </p>
+                    </div>
+
+                    <form id="firstLoginPasswordForm" onsubmit="handleFirstLoginPasswordChange(event, '${username}')" style="display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <label style="display: block; color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 14px;">
+                                Mot de passe actuel
+                            </label>
+                            <div style="position: relative;">
+                                <input type="password" id="currentPassword" required
+                                    style="width: 100%; padding: 14px 50px 14px 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; box-sizing: border-box;"
+                                    placeholder="Mot de passe temporaire"/>
+                                <button type="button" onclick="toggleModalPassword('currentPassword', this)"
+                                    style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; color: #64748b;">👁️</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="display: block; color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 14px;">
+                                Nouveau mot de passe
+                            </label>
+                            <div style="position: relative;">
+                                <input type="password" id="newPassword" required minlength="4"
+                                    style="width: 100%; padding: 14px 50px 14px 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; box-sizing: border-box;"
+                                    placeholder="Minimum 4 caractères"/>
+                                <button type="button" onclick="toggleModalPassword('newPassword', this)"
+                                    style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; color: #64748b;">👁️</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="display: block; color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 14px;">
+                                Confirmer le mot de passe
+                            </label>
+                            <div style="position: relative;">
+                                <input type="password" id="confirmPassword" required minlength="4"
+                                    style="width: 100%; padding: 14px 50px 14px 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; box-sizing: border-box;"
+                                    placeholder="Retapez le mot de passe"/>
+                                <button type="button" onclick="toggleModalPassword('confirmPassword', this)"
+                                    style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; color: #64748b;">👁️</button>
+                            </div>
+                        </div>
+
+                        <div id="passwordError" style="display: none; padding: 14px; background: #fee2e2; border-radius: 10px; color: #dc2626; font-size: 14px; text-align: center;"></div>
+
+                        <button type="submit" id="btnChangePassword" style="
+                            padding: 16px; background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+                            color: white; border: none; border-radius: 12px;
+                            font-size: 16px; font-weight: 600; cursor: pointer;
+                        ">Valider mon nouveau mot de passe</button>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        async function handleFirstLoginPasswordChange(event, username) {
+            event.preventDefault();
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('passwordError');
+            const btnChangePassword = document.getElementById('btnChangePassword');
+
+            if (newPassword !== confirmPassword) {
+                errorDiv.textContent = 'Les mots de passe ne correspondent pas';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (newPassword.length < 4) {
+                errorDiv.textContent = 'Minimum 4 caractères requis';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (newPassword === '1234') {
+                errorDiv.textContent = 'Choisissez un mot de passe différent du temporaire';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                errorDiv.style.display = 'none';
+                btnChangePassword.disabled = true;
+                btnChangePassword.textContent = 'Modification en cours...';
+
+                const response = await fetch(`/api/users/${username}/change-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    errorDiv.textContent = result.message || 'Erreur';
+                    errorDiv.style.display = 'block';
+                    btnChangePassword.disabled = false;
+                    btnChangePassword.textContent = 'Valider mon nouveau mot de passe';
+                    return;
+                }
+
+                btnChangePassword.textContent = 'Mot de passe modifié !';
+                btnChangePassword.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+                setTimeout(() => { window.location.href = '/index.html'; }, 1500);
+
+            } catch (error) {
+                errorDiv.textContent = 'Erreur serveur';
+                errorDiv.style.display = 'block';
+                btnChangePassword.disabled = false;
+                btnChangePassword.textContent = 'Valider mon nouveau mot de passe';
+            }
+        }
+
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const btn = document.querySelector('.password-toggle');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        function toggleModalPassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>

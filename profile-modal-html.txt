@@ -1,0 +1,120 @@
+<!-- ===== MODAL DE PROFIL UTILISATEUR ===== -->
+<!-- À ajouter dans la fonction render() de app.js, après les autres modals -->
+
+${state.showProfile ? `
+    <div class="modal-overlay" onclick="if(event.target === this) { state.showProfile = false; render(); }">
+        <div class="modal-content" style="max-width: 600px;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>👤 Mon Profil</h2>
+                <button class="close-btn" onclick="state.showProfile = false; render()">×</button>
+            </div>
+
+            <div class="modal-body" style="padding: 30px;">
+                <!-- Photo de profil -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="position: relative; display: inline-block;">
+                        <img id="profilePhotoPreview"
+                             src=""
+                             alt="Photo de profil"
+                             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid #e5e7eb; display: none;">
+                        <div id="profilePhotoPlaceholder"
+                             style="width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 48px; font-weight: 600; border: 4px solid #e5e7eb;">
+                            ${((state.currentUserInfo?.prenom?.[0] || '') + (state.currentUserInfo?.nom?.[0] || '')).toUpperCase() || state.currentUser?.substring(0, 2).toUpperCase()}
+                        </div>
+                        <label for="photoUpload" style="position: absolute; bottom: 10px; right: 10px; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 2px solid #e5e7eb;">
+                            📷
+                        </label>
+                        <input type="file"
+                               id="photoUpload"
+                               accept="image/*"
+                               onchange="handlePhotoUpload(event)"
+                               style="display: none;">
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px; color: #6b7280;">
+                        Cliquez sur 📷 pour changer votre photo
+                    </div>
+                </div>
+
+                <!-- Formulaire de profil -->
+                <div style="display: grid; gap: 20px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Prénom
+                        </label>
+                        <input type="text"
+                               id="profile_prenom"
+                               placeholder="Votre prénom"
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Nom <span style="color: #ef4444;">*</span>
+                        </label>
+                        <input type="text"
+                               id="profile_nom"
+                               placeholder="Votre nom"
+                               required
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Nom d'utilisateur <span style="color: #ef4444;">*</span>
+                        </label>
+                        <input type="text"
+                               id="profile_username"
+                               placeholder="Votre identifiant"
+                               required
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                        <div style="margin-top: 6px; font-size: 12px; color: #6b7280;">
+                            💡 Si vous changez votre nom d'utilisateur, vous devrez vous reconnecter
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; color: #374151;">
+                            Email
+                        </label>
+                        <input type="email"
+                               id="profile_email"
+                               placeholder="votre.email@exemple.com"
+                               style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                    </div>
+
+                    <!-- Informations non modifiables -->
+                    <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 600; margin-bottom: 12px; color: #1f2937;">
+                            📋 Informations du compte
+                        </div>
+                        <div style="display: grid; gap: 8px; font-size: 14px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6b7280;">Rôle :</span>
+                                <span style="font-weight: 500; color: #1f2937;">${state.currentUserInfo?.role || 'N/A'}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6b7280;">Niveau :</span>
+                                <span style="font-weight: 500; color: #1f2937;">${state.currentUserInfo?.niveau ?? 'N/A'}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #6b7280;">Département :</span>
+                                <span style="font-weight: 500; color: #1f2937;">${state.currentUserInfo?.departement || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="display: flex; gap: 12px; justify-content: flex-end; padding: 20px 30px; border-top: 1px solid #e5e7eb;">
+                <button onclick="state.showProfile = false; state.profilePhotoPreview = null; render()"
+                        style="padding: 12px 24px; border: 1px solid #d1d5db; background: white; border-radius: 8px; cursor: pointer; font-weight: 500; color: #374151;">
+                    Annuler
+                </button>
+                <button onclick="saveProfile()"
+                        style="padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                    💾 Sauvegarder
+                </button>
+            </div>
+        </div>
+    </div>
+` : ''}

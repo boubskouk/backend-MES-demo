@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Super Admin</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        .log {
+            background: #000;
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 3px solid #0f0;
+        }
+        .error {
+            border-left-color: #f00;
+            color: #f00;
+        }
+        .success {
+            border-left-color: #0f0;
+            color: #0f0;
+        }
+        .warning {
+            border-left-color: #ff0;
+            color: #ff0;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0c0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diagnostic Super Admin</h1>
+    <p>Cette page permet de diagnostiquer les problèmes d'authentification Super Admin</p>
+
+    <div>
+        <button onclick="testLogin()">1. Test Connexion</button>
+        <button onclick="testAuth()">2. Test Authentification</button>
+        <button onclick="testStats()">3. Test Stats</button>
+        <button onclick="clearLogs()">Effacer</button>
+    </div>
+
+    <div id="logs"></div>
+
+    <script>
+        function log(message, type = 'log') {
+            const logsDiv = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsDiv.appendChild(logEntry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+        }
+
+        async function testLogin() {
+            log('=== TEST 1: CONNEXION ===', 'warning');
+
+            try {
+                log('Envoi de la requête de connexion...');
+
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: 'boubs',
+                        password: 'SuperAdmin2024!'
+                    })
+                });
+
+                log(`Status: ${response.status} ${response.statusText}`);
+
+                const data = await response.json();
+                log(`Réponse: ${JSON.stringify(data, null, 2)}`);
+
+                if (data.success) {
+                    log('✅ CONNEXION RÉUSSIE', 'success');
+                    log(`Utilisateur: ${data.user.username}`);
+                    log(`Niveau: ${data.user.niveau}`);
+                    log(`Email: ${data.user.email}`);
+                } else {
+                    log('❌ ÉCHEC DE CONNEXION', 'error');
+                    log(`Message: ${data.message}`);
+                }
+
+            } catch (error) {
+                log(`❌ ERREUR: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAuth() {
+            log('=== TEST 2: VÉRIFICATION AUTHENTIFICATION ===', 'warning');
+
+            try {
+                log('Appel de /api/superadmin/test...');
+
+                const response = await fetch('/api/superadmin/test', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                log(`Status: ${response.status} ${response.statusText}`);
+
+                const text = await response.text();
+                log(`Type de réponse: ${response.headers.get('content-type')}`);
+
+                // Vérifier si c'est du JSON
+                try {
+                    const data = JSON.parse(text);
+                    log(`Réponse JSON: ${JSON.stringify(data, null, 2)}`);
+
+                    if (data.success) {
+                        log('✅ AUTHENTIFICATION VALIDE', 'success');
+                    } else {
+                        log('❌ AUTHENTIFICATION ÉCHOUÉE', 'error');
+                        log(`Message: ${data.message}`);
+                    }
+                } catch (e) {
+                    log('❌ LA RÉPONSE N\'EST PAS DU JSON !', 'error');
+                    log(`Premiers caractères: ${text.substring(0, 100)}...`);
+                }
+
+            } catch (error) {
+                log(`❌ ERREUR: ${error.message}`, 'error');
+            }
+        }
+
+        async function testStats() {
+            log('=== TEST 3: RÉCUPÉRATION STATISTIQUES ===', 'warning');
+
+            try {
+                log('Appel de /api/superadmin/dashboard/stats...');
+
+                const response = await fetch('/api/superadmin/dashboard/stats', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                log(`Status: ${response.status} ${response.statusText}`);
+
+                const data = await response.json();
+                log(`Réponse: ${JSON.stringify(data, null, 2)}`);
+
+                if (data.success) {
+                    log('✅ STATISTIQUES RÉCUPÉRÉES', 'success');
+                    log(`Utilisateurs: ${data.data.users.total}`);
+                    log(`Documents: ${data.data.documents.total}`);
+                } else {
+                    log('❌ ÉCHEC RÉCUPÉRATION STATS', 'error');
+                    log(`Message: ${data.message}`);
+                }
+
+            } catch (error) {
+                log(`❌ ERREUR: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-test au chargement
+        log('Page de diagnostic chargée', 'success');
+        log('Cliquez sur "1. Test Connexion" pour commencer');
+    </script>
+</body>
+</html>

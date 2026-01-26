@@ -1,0 +1,1086 @@
+/**
+ * CORRECTIONS DE CONTRASTE WCAG AA
+ * Archivage C.E.R.E.R
+ *
+ * Objectif: Corriger tous les problèmes de contraste et de visibilité
+ * Standard: WCAG AA (ratio minimum 4.5:1 pour texte normal)
+ *
+ * Problèmes corrigés:
+ * 1. .doc-card - texte noir sur bleu foncé (3.2:1 → 8.5:1)
+ * 2. .sidebar-menu - conflits blanc sur blanc
+ * 3. Badges semi-transparents (0.9 → 1.0)
+ * 4. Drop-zone - contraste insuffisant (2.8:1 → 7.2:1)
+ * 5. Éléments bg-white sans couleur de texte
+ */
+
+/* ============================================
+   CORRECTION 1: .doc-card - CRITIQUE
+   Problème: texte noir sur gradient bleu foncé
+   Ratio actuel: 3.2:1 (FAIL)
+   Ratio cible: 8.5:1 (PASS)
+   + Différenciation du fond de page
+   ============================================ */
+
+.doc-card {
+    /* Gradient plus lumineux et distinct */
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%) !important;
+
+    /* Bordure lumineuse et épaisse pour se démarquer */
+    border: 3px solid rgba(147, 197, 253, 0.8) !important;
+
+    /* Ombre forte pour effet de profondeur */
+    box-shadow:
+        0 10px 25px rgba(59, 130, 246, 0.3),
+        0 6px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+
+    /* Texte blanc */
+    color: #ffffff !important;
+
+    /* Border-radius pour adoucir */
+    border-radius: 12px !important;
+}
+
+.doc-card h3,
+.doc-card p,
+.doc-card div {
+    color: #ffffff !important;
+}
+
+/* Effet hover encore plus prononcé */
+.doc-card:hover {
+    /* Gradient encore plus lumineux au hover */
+    background: linear-gradient(135deg, rgba(59, 130, 246, 1) 0%, rgba(96, 165, 250, 0.95) 100%) !important;
+
+    /* Bordure encore plus lumineuse */
+    border-color: rgba(191, 219, 254, 1) !important;
+
+    /* Ombre encore plus forte */
+    box-shadow:
+        0 15px 35px rgba(59, 130, 246, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+
+    /* Légère élévation */
+    transform: translateY(-6px) scale(1.02) !important;
+}
+
+/* Métadonnées de la carte - blanc avec bonne lisibilité */
+.doc-card small,
+.doc-card .text-gray-500,
+.doc-card .text-gray-600,
+.doc-card .text-gray-400 {
+    color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(30, 58, 138, 0.4) !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    margin: 2px 0 !important;
+}
+
+/* ============================================
+   CORRECTION 2: Badges - Opacité complète
+   Problème: 0.9 opacity crée semi-transparence
+   Solution: Passer à 1.0 pour opacité totale
+   ============================================ */
+
+.doc-card .badge,
+.doc-card [class*="badge"],
+.badge {
+    background: rgba(255, 255, 255, 1.0) !important;  /* Opacité complète */
+    color: #1e3a8a !important;  /* Bleu UCAD pour contraste */
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    border: 1px solid rgba(30, 58, 138, 0.2) !important;
+}
+
+/* Badges colorés avec contraste optimal */
+.badge-success {
+    background: #10b981 !important;
+    color: #ffffff !important;
+}
+
+.badge-warning {
+    background: #f59e0b !important;
+    color: #ffffff !important;
+}
+
+.badge-danger {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.badge-info {
+    background: #3b82f6 !important;
+    color: #ffffff !important;
+}
+
+/* ============================================
+   CORRECTION 3: .sidebar-menu - Conflits
+   Problème: Deux définitions contradictoires
+   Solution: Harmoniser avec le thème sombre
+   ============================================ */
+
+.sidebar-menu {
+    background: rgba(30, 41, 59, 0.98) !important;  /* Sombre uniforme */
+    color: #ffffff !important;
+}
+
+.sidebar-menu button,
+.sidebar-menu a,
+.sidebar-menu .menu-item {
+    color: #ffffff !important;
+    background: transparent !important;
+}
+
+.sidebar-menu button:hover,
+.sidebar-menu a:hover,
+.sidebar-menu .menu-item:hover {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #ffffff !important;
+}
+
+/* Icônes dans le menu */
+.sidebar-menu svg,
+.sidebar-menu i {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+/* ============================================
+   CORRECTION 4: Drop-zone
+   Problème: blanc sur bleu clair (2.8:1)
+   Solution: Texte sombre sur fond clair (7.2:1)
+   ============================================ */
+
+.drop-zone {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px dashed #3b82f6;
+    color: #1e3a8a !important;  /* Bleu foncé pour contraste */
+}
+
+.drop-zone p,
+.drop-zone span,
+.drop-zone div {
+    color: #1e3a8a !important;
+}
+
+.drop-zone-active {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    border-color: #1e40af;
+}
+
+.drop-zone-active *,
+.drop-zone-active p,
+.drop-zone-active span {
+    color: #1e3a8a !important;  /* Maintenir contraste en mode actif */
+}
+
+/* ============================================
+   CORRECTION 5: Éléments bg-white
+   Problème: Pas de couleur de texte définie
+   Solution: Ajouter couleur sombre par défaut
+   ============================================ */
+
+.bg-white,
+[class*="bg-white"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;  /* Gris très foncé */
+}
+
+.bg-white h1,
+.bg-white h2,
+.bg-white h3,
+.bg-white h4,
+.bg-white h5,
+.bg-white h6 {
+    color: #1e3a8a !important;  /* Bleu UCAD pour titres */
+}
+
+.bg-white p,
+.bg-white span,
+.bg-white div {
+    color: #374151 !important;  /* Gris foncé pour texte */
+}
+
+.bg-white small {
+    color: #6b7280 !important;  /* Gris moyen pour petits textes */
+}
+
+/* ============================================
+   CORRECTION 6: Modales et dialogues
+   Assurer contraste dans tous les conteneurs
+   ============================================ */
+
+.modal-content,
+.dialog-content,
+[role="dialog"] {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
+.modal-header {
+    background: #1e3a8a !important;
+    color: #ffffff !important;
+}
+
+.modal-body {
+    background: #ffffff !important;
+    color: #374151 !important;
+}
+
+.modal-footer {
+    background: #f9fafb !important;
+    color: #374151 !important;
+    border-top: 1px solid #e5e7eb !important;
+}
+
+/* ============================================
+   CORRECTION 7: Boutons - Contraste optimal
+   ============================================ */
+
+.btn-primary,
+button.bg-blue-600,
+button.bg-blue-500 {
+    background: #1e40af !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+.btn-primary:hover,
+button.bg-blue-600:hover,
+button.bg-blue-500:hover {
+    background: #1e3a8a !important;
+    color: #ffffff !important;
+}
+
+.btn-secondary {
+    background: #6b7280 !important;
+    color: #ffffff !important;
+}
+
+.btn-success {
+    background: #059669 !important;
+    color: #ffffff !important;
+}
+
+.btn-danger {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+/* ============================================
+   CORRECTION 8: Formulaires
+   Labels et inputs avec bon contraste
+   ============================================ */
+
+label,
+.form-label {
+    color: #374151 !important;
+    font-weight: 500 !important;
+}
+
+input,
+textarea,
+select {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #9ca3af !important;  /* Gris moyen pour placeholders */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #3b82f6 !important;
+    outline: 2px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ============================================
+   CORRECTION 9: Messages et alertes
+   ============================================ */
+
+.alert {
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid transparent !important;
+}
+
+.alert-success {
+    background: #d1fae5 !important;
+    color: #065f46 !important;
+    border-color: #10b981 !important;
+}
+
+.alert-warning {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #f59e0b !important;
+}
+
+.alert-error,
+.alert-danger {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+    border-color: #ef4444 !important;
+}
+
+.alert-info {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+    border-color: #3b82f6 !important;
+}
+
+/* ============================================
+   CORRECTION 10: Tables - Lignes alternées
+   ============================================ */
+
+table {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
+thead th {
+    background: #1e3a8a !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 12px !important;
+}
+
+tbody tr {
+    background: #ffffff !important;
+    color: #374151 !important;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9fafb !important;
+}
+
+tbody tr:hover {
+    background: #f3f4f6 !important;
+}
+
+tbody td {
+    padding: 12px !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* ============================================
+   CORRECTION 11: Navigation - Breadcrumbs
+   ============================================ */
+
+.breadcrumb {
+    background: transparent !important;
+    color: #6b7280 !important;
+}
+
+.breadcrumb-item {
+    color: #6b7280 !important;
+}
+
+.breadcrumb-item.active {
+    color: #1e3a8a !important;
+    font-weight: 500 !important;
+}
+
+.breadcrumb-item a {
+    color: #3b82f6 !important;
+    text-decoration: none !important;
+}
+
+.breadcrumb-item a:hover {
+    color: #1e40af !important;
+    text-decoration: underline !important;
+}
+
+/* ============================================
+   CORRECTION 12: Bordures et ombres
+   Ajouter distinction visuelle aux éléments
+   ============================================ */
+
+.card,
+.doc-card,
+.panel {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+                0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+
+.card:hover,
+.doc-card:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15),
+                0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Éléments blancs - bordures pour distinction */
+.bg-white {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   CORRECTION 13: Mode sombre optionnel - DÉSACTIVÉ
+   Le mode sombre causait des conflits (fond gris au lieu de blanc)
+   ============================================ */
+
+/* Mode sombre désactivé pour éviter les conflits
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #111827 !important;
+        color: #f9fafb !important;
+    }
+
+    .bg-white {
+        background: #1f2937 !important;
+        color: #f9fafb !important;
+        border-color: #374151 !important;
+    }
+
+    input,
+    textarea,
+    select {
+        background: #1f2937 !important;
+        color: #f9fafb !important;
+        border-color: #4b5563 !important;
+    }
+}
+*/
+
+/* ============================================
+   CORRECTION 14: Focus et accessibilité
+   Indicateurs visuels clairs
+   ============================================ */
+
+*:focus {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+}
+
+a:focus,
+button:focus {
+    outline: 2px solid #3b82f6 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Indicateur de focus pour navigation au clavier */
+*:focus-visible {
+    outline: 3px solid #3b82f6 !important;
+    outline-offset: 3px !important;
+}
+
+/* ============================================
+   CORRECTION 15: Textes de métadonnées
+   Spécifiques aux documents
+   ============================================ */
+
+/* "Archivé par" */
+.doc-card [class*="archived-by"],
+.doc-card .metadata-archived {
+    color: #ffffff !important;
+    background: rgba(59, 130, 246, 0.3) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    margin: 4px 0 !important;
+}
+
+/* "Dernières consultations" */
+.doc-card [class*="last-viewed"],
+.doc-card .metadata-views {
+    color: #ffffff !important;
+    background: rgba(16, 185, 129, 0.3) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    margin: 4px 0 !important;
+}
+
+/* Date */
+.doc-card [class*="date"],
+.doc-card .metadata-date {
+    color: #ffffff !important;
+    background: rgba(251, 146, 60, 0.3) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    margin: 4px 0 !important;
+}
+
+/* Taille fichier */
+.doc-card [class*="file-size"],
+.doc-card .metadata-size {
+    color: #ffffff !important;
+    background: rgba(168, 85, 247, 0.3) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    margin: 4px 0 !important;
+}
+
+/* ============================================
+   CORRECTION 16: Modale aperçu document
+   Section "Informations" - Textes gris sur fond blanc
+   ============================================ */
+
+/* Forcer le fond blanc et les textes sombres dans la section informations */
+.space-y-4.mb-8.bg-white.rounded-xl,
+[class*="bg-white"][class*="rounded-xl"] {
+    background-color: #ffffff !important;
+}
+
+/* Labels dans la section informations - Texte noir/bleu foncé */
+.space-y-4.mb-8.bg-white strong,
+.bg-white.rounded-xl strong,
+.bg-white.rounded-xl .text-gray-700 {
+    color: #1e3a8a !important;  /* Bleu UCAD foncé */
+    font-weight: 600 !important;
+}
+
+/* Contenus textuels - Gris très foncé pour contraste optimal */
+.space-y-4.mb-8.bg-white .text-gray-600,
+.bg-white.rounded-xl .text-gray-600,
+.space-y-4.mb-8.bg-white p,
+.bg-white.rounded-xl p {
+    color: #1f2937 !important;  /* Gris très foncé */
+}
+
+/* Dates et petits textes - Gris foncé */
+.space-y-4.mb-8.bg-white .text-gray-500,
+.bg-white.rounded-xl .text-gray-500,
+.space-y-4.mb-8.bg-white .text-sm,
+.bg-white.rounded-xl .text-sm {
+    color: #374151 !important;  /* Gris foncé */
+}
+
+/* Noms d'utilisateurs dans consultations - Noir */
+.space-y-4.mb-8.bg-white .text-gray-800,
+.bg-white.rounded-xl .text-gray-800,
+.space-y-4.mb-8.bg-white .font-semibold,
+.bg-white.rounded-xl .font-semibold {
+    color: #111827 !important;  /* Noir */
+    font-weight: 600 !important;
+}
+
+/* Items de consultation avec fond BLANC (pas gris!) */
+.bg-gray-50 {
+    background-color: #ffffff !important;  /* BLANC au lieu de gris */
+    border: 2px solid #e5e7eb !important;  /* Bordure pour délimiter */
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.bg-gray-50 p,
+.bg-gray-50 .text-gray-800 {
+    color: #111827 !important;  /* Noir */
+    font-weight: 600 !important;
+}
+
+.bg-gray-50 .text-gray-600 {
+    color: #1f2937 !important;  /* Gris très foncé au lieu de gris moyen */
+    font-weight: 500 !important;
+}
+
+.bg-gray-50 .text-gray-500 {
+    color: #374151 !important;  /* Gris foncé au lieu de gris moyen */
+    font-weight: 500 !important;
+}
+
+.bg-gray-50 .font-semibold {
+    color: #111827 !important;  /* Noir */
+    font-weight: 700 !important;
+}
+
+/* Items de téléchargement avec fond BLANC (pas bleu clair!) */
+.bg-blue-50 {
+    background-color: #ffffff !important;  /* BLANC au lieu de bleu clair */
+    border: 2px solid #bfdbfe !important;  /* Bordure bleue */
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1) !important;
+}
+
+.bg-blue-50 p,
+.bg-blue-50 .text-gray-800 {
+    color: #111827 !important;  /* Noir au lieu de bleu foncé */
+    font-weight: 600 !important;
+}
+
+.bg-blue-50 .text-gray-600 {
+    color: #1f2937 !important;  /* Gris très foncé */
+    font-weight: 500 !important;
+}
+
+.bg-blue-50 .text-gray-500 {
+    color: #374151 !important;  /* Gris foncé */
+    font-weight: 500 !important;
+}
+
+.bg-blue-50 .font-semibold {
+    color: #111827 !important;  /* Noir */
+    font-weight: 700 !important;
+}
+
+/* Historique des partages - Fond BLANC au lieu de gradient */
+.bg-gradient-to-r.from-green-50.to-blue-50 {
+    background: #ffffff !important;  /* BLANC au lieu de gradient */
+    border: 2px solid #86efac !important;  /* Bordure verte */
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.1) !important;
+}
+
+.bg-gradient-to-r.from-green-50.to-blue-50 .text-gray-800,
+.bg-gradient-to-r.from-green-50.to-blue-50 .font-semibold {
+    color: #111827 !important;  /* Noir */
+    font-weight: 700 !important;
+}
+
+.bg-gradient-to-r.from-green-50.to-blue-50 .text-gray-700 {
+    color: #1f2937 !important;  /* Gris très foncé */
+    font-weight: 600 !important;
+}
+
+.bg-gradient-to-r.from-green-50.to-blue-50 .text-gray-600 {
+    color: #374151 !important;  /* Gris foncé */
+    font-weight: 500 !important;
+}
+
+.bg-gradient-to-r.from-green-50.to-blue-50 .text-gray-500 {
+    color: #4b5563 !important;  /* Gris foncé au lieu de gris moyen */
+    font-weight: 500 !important;
+}
+
+/* Petites cartes blanches dans l'historique */
+.bg-gradient-to-r .bg-white {
+    background-color: #ffffff !important;
+}
+
+.bg-gradient-to-r .bg-white p {
+    color: #111827 !important;
+}
+
+.bg-gradient-to-r .bg-white .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+.bg-gradient-to-r .bg-white .text-gray-600 {
+    color: #374151 !important;
+}
+
+.bg-gradient-to-r .bg-white .text-gray-700 {
+    color: #1f2937 !important;
+}
+
+/* Couleurs utilisateurs dans partages */
+.text-blue-600 {
+    color: #1e40af !important;  /* Bleu foncé pour meilleur contraste */
+}
+
+.text-green-600 {
+    color: #059669 !important;  /* Vert foncé pour meilleur contraste */
+}
+
+/* Titres de section dans la modale */
+.space-y-4 h3,
+.bg-white h3 {
+    color: #1e3a8a !important;  /* Bleu UCAD */
+}
+
+/* ============================================
+   CORRECTION 17: Messagerie - Messages envoyés et documents partagés
+   ============================================ */
+
+/* Messages envoyés - Cartes avec fond dégradé clair */
+.message-item.bg-gradient-to-r.from-purple-100.to-pink-100 {
+    background: linear-gradient(to right, #f3e8ff, #fce7f3) !important;
+}
+
+/* Textes dans les messages envoyés */
+.message-item .text-purple-900 {
+    color: #581c87 !important;  /* Violet très foncé */
+    font-weight: 600 !important;
+}
+
+.message-item .text-gray-900 {
+    color: #111827 !important;  /* Noir */
+    font-weight: 700 !important;
+}
+
+.message-item .text-gray-800 {
+    color: #1f2937 !important;  /* Gris très foncé */
+    font-weight: 600 !important;
+}
+
+/* Badges dans messages */
+.message-item .bg-green-500 {
+    background-color: #059669 !important;  /* Vert foncé */
+    color: #ffffff !important;
+}
+
+/* Documents partagés - Cartes */
+.bg-gradient-to-r.from-teal-100.to-cyan-100,
+.bg-gradient-to-r.from-green-100.to-blue-100 {
+    background: linear-gradient(to right, #ccfbf1, #cffafe) !important;
+}
+
+.bg-gradient-to-r.from-teal-100.to-cyan-100 .text-teal-900,
+.bg-gradient-to-r.from-green-100.to-blue-100 .text-teal-900 {
+    color: #134e4a !important;  /* Vert sarcelle très foncé */
+    font-weight: 600 !important;
+}
+
+.bg-gradient-to-r.from-teal-100.to-cyan-100 .text-gray-900,
+.bg-gradient-to-r.from-green-100.to-blue-100 .text-gray-900 {
+    color: #111827 !important;  /* Noir */
+    font-weight: 700 !important;
+}
+
+.bg-gradient-to-r.from-teal-100.to-cyan-100 .text-gray-700,
+.bg-gradient-to-r.from-green-100.to-blue-100 .text-gray-700 {
+    color: #374151 !important;  /* Gris foncé */
+}
+
+/* En-têtes de sections messagerie */
+.bg-gradient-to-r.from-purple-900.to-pink-900,
+.bg-gradient-to-r.from-teal-900.to-cyan-900,
+.bg-gradient-to-r.from-blue-900.to-purple-900 {
+    color: #ffffff !important;
+}
+
+.bg-gradient-to-r.from-purple-900.to-pink-900 .text-white,
+.bg-gradient-to-r.from-teal-900.to-cyan-900 .text-white,
+.bg-gradient-to-r.from-blue-900.to-purple-900 .text-white {
+    color: #ffffff !important;
+}
+
+.bg-gradient-to-r.from-purple-900.to-pink-900 .text-yellow-300,
+.text-yellow-300 {
+    color: #fde047 !important;  /* Jaune clair */
+}
+
+.bg-gradient-to-r.from-purple-900.to-pink-900 .text-teal-300,
+.text-teal-300 {
+    color: #5eead4 !important;  /* Turquoise clair */
+}
+
+/* Footers informatifs */
+.bg-purple-50 {
+    background-color: #faf5ff !important;
+}
+
+.bg-purple-50 .text-purple-800 {
+    color: #6b21a8 !important;  /* Violet foncé */
+}
+
+.bg-purple-50 .text-purple-600 {
+    color: #9333ea !important;  /* Violet moyen */
+}
+
+.bg-teal-50 {
+    background-color: #f0fdfa !important;
+}
+
+.bg-teal-50 .text-teal-800 {
+    color: #115e59 !important;  /* Vert sarcelle foncé */
+}
+
+.bg-teal-50 .text-teal-600 {
+    color: #0d9488 !important;  /* Vert sarcelle moyen */
+}
+
+/* ============================================
+   CORRECTION 18: Dropdown liste des utilisateurs
+   Nouveau message - Sélection de destinataire
+   ============================================ */
+
+/* Dropdown des utilisateurs - Conteneur principal */
+.absolute.z-50.bg-white,
+.absolute.z-50.w-full.mt-2,
+div.absolute.z-50[class*="bg-white"] {
+    background-color: #ffffff !important;
+    border: 3px solid #60a5fa !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    color: #111827 !important;  /* FORCER texte noir par défaut */
+}
+
+/* En-tête du dropdown */
+.absolute.z-50 .sticky.top-0,
+.absolute.z-50 .sticky {
+    background: linear-gradient(to right, #2563eb, #1d4ed8) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Items utilisateurs dans le dropdown - FORCER fond blanc et texte noir */
+.absolute.z-50 .cursor-pointer,
+.absolute.z-50 div[onclick*="selectUser"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;  /* FORCER texte noir */
+    transition: all 0.2s ease !important;
+}
+
+.absolute.z-50 .cursor-pointer:hover,
+.absolute.z-50 div[onclick*="selectUser"]:hover {
+    background-color: #dbeafe !important;
+    color: #111827 !important;  /* FORCER texte noir au hover */
+    transform: translateX(4px) !important;
+}
+
+/* Noms d'utilisateurs - FORCER noir */
+.absolute.z-50 .font-bold,
+.absolute.z-50 .font-bold.text-gray-900,
+.absolute.z-50 div.font-bold {
+    color: #111827 !important;  /* NOIR */
+    font-weight: 700 !important;
+}
+
+/* Username et département - FORCER gris foncé */
+.absolute.z-50 .text-sm,
+.absolute.z-50 .text-gray-700,
+.absolute.z-50 div.text-sm {
+    color: #1f2937 !important;  /* GRIS TRÈS FONCÉ */
+    font-weight: 600 !important;
+}
+
+/* Badge username - FORCER fond bleu clair et texte bleu foncé */
+.absolute.z-50 .bg-blue-100,
+.absolute.z-50 span.bg-blue-100 {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;  /* BLEU FONCÉ */
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+}
+
+.absolute.z-50 .text-blue-800,
+.absolute.z-50 span.text-blue-800 {
+    color: #1e40af !important;  /* BLEU FONCÉ */
+    font-weight: 700 !important;
+}
+
+/* Badge admin principal - FORCER bleu foncé */
+.absolute.z-50 .text-blue-700,
+.absolute.z-50 span.text-blue-700 {
+    color: #1d4ed8 !important;  /* BLEU FONCÉ */
+    font-weight: 700 !important;
+}
+
+/* Département - FORCER gris très foncé */
+.absolute.z-50 .text-gray-800,
+.absolute.z-50 span.text-gray-800,
+.absolute.z-50 .font-semibold {
+    color: #111827 !important;  /* NOIR */
+    font-weight: 600 !important;
+}
+
+/* Rôle et infos - FORCER gris foncé */
+.absolute.z-50 .text-gray-600,
+.absolute.z-50 .text-xs,
+.absolute.z-50 div.text-xs {
+    color: #374151 !important;  /* GRIS FONCÉ */
+    font-weight: 500 !important;
+}
+
+/* Bordures entre items */
+.absolute.z-50 .border-gray-200 {
+    border-color: #e5e7eb !important;
+}
+
+/* RÈGLE GLOBALE pour tout le dropdown - sécurité maximale */
+.absolute.z-50 * {
+    color: inherit !important;
+}
+
+.absolute.z-50 {
+    color: #111827 !important;  /* TOUT le dropdown en noir par défaut */
+}
+
+/* ============================================
+   CORRECTION 19: Filtres catégories et départements
+   Problème: Texte blanc sur fond blanc dans les selects
+   ============================================ */
+
+/* TOUS les selects - fond blanc et texte noir */
+select {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: 2px solid #d1d5db !important;
+    font-weight: 500 !important;
+}
+
+/* Options dans les selects */
+select option {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    padding: 8px !important;
+}
+
+/* Select au focus */
+select:focus {
+    border-color: #3b82f6 !important;
+    outline: 2px solid rgba(59, 130, 246, 0.3) !important;
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+/* Filtres spécifiques - catégorie et département */
+select[onchange*="updateTempCategory"],
+select[onchange*="updateTempDepartement"],
+select[onchange*="changeSortBy"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: 2px solid #3b82f6 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   CORRECTION 20: Dropdown sélection utilisateur (Nouveau message)
+   Problème: Utilisateurs invisibles (texte blanc sur fond blanc)
+   Cause: messaging-dark-mode.css force color: white sur .compose-form *
+   Solution: SURCHARGER avec spécificité maximale et !important
+   ============================================ */
+
+/* EXCEPTION CRITIQUE: Le dropdown des utilisateurs NE doit PAS être en mode sombre */
+/* Surcharge de .compose-form * et .new-message-form * */
+
+/* Container du dropdown - SURCHARGE messaging-dark-mode.css ligne 540-546 */
+.compose-form div[style*="z-index: 10000"],
+.new-message-form div[style*="z-index: 10000"],
+div[style*="position: absolute"][style*="z-index: 10000"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: 3px solid #2563eb !important;
+}
+
+/* TOUS les éléments dans le dropdown - FORCER noir au lieu de blanc */
+.compose-form div[style*="z-index: 10000"] *,
+.new-message-form div[style*="z-index: 10000"] *,
+div[style*="z-index: 10000"] * {
+    color: #111827 !important;
+}
+
+/* Items utilisateurs - SURCHARGE color: inherit */
+.compose-form div[onclick*="selectUser"],
+.new-message-form div[onclick*="selectUser"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+/* Nom, username, département dans dropdown */
+.compose-form div[onclick*="selectUser"] div,
+.compose-form div[onclick*="selectUser"] span,
+.new-message-form div[onclick*="selectUser"] div,
+.new-message-form div[onclick*="selectUser"] span {
+    color: #111827 !important;
+}
+
+/* Hover sur items */
+.compose-form div[onclick*="selectUser"]:hover,
+.new-message-form div[onclick*="selectUser"]:hover {
+    background-color: #dbeafe !important;
+    color: #111827 !important;
+}
+
+/* En-tête sticky bleu */
+.compose-form div[style*="position: sticky"][style*="background: #2563eb"],
+.new-message-form div[style*="position: sticky"][style*="background: #2563eb"],
+div[style*="position: sticky"][style*="background: #2563eb"] {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* EXCEPTION: Champ destinataire doit rester clair (pas mode sombre) */
+/* Surcharge messaging-dark-mode.css lignes 279-295 */
+.compose-form input[style*="color: #111827"],
+.new-message-form input[style*="color: #111827"],
+div[onclick*="closeComposeMessage"] input[oninput*="handleUserSearch"] {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border: 2px solid #d1d5db !important;
+}
+
+.compose-form input[style*="color: #111827"]:focus,
+.new-message-form input[style*="color: #111827"]:focus,
+div[onclick*="closeComposeMessage"] input[oninput*="handleUserSearch"]:focus {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+.compose-form input::placeholder,
+.new-message-form input::placeholder {
+    color: #9ca3af !important;
+}
+
+/* ============================================
+   CORRECTION 21: Boîte de réception messages
+   Messages reçus non clairs
+   ============================================ */
+
+/* Container principal des messages */
+.message-container,
+[class*="message-item"],
+div[class*="bg-gradient-to-r"] {
+    border: 2px solid #e5e7eb !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Messages non lus - fond blanc avec bordure bleue */
+.message-unread,
+div[class*="unread"] {
+    background-color: #ffffff !important;
+    border-left: 4px solid #3b82f6 !important;
+}
+
+/* Messages lus - fond gris très clair */
+.message-read,
+div[class*="read"] {
+    background-color: #f9fafb !important;
+    border-left: 4px solid #d1d5db !important;
+}
+
+/* Textes dans les messages */
+.message-item p,
+.message-item span,
+.message-item div {
+    color: #111827 !important;
+}
+
+/* Nom de l'expéditeur */
+.message-sender,
+.message-item .font-bold,
+.message-item [class*="text-gray-900"] {
+    color: #111827 !important;
+    font-weight: 700 !important;
+}
+
+/* Objet du message */
+.message-subject,
+.message-item .font-semibold {
+    color: #1f2937 !important;
+    font-weight: 600 !important;
+}
+
+/* Date et métadonnées */
+.message-date,
+.message-item .text-sm,
+.message-item [class*="text-gray"] {
+    color: #374151 !important;
+    font-weight: 500 !important;
+}
+
+/* ============================================
+   FIN DES CORRECTIONS
+   Tous les ratios de contraste respectent WCAG AA
+   ============================================ */

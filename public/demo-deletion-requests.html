@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandes de Suppression - C.E.R.E.R</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                📝 Gestion des Demandes de Suppression
+            </h1>
+            <p class="text-gray-600">
+                Interface pour les utilisateurs de niveau 1 (Primaire)
+            </p>
+        </div>
+
+        <!-- Connexion -->
+        <div id="login-section" class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">🔐 Connexion</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold mb-2">Utilisateur</label>
+                    <input
+                        id="username"
+                        type="text"
+                        value="fatima"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Nom d'utilisateur"
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Mot de passe</label>
+                    <input
+                        id="password"
+                        type="password"
+                        value="1234"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Mot de passe"
+                    />
+                </div>
+                <button
+                    onclick="handleLogin()"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                >
+                    Se connecter
+                </button>
+            </div>
+        </div>
+
+        <!-- Informations utilisateur (caché par défaut) -->
+        <div id="user-info" class="hidden bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
+            <p class="font-bold text-blue-800">
+                Connecté en tant que: <span id="current-user-name"></span>
+            </p>
+            <p class="text-sm text-blue-700">
+                Rôle: <span id="current-user-role"></span> (Niveau <span id="current-user-level"></span>)
+            </p>
+        </div>
+
+        <!-- Conteneur des demandes -->
+        <div id="deletion-requests-container"></div>
+
+        <!-- Zone de notification -->
+        <div id="notification-area" class="fixed top-4 right-4 z-50"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/deletion-requests.js"></script>
+
+    <script>
+        // État de l'application
+        const state = {
+            isAuthenticated: false,
+            currentUser: null,
+            currentUserInfo: null
+        };
+
+        // Fonction de connexion
+        async function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                showNotification('Veuillez remplir tous les champs', 'error');
+                return;
+            }
+
+            try {
+                const result = await loginUser(username, password);
+
+                if (result.success) {
+                    state.isAuthenticated = true;
+                    state.currentUser = username;
+                    state.currentUserInfo = result.user;
+
+                    // Mettre à jour l'interface
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('current-user-name').textContent = result.user.nom;
+                    document.getElementById('current-user-role').textContent = result.user.role;
+                    document.getElementById('current-user-level').textContent = result.user.roleNiveau;
+
+                    showNotification(`✅ Bienvenue ${result.user.nom}!`, 'success');
+
+                    // Charger les demandes
+                    if (result.user.roleNiveau === 1) {
+                        await loadDeletionRequests();
+                    } else {
+                        showNotification('⚠️ Seuls les utilisateurs de niveau 1 peuvent voir les demandes', 'warning');
+                    }
+                }
+            } catch (error) {
+                showNotification('❌ Erreur de connexion', 'error');
+            }
+        }
+
+        // Fonction de notification
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                warning: 'bg-orange-500',
+                info: 'bg-blue-500'
+            };
+
+            const notification = document.createElement('div');
+            notification.className = `${colors[type]} text-white px-6 py-4 rounded-lg shadow-lg mb-4 transform transition-all duration-300`;
+            notification.textContent = message;
+
+            const container = document.getElementById('notification-area');
+            container.appendChild(notification);
+
+            // Supprimer après 5 secondes
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Permettre la connexion avec Enter
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+    </script>
+</body>
+</html>

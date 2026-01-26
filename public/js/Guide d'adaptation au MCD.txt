@@ -1,0 +1,663 @@
+# 📋 Guide d'Adaptation au MCD - Application d'Archivage C.E.R.E.R
+
+## 🎯 Vue d'ensemble
+
+Ce guide détaille les modifications nécessaires pour adapter votre application au Modèle Conceptuel de Données (MCD).
+
+---
+
+## 📊 Schéma de la Base de Données
+
+### Collections MongoDB
+
+#### 1. **roles**
+```javascript
+{
+  _id: ObjectId,
+  libelle: String,        // "primaire" | "secondaire" | "tertiaire"
+  niveau: Number,         // 1 (max droits) | 2 | 3 (min droits)
+  description: String
+}
+```
+
+#### 2. **departements**
+```javascript
+{
+  _id: ObjectId,
+  nom: String,
+  description: String
+}
+```
+
+#### 3. **users**
+```javascript
+{
+  _id: ObjectId,
+  username: String,       // Unique
+  nom: String,
+  email: String,
+  password: String,       // Hashé
+  idRole: ObjectId,       // Référence à roles
+  idDepartement: ObjectId,// Référence à departements
+  dateCreation: Date
+}
+```
+
+#### 4. **documents**
+```javascript
+{
+  _id: ObjectId,
+  titre: String,
+  description: String,
+  fichier: String,        // Base64
+  dateAjout: Date,
+  idUtilisateur: String,  // username du créateur
+  idCategorie: String,
+  idDepartement: ObjectId,// Référence au département
+  nomFichier: String,
+  taille: Number,
+  type: String,
+  contenu: String,
+  tags: String
+}
+```
+
+#### 5. **categories**
+```javascript
+{
+  _id: ObjectId,
+  id: String,
+  nom: String,
+  couleur: String,
+  icon: String,
+  idUtilisateur: String
+}
+```
+
+---
+
+## 🔐 Hiérarchie des Rôles et Permissions
+
+### Règles d'accès
+
+#### Niveau 1 - Rôle Primaire
+- ✅ Accès COMPLET à tous les documents du département
+- ✅ Peut voir/modifier/supprimer documents de niveau 2 et 3
+- ✅ Gestion complète du département
+
+#### Niveau 2 - Rôle Secondaire
+- ✅ Accès à ses documents
+- ✅ Accès aux documents de niveau 3 dans son département
+- ❌ Ne peut pas voir les documents primaires
+
+#### Niveau 3 - Rôle Tertiaire
+- ✅ Accès uniquement à ses propres documents
+- ❌ Ne peut pas voir les documents d'autres utilisateurs
+
+### Isolation par Département
+- Les documents sont **strictement isolés** par département
+- Un utilisateur ne voit JAMAIS les documents d'un autre département
+- Exception : Un administrateur système pourrait avoir accès global
+
+---
+
+## 🔧 Modifications des Fichiers
+
+### 1. **server.js** → Remplacer par **server-mcd-adapte.js**
+
+**Changements principaux :**
+- ✅ Ajout des collections `roles` et `departements`
+- ✅ Fonction `canAccessDocument()` pour contrôle d'accès
+- ✅ Fonction `getAccessibleDocuments()` avec filtrage hiérarchique
+- ✅ Initialisation des rôles et départements par défaut
+- ✅ Modification des routes pour gérer les permissions
+
+### 2. **api.js** - Modifications nécessaires
+
+```javascript
+// Ajouter ces nouvelles fonctions
+
+async function getRoles() {
+    return await apiCall('/roles');
+}
+
+async function getDepartements() {
+    return await apiCall('/departements');
+}
+
+async function getUserInfo(username) {
+    return await apiCall(`/users/${username}`);
+}
+```
+
+### 3. **app.js** - Modifications de l'état
+
+```javascript
+const state = {
+    documents: [],
+    categories: [],
+    user: null,           // NOUVEAU: Infos complètes utilisateur
+    userRole: null,       // NOUVEAU: Rôle de l'utilisateur
+    userDepartement: null,// NOUVEAU: Département
+    roles: [],            // NOUVEAU: Liste des rôles
+    departements: [],     // NOUVEAU: Liste des départements
+    // ... reste inchangé
+};
+```
+
+### 4. **auth.js** - Adapter la connexion
+
+```javascript
+async function login(username, password) {
+    try {
+        const result = await loginUser(username, password);
+        
+        if (result.success) {
+            state.currentUser = username;
+            state.isAuthenticated = true;
+            state.user = result.user;  // NOUVEAU
+            await loadData();
+            await loadRolesAndDepts(); // NOUVEAU
+            showNotification(`✅ Bienvenue ${result.user.nom}!`);
+            return true;
+        }
+    } catch (error) {
+        return false;
+    }
+}
+
+async function loadRolesAndDepts() {
+    state.roles = await getRoles();
+    state.departements = await getDepartements();
+    render();
+}
+```
+
+---
+
+## 📝 Exemples d'Utilisation
+
+### Scénario 1 : Fatima (Primaire, Direction)
+```
+✅ Peut voir TOUS les documents de la Direction
+✅ Peut voir les documents d'Awa (Secondaire, Direction)
+✅ Peut modifier/supprimer ces documents
+❌ Ne peut PAS voir les documents de Comptabilité
+```
+
+### Scénario 2 : Awa (Secondaire, Direction)
+```
+✅ Peut voir ses propres documents
+✅ Peut voir les documents Tertiaires de la Direction
+❌ Ne peut PAS voir les documents de Fatima (Primaire)
+❌ Ne peut PAS voir les documents de Comptabilité
+```
+
+### Scénario 3 : Deguene (Tertiaire, Comptabilité)
+```
+✅ Peut voir uniquement SES documents
+❌ Ne peut PAS voir les documents de JBK (Primaire, Compta)
+❌ Ne peut PAS voir les documents de Direction
+```
+
+### Scénario 4 : JBK (Primaire, Comptabilité)
+```
+✅ Peut voir TOUS les documents de Comptabilité
+✅ Peut voir les documents de Deguene (Tertiaire, Compta)
+✅ Peut modifier/supprimer les documents du département
+❌ Ne peut PAS voir les documents de Direction
+```
+
+---
+
+## 🚀 Migration des Données Existantes
+
+### Script de Migration MongoDB
+
+```javascript
+// migration.js - À exécuter dans MongoDB Shell ou Node.js
+
+const { MongoClient, ObjectId } = require('mongodb');
+
+async function migrate() {
+    const client = await MongoClient.connect('mongodb://localhost:27017');
+    const db = client.db('cerer_archivage');
+    
+    // 1. Récupérer les rôles et départements
+    const primaryRole = await db.collection('roles').findOne({ libelle: 'primaire' });
+    const directionDept = await db.collection('departements').findOne({ nom: 'Direction' });
+    
+    // 2. Mettre à jour les utilisateurs existants
+    await db.collection('users').updateMany(
+        { idRole: { $exists: false } },
+        { 
+            $set: { 
+                idRole: primaryRole._id,
+                idDepartement: directionDept._id,
+                nom: '',
+                email: ''
+            } 
+        }
+    );
+    
+    // 3. Mettre à jour les documents existants
+    const users = await db.collection('users').find().toArray();
+    
+    for (const user of users) {
+        await db.collection('documents').updateMany(
+            { userId: user.username },
+            { 
+                $set: { 
+                    idUtilisateur: user.username,
+                    idDepartement: user.idDepartement 
+                },
+                $unset: { userId: "" }
+            }
+        );
+    }
+    
+    // 4. Mettre à jour les catégories
+    for (const user of users) {
+        await db.collection('categories').updateMany(
+            { userId: user.username },
+            { 
+                $set: { 
+                    idUtilisateur: user.username
+                },
+                $unset: { userId: "" }
+            }
+        );
+    }
+    
+    console.log('✅ Migration terminée');
+    await client.close();
+}
+
+migrate().catch(console.error);
+```
+
+---
+
+## 🎨 Modifications Interface Utilisateur
+
+### Affichage des Informations Utilisateur
+
+```javascript
+// Dans le header de l'application
+function renderUserInfo() {
+    return `
+        <div class="user-info">
+            <div class="user-avatar">${state.user.nom.charAt(0)}</div>
+            <div>
+                <p class="font-bold">${state.user.nom}</p>
+                <p class="text-sm text-gray-600">
+                    ${state.user.role} • ${state.user.departement}
+                </p>
+            </div>
+        </div>
+    `;
+}
+```
+
+### Badge de Rôle sur les Documents
+
+```javascript
+function renderDocumentCard(doc) {
+    const isOwner = doc.idUtilisateur === state.currentUser;
+    const canModify = isOwner || state.user.roleNiveau === 1;
+    
+    return `
+        <div class="doc-card">
+            <h3>${doc.titre}</h3>
+            
+            ${!isOwner ? `
+                <span class="text-xs badge badge-info">
+                    📤 Partagé par ${doc.idUtilisateur}
+                </span>
+            ` : ''}
+            
+            <div class="actions">
+                <button onclick="viewDoc('${doc._id}')">👁️ Voir</button>
+                ${canModify ? `
+                    <button onclick="deleteDoc('${doc._id}')">🗑️ Supprimer</button>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+```
+
+### Formulaire d'Inscription Amélioré
+
+```javascript
+function renderRegisterForm() {
+    return `
+        <form>
+            <input type="text" placeholder="Nom complet" required />
+            <input type="text" placeholder="Username" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Mot de passe" required />
+            
+            <select name="role" required>
+                <option value="">-- Choisir un rôle --</option>
+                ${state.roles.map(role => `
+                    <option value="${role._id}">
+                        ${role.libelle} - ${role.description}
+                    </option>
+                `).join('')}
+            </select>
+            
+            <select name="departement" required>
+                <option value="">-- Choisir un département --</option>
+                ${state.departements.map(dept => `
+                    <option value="${dept._id}">
+                        ${dept.nom}
+                    </option>
+                `).join('')}
+            </select>
+            
+            <button type="submit">Créer le compte</button>
+        </form>
+    `;
+}
+```
+
+---
+
+## 🔍 Tests de Validation
+
+### Test 1 : Accès aux Documents par Hiérarchie
+
+```javascript
+// Scénario : Vérifier qu'un utilisateur Tertiaire ne voit que ses docs
+async function testTertiaryAccess() {
+    // Se connecter en tant que Deguene (Tertiaire, Compta)
+    await login('deguene', '3576');
+    
+    const docs = await getDocuments('deguene');
+    
+    // Vérifier que tous les docs appartiennent à Deguene
+    const allMine = docs.every(doc => doc.idUtilisateur === 'deguene');
+    
+    console.assert(allMine, 'Tertiaire ne devrait voir que ses docs');
+}
+```
+
+### Test 2 : Isolation par Département
+
+```javascript
+// Scénario : Vérifier l'isolation entre départements
+async function testDepartmentIsolation() {
+    // Fatima (Direction) ne doit pas voir les docs de Compta
+    await login('fatima', '1234');
+    
+    const fatimaDocs = await getDocuments('fatima');
+    const comptaDocs = fatimaDocs.filter(doc => 
+        doc.idDepartement.toString() !== state.user.idDepartement.toString()
+    );
+    
+    console.assert(comptaDocs.length === 0, 'Isolation département OK');
+}
+```
+
+### Test 3 : Accès Primaire
+
+```javascript
+// Scénario : Un Primaire voit tous les docs de son département
+async function testPrimaryAccess() {
+    await login('jbk', '0811');
+    
+    const docs = await getDocuments('jbk');
+    
+    // JBK devrait voir ses docs + ceux de Deguene (même dept)
+    const hasOthersDocs = docs.some(doc => doc.idUtilisateur !== 'jbk');
+    
+    console.assert(hasOthersDocs, 'Primaire voit docs du département');
+}
+```
+
+---
+
+## 📦 Installation et Déploiement
+
+### Étape 1 : Sauvegarder les Données Actuelles
+
+```bash
+# Export MongoDB
+mongodump --db cerer_archivage --out ./backup
+```
+
+### Étape 2 : Remplacer le Serveur
+
+```bash
+# Arrêter l'ancien serveur
+# Ctrl+C ou pm2 stop server
+
+# Remplacer server.js par server-mcd-adapte.js
+mv server.js server-old.js
+mv server-mcd-adapte.js server.js
+
+# Installer les dépendances (si nouvelles)
+npm install
+```
+
+### Étape 3 : Exécuter la Migration
+
+```bash
+# Lancer le script de migration
+node migration.js
+```
+
+### Étape 4 : Démarrer le Nouveau Serveur
+
+```bash
+node server.js
+# ou avec PM2
+pm2 start server.js --name cerer-archivage
+```
+
+### Étape 5 : Vérifications
+
+```bash
+# Tester la connexion
+curl http://localhost:4000/health
+
+# Tester le login
+curl -X POST http://localhost:4000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"fatima","password":"1234"}'
+
+# Vérifier les rôles
+curl http://localhost:4000/api/roles
+
+# Vérifier les départements
+curl http://localhost:4000/api/departements
+```
+
+---
+
+## 🛠️ Gestion des Rôles et Départements
+
+### Ajouter un Nouveau Rôle
+
+```javascript
+// Route API à ajouter dans server.js
+app.post('/api/roles', async (req, res) => {
+    const { libelle, niveau, description } = req.body;
+    
+    await rolesCollection.insertOne({
+        libelle,
+        niveau: parseInt(niveau),
+        description
+    });
+    
+    res.json({ success: true });
+});
+```
+
+### Ajouter un Nouveau Département
+
+```javascript
+app.post('/api/departements', async (req, res) => {
+    const { nom, description } = req.body;
+    
+    await departementsCollection.insertOne({
+        nom,
+        description
+    });
+    
+    res.json({ success: true });
+});
+```
+
+### Changer le Rôle d'un Utilisateur
+
+```javascript
+app.put('/api/users/:username/role', async (req, res) => {
+    const { username } = req.params;
+    const { newRoleId } = req.body;
+    
+    await usersCollection.updateOne(
+        { username },
+        { $set: { idRole: new ObjectId(newRoleId) } }
+    );
+    
+    res.json({ success: true });
+});
+```
+
+---
+
+## 🎯 Fonctionnalités Avancées
+
+### 1. Statistiques par Département
+
+```javascript
+app.get('/api/stats/departement/:deptId', async (req, res) => {
+    const { deptId } = req.params;
+    
+    const docCount = await documentsCollection.countDocuments({
+        idDepartement: new ObjectId(deptId)
+    });
+    
+    const userCount = await usersCollection.countDocuments({
+        idDepartement: new ObjectId(deptId)
+    });
+    
+    res.json({ docCount, userCount });
+});
+```
+
+### 2. Journal d'Audit
+
+```javascript
+// Créer une collection 'audit_logs'
+async function logAction(userId, action, details) {
+    await db.collection('audit_logs').insertOne({
+        userId,
+        action, // 'view', 'create', 'update', 'delete'
+        details,
+        timestamp: new Date()
+    });
+}
+
+// Utilisation
+app.get('/api/documents/:userId/:docId', async (req, res) => {
+    // ... code existant ...
+    
+    await logAction(userId, 'view', { documentId: docId });
+    
+    res.json(document);
+});
+```
+
+### 3. Notifications Inter-Départements
+
+```javascript
+// Pour partager un document entre départements
+app.post('/api/documents/:docId/share', async (req, res) => {
+    const { docId } = req.params;
+    const { targetDepartementId, userId } = req.body;
+    
+    // Créer une copie du document dans l'autre département
+    const originalDoc = await documentsCollection.findOne({
+        _id: new ObjectId(docId)
+    });
+    
+    const sharedDoc = {
+        ...originalDoc,
+        _id: undefined,
+        idDepartement: new ObjectId(targetDepartementId),
+        sharedFrom: userId,
+        sharedAt: new Date()
+    };
+    
+    await documentsCollection.insertOne(sharedDoc);
+    
+    res.json({ success: true });
+});
+```
+
+---
+
+## ⚠️ Points d'Attention
+
+### Sécurité
+- ✅ Toujours vérifier les permissions avant chaque opération
+- ✅ Valider que l'utilisateur appartient au département
+- ✅ Ne jamais exposer les documents d'autres départements
+- ✅ Logger les actions sensibles
+
+### Performance
+- ✅ Créer des index sur `idDepartement` et `idUtilisateur`
+- ✅ Utiliser `projection` pour ne pas charger le contenu des fichiers
+- ✅ Paginer les résultats si beaucoup de documents
+- ✅ Mettre en cache les rôles et départements
+
+### Maintenance
+- ✅ Sauvegarder régulièrement la base de données
+- ✅ Surveiller l'espace disque utilisé
+- ✅ Nettoyer les documents orphelins
+- ✅ Archiver les vieux logs d'audit
+
+---
+
+## 📞 Support et Assistance
+
+Pour toute question sur l'adaptation au MCD :
+
+1. **Vérifier les logs** : `tail -f logs/server.log`
+2. **Tester les permissions** : Utiliser les tests fournis
+3. **Consulter MongoDB** : `mongo cerer_archivage`
+4. **Réinitialiser** : Supprimer la DB et relancer (dev uniquement)
+
+---
+
+## ✅ Checklist de Migration
+
+- [ ] Sauvegarder les données actuelles
+- [ ] Remplacer server.js
+- [ ] Exécuter le script de migration
+- [ ] Tester la connexion de chaque utilisateur
+- [ ] Vérifier l'accès aux documents selon les rôles
+- [ ] Valider l'isolation des départements
+- [ ] Tester la création de documents
+- [ ] Tester la suppression avec permissions
+- [ ] Mettre à jour l'interface utilisateur
+- [ ] Former les utilisateurs aux nouveaux rôles
+- [ ] Documenter les changements
+- [ ] Déployer en production
+
+---
+
+## 🎓 Conclusion
+
+Cette adaptation transforme votre application en un système **multi-départements** avec **gestion hiérarchique des droits**, conforme au MCD spécifié. 
+
+Les utilisateurs bénéficient maintenant de :
+- 🔐 Sécurité renforcée par département
+- 👥 Collaboration contrôlée selon les rôles
+- 📊 Visibilité adaptée aux responsabilités
+- 🛡️ Protection des données sensibles
+
+**Bon courage pour la migration ! 🚀**

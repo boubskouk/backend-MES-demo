@@ -1,0 +1,470 @@
+/* ============================================
+   FENÊTRE D'AJOUT/ÉDITION DE DOCUMENTS
+   Design ultra-visible avec distinction verrous
+   ============================================ */
+
+/* ============================================
+   MODAL PRINCIPALE
+   ============================================ */
+
+/* Modal d'ajout/édition de document */
+#documentModal,
+#editDocumentModal,
+.document-modal,
+[id*="Modal"][id*="document"] {
+    background: rgba(15, 23, 42, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 2px solid rgba(14, 165, 233, 0.5) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(14, 165, 233, 0.3) !important;
+}
+
+/* Conteneur de la modal */
+.modal-glass,
+.document-form-container {
+    background: linear-gradient(135deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(30, 41, 59, 0.98) 100%) !important;
+    color: white !important;
+}
+
+/* Header de la modal */
+.modal-glass > div:first-child,
+.document-modal-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%) !important;
+    color: white !important;
+    padding: 1.5rem !important;
+    border-bottom: 2px solid rgba(14, 165, 233, 0.5) !important;
+    border-radius: 1rem 1rem 0 0 !important;
+}
+
+.modal-glass > div:first-child h2,
+.modal-glass > div:first-child h3,
+.document-modal-header h2,
+.document-modal-header h3 {
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ============================================
+   LABELS ET TITRES
+   ============================================ */
+
+/* Tous les labels */
+.modal-glass label,
+.document-form label,
+form label {
+    color: #f1f5f9 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* Labels avec astérisque (obligatoires) */
+label:has(span),
+label[required]::after {
+    color: #fbbf24 !important;
+}
+
+/* Textes d'aide */
+.help-text,
+.text-sm,
+small {
+    color: #cbd5e1 !important;
+    font-size: 0.875rem !important;
+}
+
+/* ============================================
+   CHAMPS DE SAISIE - ULTRA VISIBLES
+   ============================================ */
+
+/* Tous les inputs, selects, textareas dans la modal */
+.modal-glass input[type="text"],
+.modal-glass input[type="email"],
+.modal-glass input[type="number"],
+.modal-glass input[type="date"],
+.modal-glass input[type="password"],
+.modal-glass select,
+.modal-glass textarea,
+.document-form input,
+.document-form select,
+.document-form textarea {
+    background: rgba(15, 23, 42, 0.95) !important;
+    color: white !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    padding: 0.875rem 1rem !important;
+    border: 2px solid rgba(51, 65, 85, 0.8) !important;
+    border-radius: 0.5rem !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Placeholder visible */
+.modal-glass input::placeholder,
+.modal-glass select::placeholder,
+.modal-glass textarea::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+    font-weight: 400 !important;
+}
+
+/* Focus sur les champs */
+.modal-glass input:focus,
+.modal-glass select:focus,
+.modal-glass textarea:focus {
+    background: rgba(30, 41, 59, 1) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.3),
+        0 0 0 4px rgba(14, 165, 233, 0.3) !important;
+    outline: none !important;
+    color: white !important;
+}
+
+/* Hover sur les champs */
+.modal-glass input:hover,
+.modal-glass select:hover,
+.modal-glass textarea:hover {
+    border-color: rgba(14, 165, 233, 0.5) !important;
+    background: rgba(30, 41, 59, 0.98) !important;
+}
+
+/* ============================================
+   SELECT ET OPTIONS
+   ============================================ */
+
+/* Select personnalisé */
+.modal-glass select {
+    cursor: pointer !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.5rem center !important;
+    background-size: 1.5rem !important;
+    padding-right: 2.5rem !important;
+}
+
+/* Options du select */
+.modal-glass select option {
+    background: rgba(15, 23, 42, 0.98) !important;
+    color: white !important;
+    padding: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+/* ============================================
+   FILE UPLOAD - ZONE DE DRAG & DROP
+   ============================================ */
+
+/* Zone de dépôt de fichiers */
+.drop-zone,
+input[type="file"],
+.file-upload-zone {
+    background: linear-gradient(135deg,
+        rgba(14, 165, 233, 0.1) 0%,
+        rgba(16, 185, 129, 0.1) 100%) !important;
+    border: 3px dashed rgba(14, 165, 233, 0.6) !important;
+    border-radius: 0.75rem !important;
+    padding: 2rem !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.drop-zone:hover,
+input[type="file"]:hover,
+.file-upload-zone:hover {
+    background: linear-gradient(135deg,
+        rgba(14, 165, 233, 0.2) 0%,
+        rgba(16, 185, 129, 0.2) 100%) !important;
+    border-color: rgba(14, 165, 233, 0.9) !important;
+    border-style: solid !important;
+    transform: scale(1.02) !important;
+}
+
+.drop-zone-active {
+    background: linear-gradient(135deg,
+        rgba(14, 165, 233, 0.3) 0%,
+        rgba(16, 185, 129, 0.3) 100%) !important;
+    border-color: #0ea5e9 !important;
+    border-style: solid !important;
+}
+
+/* Texte dans la zone de drop */
+.drop-zone *,
+.file-upload-zone * {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* ============================================
+   CHECKBOXES ET RADIO BUTTONS
+   ============================================ */
+
+/* Conteneur de checkbox/radio */
+.modal-glass input[type="checkbox"],
+.modal-glass input[type="radio"] {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    accent-color: #0ea5e9 !important;
+    cursor: pointer !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Label à côté de checkbox */
+.modal-glass label:has(input[type="checkbox"]),
+.modal-glass label:has(input[type="radio"]) {
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    padding: 0.75rem !important;
+    border-radius: 0.5rem !important;
+    background: rgba(30, 41, 59, 0.5) !important;
+    border: 1px solid rgba(51, 65, 85, 0.5) !important;
+    transition: all 0.2s ease !important;
+}
+
+.modal-glass label:has(input[type="checkbox"]):hover,
+.modal-glass label:has(input[type="radio"]):hover {
+    background: rgba(14, 165, 233, 0.15) !important;
+    border-color: rgba(14, 165, 233, 0.5) !important;
+}
+
+/* ============================================
+   DISTINCTION DOCUMENTS VERROUILLÉS
+   ============================================ */
+
+/* Indicateur de verrou */
+.locked-indicator,
+.document-locked,
+[data-locked="true"],
+.verrouille {
+    position: relative !important;
+}
+
+.locked-indicator::before,
+.document-locked::before,
+[data-locked="true"]::before {
+    content: '🔒 VERROUILLÉ' !important;
+    position: absolute !important;
+    top: -0.5rem !important;
+    right: 0.5rem !important;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5) !important;
+    z-index: 10 !important;
+    animation: pulse 2s infinite !important;
+}
+
+/* Document verrouillé - fond rouge */
+.doc-card.locked,
+.doc-card[data-locked="true"],
+.document-item.locked {
+    border: 3px solid #ef4444 !important;
+    background: linear-gradient(135deg,
+        rgba(239, 68, 68, 0.15) 0%,
+        rgba(220, 38, 38, 0.1) 100%) !important;
+    box-shadow:
+        0 4px 12px rgba(239, 68, 68, 0.3),
+        inset 0 0 30px rgba(239, 68, 68, 0.1) !important;
+}
+
+.doc-card.locked::after {
+    content: '🔒' !important;
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    font-size: 2rem !important;
+    opacity: 0.3 !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)) !important;
+}
+
+/* Document non verrouillé - fond vert */
+.doc-card:not(.locked),
+.doc-card[data-locked="false"],
+.document-item:not(.locked) {
+    border: 2px solid rgba(16, 185, 129, 0.4) !important;
+    background: linear-gradient(135deg,
+        rgba(16, 185, 129, 0.08) 0%,
+        rgba(5, 150, 105, 0.05) 100%) !important;
+}
+
+.doc-card:not(.locked)::after {
+    content: '🔓' !important;
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    font-size: 1.5rem !important;
+    opacity: 0.2 !important;
+}
+
+/* Toggle de verrouillage */
+.lock-toggle,
+input[name*="lock"],
+input[name*="verrou"] {
+    position: relative !important;
+    width: 3.5rem !important;
+    height: 2rem !important;
+    appearance: none !important;
+    background: rgba(239, 68, 68, 0.3) !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid #ef4444 !important;
+}
+
+.lock-toggle::before {
+    content: '🔒' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 0.25rem !important;
+    transform: translateY(-50%) !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    background: white !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.75rem !important;
+}
+
+.lock-toggle:checked {
+    background: rgba(16, 185, 129, 0.3) !important;
+    border-color: #10b981 !important;
+}
+
+.lock-toggle:checked::before {
+    content: '🔓' !important;
+    left: calc(100% - 1.75rem) !important;
+}
+
+/* Badge de statut */
+.status-badge.locked {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 0.25rem !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4) !important;
+}
+
+.status-badge.unlocked {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 0.25rem !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* ============================================
+   BOUTONS DE LA MODAL
+   ============================================ */
+
+/* Bouton soumettre */
+.modal-glass button[type="submit"],
+.modal-glass .btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 0.875rem 2rem !important;
+    border: 2px solid rgba(16, 185, 129, 0.6) !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.modal-glass button[type="submit"]:hover {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.6) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Bouton annuler */
+.modal-glass button[type="button"],
+.modal-glass .btn-cancel {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 0.875rem 2rem !important;
+    border: 2px solid rgba(100, 116, 139, 0.6) !important;
+    border-radius: 0.5rem !important;
+}
+
+.modal-glass button[type="button"]:hover {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ============================================
+   SECTIONS ET GROUPES
+   ============================================ */
+
+/* Groupe de champs */
+.form-group,
+.field-group {
+    background: rgba(30, 41, 59, 0.4) !important;
+    padding: 1.25rem !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid rgba(51, 65, 85, 0.5) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Titre de section */
+.form-section-title,
+.field-group-title {
+    color: #38bdf8 !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    border-bottom: 2px solid rgba(14, 165, 233, 0.3) !important;
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.3) !important;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* Animation d'apparition de la modal */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-glass {
+    animation: modalFadeIn 0.3s ease-out !important;
+}
