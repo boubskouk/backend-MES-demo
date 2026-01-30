@@ -73,11 +73,11 @@ async function createDocument(documentData, userId) {
 
     if (documentData.contenu) {
         if (STORAGE_MODE === 'file') {
-            // Mode optimisé: fichier sur disque
-            const saved = fileStorage.saveFileContent(documentData.contenu, documentData.nomFichier);
+            // Mode optimisé: fichier sur disque (ou MongoDB en prod)
+            const saved = await fileStorage.saveFileContent(documentData.contenu, documentData.nomFichier);
             filePath = saved.filePath;
             fileSize = saved.fileSize;
-            console.log(`💾 Fichier stocké sur disque: ${filePath} (${(fileSize/1024).toFixed(2)} KB)`);
+            console.log(`💾 Fichier stocké: ${filePath} (${(fileSize/1024).toFixed(2)} KB)`);
         } else {
             // Mode ancien: base64 dans MongoDB
             contenuToStore = documentData.contenu;
@@ -278,11 +278,11 @@ async function getDocument(userId, docId) {
         fullDocument.historiquePartages = [];
     }
 
-    // ✅ STOCKAGE OPTIMISÉ: Charger le contenu depuis le fichier si nécessaire
+    // ✅ STOCKAGE OPTIMISÉ: Charger le contenu depuis le stockage (MongoDB en prod, fichier en dev)
     if (fullDocument.filePath && !fullDocument.contenu) {
         try {
-            fullDocument.contenu = fileStorage.loadFileContent(fullDocument.filePath, fullDocument.type);
-            console.log(`📂 Contenu chargé depuis fichier: ${fullDocument.filePath}`);
+            fullDocument.contenu = await fileStorage.loadFileContent(fullDocument.filePath, fullDocument.type);
+            console.log(`📂 Contenu chargé: ${fullDocument.filePath}`);
         } catch (error) {
             console.error(`❌ Erreur chargement fichier ${fullDocument.filePath}:`, error.message);
             // Ne pas bloquer si le fichier n'existe pas

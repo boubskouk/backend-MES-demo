@@ -505,7 +505,7 @@ async function permanentDeleteDossier(dossierId) {
         if (documentsArray.length > 0) {
             for (const doc of documentsArray) {
                 try {
-                    fileStorage.deleteFile(doc.path);
+                    await fileStorage.deleteFile(doc.path);
                 } catch (error) {
                     console.error(`Erreur suppression document ${doc.path}:`, error.message);
                 }

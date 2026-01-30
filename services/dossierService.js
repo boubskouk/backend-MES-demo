@@ -212,8 +212,8 @@ async function processDocument(documentData, userId, dossierId, userInfo = {}) {
         throw new Error(`Le fichier dépasse la taille maximale autorisée (${LIMITS.MAX_FILE_SIZE / 1024 / 1024} MB)`);
     }
 
-    // Sauvegarder le fichier sur disque
-    const saved = fileStorage.saveFileContent(documentData.contenu, documentData.nomFichier);
+    // Sauvegarder le fichier (MongoDB en prod, disque en dev)
+    const saved = await fileStorage.saveFileContent(documentData.contenu, documentData.nomFichier);
 
     // Générer l'ID document avec liaison au dossier
     const idDocument = generateDocumentIdInDossier(dossierId);
@@ -555,7 +555,7 @@ async function addDocument(userId, dossierId, documentData) {
     const nouvelleTailleTotale = dossier.tailleTotale + document.taille;
     if (nouvelleTailleTotale > LIMITS.MAX_DOSSIER_SIZE) {
         // Supprimer le fichier déjà sauvegardé
-        fileStorage.deleteFile(document.path);
+        await fileStorage.deleteFile(document.path);
         throw new Error(`Limite atteinte: taille maximale du dossier ${LIMITS.MAX_DOSSIER_SIZE / 1024 / 1024} MB`);
     }
 
@@ -636,7 +636,7 @@ async function removeDocument(userId, dossierId, documentId) {
     }
 
     // Supprimer le fichier du stockage
-    fileStorage.deleteFile(document.path);
+    await fileStorage.deleteFile(document.path);
 
     const now = new Date();
 
@@ -722,8 +722,8 @@ async function downloadDocument(userId, dossierId, documentId, options = {}) {
         }
     }
 
-    // Charger le contenu
-    const contenu = fileStorage.loadFileContent(document.path, document.type);
+    // Charger le contenu (MongoDB en prod, disque en dev)
+    const contenu = await fileStorage.loadFileContent(document.path, document.type);
 
     // Déterminer l'action et le champ d'historique selon le type (consultation vs téléchargement)
     const actionType = isPreview ? 'DOCUMENT_CONSULTED' : 'DOCUMENT_DOWNLOADED';
@@ -805,7 +805,7 @@ async function downloadAllAsZip(userId, dossierId) {
     // Ajouter chaque document
     for (const doc of documentsArray) {
         try {
-            const buffer = fileStorage.loadFileBuffer(doc.path);
+            const buffer = await fileStorage.loadFileBuffer(doc.path);
             archive.append(buffer, { name: doc.nomOriginal });
         } catch (error) {
             console.error(`❌ Erreur lecture document ${doc.path}:`, error.message);
@@ -1186,7 +1186,7 @@ async function permanentDelete(userId, dossierId) {
     // Supprimer tous les fichiers du stockage
     for (const fichier of dossier.fichiers) {
         try {
-            fileStorage.deleteFile(fichier.path);
+            await fileStorage.deleteFile(fichier.path);
         } catch (error) {
             console.error(`❌ Erreur suppression fichier ${fichier.path}:`, error.message);
         }
