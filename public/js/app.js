@@ -1516,6 +1516,138 @@ function closePreviewModal() {
     render();
 }
 
+// Afficher l'historique/traçabilité d'un document (20 dernières actions)
+async function showDocumentHistory(dossierId, documentId, documentNom) {
+    try {
+        state.loading = true;
+        render();
+
+        // Appel API pour récupérer l'historique du document
+        const response = await fetch(`/api/dossiers/${dossierId}/documents/${documentId}/history?limit=20`, {
+            credentials: 'include'
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            const history = result.history || [];
+
+            // Créer le contenu du modal
+            let historyHtml = '';
+            if (history.length === 0) {
+                historyHtml = '<p class="text-gray-500 text-center py-4">Aucun historique disponible pour ce document.</p>';
+            } else {
+                historyHtml = history.map(item => {
+                    const date = new Date(item.timestamp || item.date).toLocaleString('fr-FR');
+                    const actionLabel = getActionLabel(item.action);
+                    const actionColor = getActionColor(item.action);
+                    return `
+                        <div class="flex items-start gap-3 p-3 border-b border-gray-100 hover:bg-gray-50">
+                            <span class="text-2xl">${actionLabel.icon}</span>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="px-2 py-1 rounded text-xs font-medium text-white" style="background: ${actionColor}">
+                                        ${actionLabel.text}
+                                    </span>
+                                    <span class="text-xs text-gray-500">${date}</span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-1">
+                                    👤 <strong>${item.user || item.utilisateur || 'Système'}</strong>
+                                    ${item.details ? ` - ${item.details}` : ''}
+                                </p>
+                                ${item.ip ? `<p class="text-xs text-gray-400">IP: ${item.ip}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Afficher le modal
+            const modalHtml = `
+                <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onclick="closeHistoryModal()">
+                    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden" onclick="event.stopPropagation()">
+                        <div class="p-4 border-b bg-gradient-to-r from-orange-500 to-amber-500 text-white flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-bold">📜 Historique du document</h2>
+                                <p class="text-sm opacity-90">${documentNom}</p>
+                            </div>
+                            <button onclick="closeHistoryModal()" class="text-white hover:text-gray-200 text-2xl">&times;</button>
+                        </div>
+                        <div class="overflow-y-auto" style="max-height: calc(80vh - 100px)">
+                            ${historyHtml}
+                        </div>
+                        <div class="p-3 border-t bg-gray-50 text-center">
+                            <span class="text-xs text-gray-500">20 dernières actions affichées</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Ajouter le modal au DOM
+            const existingModal = document.getElementById('historyModal');
+            if (existingModal) existingModal.remove();
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        } else {
+            showNotification(result.message || 'Erreur lors de la récupération de l\'historique', 'error');
+        }
+    } catch (error) {
+        Logger.error('[HISTORY] Erreur:', error);
+        showNotification('Erreur lors de la récupération de l\'historique', 'error');
+    } finally {
+        state.loading = false;
+        render();
+    }
+}
+
+// Fermer le modal d'historique
+function closeHistoryModal() {
+    const modal = document.getElementById('historyModal');
+    if (modal) modal.remove();
+}
+
+// Obtenir le libellé d'une action
+function getActionLabel(action) {
+    const labels = {
+        'DOCUMENT_CREATED': { text: 'Création', icon: '📄' },
+        'DOCUMENT_UPLOADED': { text: 'Ajout', icon: '📤' },
+        'DOCUMENT_CONSULTED': { text: 'Consultation', icon: '👁️' },
+        'DOCUMENT_DOWNLOADED': { text: 'Téléchargement', icon: '📥' },
+        'DOCUMENT_SHARED': { text: 'Partage', icon: '🔗' },
+        'DOCUMENT_UNSHARED': { text: 'Retrait partage', icon: '🔓' },
+        'DOCUMENT_LOCKED': { text: 'Verrouillage', icon: '🔒' },
+        'DOCUMENT_UNLOCKED': { text: 'Déverrouillage', icon: '🔓' },
+        'DOCUMENT_UPDATED': { text: 'Modification', icon: '✏️' },
+        'DOCUMENT_DELETED': { text: 'Suppression', icon: '🗑️' },
+        'DOCUMENT_RESTORED': { text: 'Restauration', icon: '♻️' },
+        'DOCUMENT_RENAMED': { text: 'Renommage', icon: '✍️' },
+        'DOSSIER_CREATED': { text: 'Dossier créé', icon: '📁' },
+        'DOSSIER_DOWNLOADED': { text: 'Dossier téléchargé', icon: '📦' }
+    };
+    return labels[action] || { text: action || 'Action', icon: '📋' };
+}
+
+// Obtenir la couleur d'une action
+function getActionColor(action) {
+    const colors = {
+        'DOCUMENT_CREATED': '#22c55e',
+        'DOCUMENT_UPLOADED': '#22c55e',
+        'DOCUMENT_CONSULTED': '#8b5cf6',
+        'DOCUMENT_DOWNLOADED': '#3b82f6',
+        'DOCUMENT_SHARED': '#06b6d4',
+        'DOCUMENT_UNSHARED': '#f59e0b',
+        'DOCUMENT_LOCKED': '#ef4444',
+        'DOCUMENT_UNLOCKED': '#22c55e',
+        'DOCUMENT_UPDATED': '#f59e0b',
+        'DOCUMENT_DELETED': '#ef4444',
+        'DOCUMENT_RESTORED': '#22c55e',
+        'DOCUMENT_RENAMED': '#8b5cf6',
+        'DOSSIER_CREATED': '#22c55e',
+        'DOSSIER_DOWNLOADED': '#3b82f6'
+    };
+    return colors[action] || '#6b7280';
+}
+
 // Render du modal de prévisualisation
 function renderPreviewModal() {
     if (!state.showPreviewModal || !state.previewDocument) return '';
@@ -1883,18 +2015,32 @@ function renderDossierDetailModal() {
                     ` : ''}
                 </div>
 
-                <!-- Boutons d'actions compacts -->
-                <div class="flex gap-1 flex-wrap">
+                <!-- Boutons d'actions avec libellés -->
+                <div class="flex gap-2 flex-wrap">
                     <button onclick="event.stopPropagation(); previewDocument('${d.idDossier}', '${docId}', '${docName}', '${doc.type || ''}')"
-                            class="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs hover:bg-purple-200" title="Consulter">👁️</button>
+                            class="px-3 py-1.5 bg-purple-500 text-white rounded-lg text-xs hover:bg-purple-600 font-medium flex items-center gap-1">
+                        👁️ Consulter
+                    </button>
                     <button onclick="event.stopPropagation(); downloadDossierFile('${d.idDossier}', '${docId}')"
-                            class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200" title="Télécharger">📥</button>
+                            class="px-3 py-1.5 bg-blue-500 text-white rounded-lg text-xs hover:bg-blue-600 font-medium flex items-center gap-1">
+                        📥 Télécharger
+                    </button>
                     ${canShare ? `<button onclick="event.stopPropagation(); openShareDocumentModal('${d.idDossier}', '${docId}', '${docName}')"
-                            class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs hover:bg-green-200" title="Partager">📤</button>` : ''}
+                            class="px-3 py-1.5 bg-green-500 text-white rounded-lg text-xs hover:bg-green-600 font-medium flex items-center gap-1">
+                        📤 Partager
+                    </button>` : ''}
+                    <button onclick="event.stopPropagation(); showDocumentHistory('${d.idDossier}', '${docId}', '${docName}')"
+                            class="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs hover:bg-orange-600 font-medium flex items-center gap-1">
+                        📜 Historique
+                    </button>
                     ${canEdit ? `<button onclick="event.stopPropagation(); toggleDocumentLockAction('${d.idDossier}', '${docId}')"
-                            class="px-2 py-1 ${docLocked ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'} rounded text-xs hover:opacity-80" title="${docLocked ? 'Déverrouiller' : 'Verrouiller'}">${docLocked ? '🔓' : '🔒'}</button>` : ''}
+                            class="px-3 py-1.5 ${docLocked ? 'bg-yellow-500' : 'bg-gray-500'} text-white rounded-lg text-xs hover:opacity-90 font-medium flex items-center gap-1">
+                        ${docLocked ? '🔓 Déverrouiller' : '🔒 Verrouiller'}
+                    </button>` : ''}
                     ${canEdit ? `<button onclick="event.stopPropagation(); handleRemoveDocumentFromDossier('${d.idDossier}', '${docId}', '${docName}')"
-                            class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200" title="Supprimer">🗑️</button>` : ''}
+                            class="px-3 py-1.5 bg-red-500 text-white rounded-lg text-xs hover:bg-red-600 font-medium flex items-center gap-1">
+                        🗑️ Supprimer
+                    </button>` : ''}
                 </div>
             </div>
         `;

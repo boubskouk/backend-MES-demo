@@ -128,4 +128,11 @@ router.post('/restore/:dossierId', isAuthenticated, dossiersController.restoreDo
 // DELETE /api/dossiers/permanent/:dossierId - Suppression définitive
 router.delete('/permanent/:dossierId', isAuthenticated, dossiersController.permanentDelete);
 
+// ============================================
+// ROUTES HISTORIQUE/TRAÇABILITÉ
+// ============================================
+
+// GET /api/dossiers/:dossierId/documents/:documentId/history - Historique d'un document
+router.get('/:dossierId/documents/:documentId/history', isAuthenticated, dossiersController.getDocumentHistory);
+
 module.exports = router;

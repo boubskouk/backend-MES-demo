@@ -884,6 +884,132 @@ async function searchDocuments(req, res) {
     }
 }
 
+/**
+ * GET /api/dossiers/:dossierId/documents/:documentId/history
+ * Récupérer l'historique/traçabilité d'un document (20 dernières actions)
+ */
+async function getDocumentHistory(req, res) {
+    try {
+        const { dossierId, documentId } = req.params;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const { getCollections } = require('../config/database');
+        const collections = getCollections();
+
+        // Rechercher les logs d'audit liés à ce document
+        const history = await collections.auditLogs.find({
+            $or: [
+                { 'details.documentId': documentId },
+                { 'details.dossierId': dossierId, 'details.documentId': documentId },
+                { documentId: documentId },
+                { 'metadata.documentId': documentId }
+            ]
+        })
+        .sort({ timestamp: -1 })
+        .limit(limit)
+        .toArray();
+
+        // Formater les résultats
+        const formattedHistory = history.map(log => ({
+            action: log.action || log.eventType,
+            timestamp: log.timestamp || log.date,
+            user: log.user || log.utilisateur || log.username,
+            details: log.details?.message || log.message || '',
+            ip: log.ip || log.details?.ip
+        }));
+
+        // Si pas assez de résultats, chercher aussi dans le dossier lui-même
+        if (formattedHistory.length < limit) {
+            // Récupérer le dossier pour voir l'historique embarqué
+            const dossier = await collections.dossiers.findOne({
+                $or: [
+                    { idDossier: dossierId },
+                    { _id: require('mongodb').ObjectId.isValid(dossierId) ? new require('mongodb').ObjectId(dossierId) : null }
+                ]
+            });
+
+            if (dossier) {
+                // Chercher le document dans le dossier
+                const documents = dossier.documents || dossier.fichiers || [];
+                const doc = documents.find(d =>
+                    d.idDocument === documentId ||
+                    d.id === documentId ||
+                    String(d._id) === documentId
+                );
+
+                if (doc) {
+                    // Ajouter l'historique de téléchargement
+                    if (doc.historiqueTelechargements) {
+                        doc.historiqueTelechargements.forEach(h => {
+                            formattedHistory.push({
+                                action: 'DOCUMENT_DOWNLOADED',
+                                timestamp: h.date,
+                                user: h.utilisateur,
+                                details: '',
+                                ip: h.ip
+                            });
+                        });
+                    }
+
+                    // Ajouter l'historique de consultation
+                    if (doc.historiqueConsultations) {
+                        doc.historiqueConsultations.forEach(h => {
+                            formattedHistory.push({
+                                action: 'DOCUMENT_CONSULTED',
+                                timestamp: h.date,
+                                user: h.utilisateur,
+                                details: '',
+                                ip: h.ip
+                            });
+                        });
+                    }
+
+                    // Ajouter les infos d'archivage
+                    if (doc.archivePar) {
+                        formattedHistory.push({
+                            action: 'DOCUMENT_UPLOADED',
+                            timestamp: doc.archivePar.dateArchivage || doc.dateAjout,
+                            user: doc.archivePar.utilisateur || doc.archivePar.nomComplet,
+                            details: 'Document ajouté au dossier',
+                            ip: ''
+                        });
+                    }
+
+                    // Ajouter les infos de partage
+                    if (doc.sharedWith && doc.sharedWith.length > 0) {
+                        doc.sharedWith.forEach(share => {
+                            formattedHistory.push({
+                                action: 'DOCUMENT_SHARED',
+                                timestamp: share.sharedAt || share.date,
+                                user: share.sharedBy,
+                                details: `Partagé avec ${share.sharedWith || share.utilisateur}`,
+                                ip: ''
+                            });
+                        });
+                    }
+                }
+            }
+        }
+
+        // Trier par date décroissante et limiter
+        formattedHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        const finalHistory = formattedHistory.slice(0, limit);
+
+        res.json({
+            success: true,
+            history: finalHistory,
+            total: finalHistory.length
+        });
+
+    } catch (error) {
+        console.error('❌ Erreur getDocumentHistory:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Erreur serveur'
+        });
+    }
+}
+
 module.exports = {
     // Dossiers
     getAccessibleDossiers: getAccessibleDossiers_Controller,
@@ -910,6 +1036,7 @@ module.exports = {
     unshareDocument,
     toggleDocumentLock,
     searchDocuments,
+    getDocumentHistory,
 
     // Alias rétrocompatibilité
     addFichier: addDocument,
