@@ -2,13 +2,22 @@
 // CONSTANTES GLOBALES
 // ============================================
 
+// Fonction pour extraire le nom de la base de l'URI MongoDB
+function extractDbNameFromUri(uri) {
+    if (!uri) return null;
+    // Format: mongodb+srv://user:pass@host/DATABASE?options
+    // ou: mongodb://host:port/DATABASE?options
+    const match = uri.match(/mongodb(?:\+srv)?:\/\/[^/]+\/([^?]+)/);
+    return match ? match[1] : null;
+}
+
 module.exports = {
     // Configuration serveur
     PORT: process.env.PORT || 4000,
 
     // Configuration MongoDB
     MONGO_URI: process.env.MONGODB_URI || "mongodb://localhost:27017/mes_archivage?retryWrites=true&w=majority",
-    DB_NAME: process.env.MONGODB_DB_NAME || 'mes_archivage',
+    DB_NAME: process.env.MONGODB_DB_NAME || extractDbNameFromUri(process.env.MONGODB_URI) || 'mes_archivage',
 
     // Niveaux de permissions
     PERMISSIONS: {
