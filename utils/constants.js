@@ -59,7 +59,11 @@ module.exports = {
 
     // CORS
     CORS: {
-        ALLOWED_ORIGINS: ['http://localhost:4000', 'http://127.0.0.1:4000'],
+        ALLOWED_ORIGINS: [
+            'http://localhost:4000',
+            'http://127.0.0.1:4000',
+            'https://backend-mes-demo.onrender.com'
+        ],
         METHODS: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         HEADERS: ['Content-Type', 'Authorization']
     },
