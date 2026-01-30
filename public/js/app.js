@@ -4058,10 +4058,6 @@ function render() {
                             </div>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="state.showDossierUploadForm = true; render();"
-                                    class="nav-btn nav-btn-inactive">
-                                📁 Nouveau dossier
-                            </button>
                             <button onclick="toggleMessagingSection()"
                                     class="nav-btn ${state.showMessagingSection ? 'nav-btn-active' : 'nav-btn-inactive'} relative">
                                 📬 Boîte de réception
