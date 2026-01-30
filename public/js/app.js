@@ -1762,27 +1762,52 @@ function renderDossierCard(dossier) {
     const cat = state.categories.find(c => c.id === dossier.categorie) || { nom: dossier.categorie, couleur: '#3b82f6', icon: '📁' };
     const locked = dossier.locked ? '🔒' : '';
     const shared = (dossier.sharedWith && dossier.sharedWith.length > 0) ? '👥' : '';
+    const serviceName = dossier.serviceArchivage || dossier.service || '';
+    const deptName = dossier.departementArchivage || dossier.departement || '';
+    const dateCreation = dossier.createdAt ? new Date(dossier.createdAt).toLocaleDateString('fr-FR') : '';
 
     return `
-        <div class="bg-white rounded-lg shadow-sm p-3 cursor-pointer hover:shadow-md transition-shadow border-l-3"
-             style="border-left: 3px solid ${cat.couleur}"
+        <div class="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-lg transition-shadow border-l-4"
+             style="border-left: 4px solid ${cat.couleur}"
              onclick="selectDossier('${dossier.idDossier || dossier._id}')">
-            <div class="flex items-center gap-2 mb-1">
-                <span class="text-lg">${cat.icon || '📁'}</span>
-                <h3 class="font-medium text-gray-800 truncate flex-1 text-sm">${dossier.titre}</h3>
-                ${locked}${shared}
+
+            <!-- Titre et icônes -->
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xl">${cat.icon || '📁'}</span>
+                <h3 class="font-semibold text-gray-800 truncate flex-1">${dossier.titre}</h3>
+                <span class="flex gap-1">${locked}${shared}</span>
             </div>
-            <div class="flex items-center justify-between text-xs text-gray-500">
-                <span class="px-1.5 py-0.5 rounded text-white text-xs" style="background: ${cat.couleur}">${cat.nom}</span>
-                <span>📄 ${dossier.nombreFichiers || dossier.nombreDocuments || 0}</span>
-            </div>
-            <div class="flex items-center justify-between mt-1 text-xs text-gray-400">
-                <span class="truncate">${dossier.serviceArchivage || dossier.departementArchivage || ''}</span>
+
+            <!-- ID du dossier -->
+            <div class="flex items-center gap-2 mb-2 text-xs">
+                <span class="text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
+                    🆔 ${dossier.idDossier || dossier._id}
+                </span>
                 <button onclick="event.stopPropagation(); copyToClipboard('${dossier.idDossier}')"
-                        class="px-1.5 py-0.5 bg-gray-100 hover:bg-gray-200 rounded"
-                        title="${dossier.idDossier}">
+                        class="px-2 py-1 bg-blue-100 hover:bg-blue-200 rounded text-blue-600"
+                        title="Copier l'ID">
                     📋
                 </button>
+            </div>
+
+            <!-- Catégorie -->
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs text-gray-500">📂 Catégorie:</span>
+                <span class="px-2 py-1 rounded text-white text-xs font-medium" style="background: ${cat.couleur}">
+                    ${cat.nom}
+                </span>
+            </div>
+
+            <!-- Service et Département -->
+            <div class="flex items-center gap-2 mb-2 text-xs text-gray-600">
+                ${serviceName ? `<span class="bg-green-100 text-green-700 px-2 py-1 rounded">🏢 ${serviceName}</span>` : ''}
+                ${deptName ? `<span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">🏛️ ${deptName}</span>` : ''}
+            </div>
+
+            <!-- Nombre de fichiers et date -->
+            <div class="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-100">
+                <span class="font-medium">📄 ${dossier.nombreFichiers || dossier.nombreDocuments || 0} fichier(s)</span>
+                ${dateCreation ? `<span>📅 ${dateCreation}</span>` : ''}
             </div>
         </div>
     `;
