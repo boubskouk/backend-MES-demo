@@ -104,14 +104,19 @@ async function getDocumentsStats(filters = {}) {
             totalDossiers = await dossiersCollection.countDocuments(baseFilter);
 
             // Stats des documents dans les dossiers (via aggregation)
+            // Supporte les deux formats: documents[] et fichiers[]
             const dossierStats = await dossiersCollection.aggregate([
                 { $match: baseFilter },
                 { $project: {
-                    nombreDocuments: { $size: { $ifNull: ["$documents", []] } },
+                    nombreDocuments: {
+                        $add: [
+                            { $size: { $ifNull: ["$documents", []] } },
+                            { $size: { $ifNull: ["$fichiers", []] } }
+                        ]
+                    },
                     locked: 1,
                     sharedWith: 1,
-                    idDepartement: 1,
-                    documents: 1
+                    idDepartement: 1
                 }},
                 { $group: {
                     _id: null,
@@ -128,12 +133,20 @@ async function getDocumentsStats(filters = {}) {
             }
 
             // Répartition par département depuis les dossiers
+            // Supporte les deux formats: documents[] et fichiers[]
             byDepartmentFromDossiers = await dossiersCollection.aggregate([
                 { $match: baseFilter },
                 { $group: {
                     _id: "$idDepartement",
                     countDossiers: { $sum: 1 },
-                    countDocuments: { $sum: { $size: { $ifNull: ["$documents", []] } } }
+                    countDocuments: {
+                        $sum: {
+                            $add: [
+                                { $size: { $ifNull: ["$documents", []] } },
+                                { $size: { $ifNull: ["$fichiers", []] } }
+                            ]
+                        }
+                    }
                 }},
                 { $lookup: {
                     from: "departements",
@@ -810,11 +823,21 @@ async function getAllDocuments(filters = {}) {
         // Récupérer tous les dossiers non supprimés
         const dossiers = await dossiersCollection.find(matchFilter).toArray();
 
+        // Récupérer tous les utilisateurs pour enrichir les données (nom complet du verrouilleur)
+        const users = await usersCollection.find({}).toArray();
+        const userMap = {};
+        users.forEach(u => {
+            userMap[u.username] = u.nom || u.username;
+        });
+
         // Extraire tous les documents de tous les dossiers
         let allDocuments = [];
         for (const dossier of dossiers) {
             const documents = dossier.documents || dossier.fichiers || [];
             for (const doc of documents) {
+                // Obtenir le nom complet du verrouilleur
+                const lockerName = doc.lockedBy ? (userMap[doc.lockedBy] || doc.lockedBy) : null;
+
                 allDocuments.push({
                     idDocument: doc.idDocument || doc.id,
                     titre: doc.nomOriginal || doc.nom,
@@ -830,7 +853,9 @@ async function getAllDocuments(filters = {}) {
                     createdAt: doc.dateAjout || dossier.createdAt,
                     locked: doc.locked || false,
                     lockedBy: doc.lockedBy,
+                    lockerName: lockerName,
                     sharedWith: doc.sharedWith || [],
+                    historiqueTelechargements: doc.historiqueTelechargements || [],
                     downloadCount: (doc.historiqueTelechargements || []).length,
                     shareCount: (doc.sharedWith || []).length
                 });

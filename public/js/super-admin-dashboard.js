@@ -2147,14 +2147,6 @@ function renderDocumentsSubTabs() {
                     onclick="changeDocumentsSubTab('deletions')">
                 🗑️ Suppressions
             </button>
-            <button class="sub-tab ${state.documentsSubTab === 'locked' ? 'active' : ''}"
-                    onclick="changeDocumentsSubTab('locked')">
-                🔒 Verrouillés
-            </button>
-            <button class="sub-tab ${state.documentsSubTab === 'tracabilite' ? 'active' : ''}"
-                    onclick="changeDocumentsSubTab('tracabilite')">
-                🔍 Traçabilité
-            </button>
         </div>
     `;
 }

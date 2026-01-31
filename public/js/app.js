@@ -4273,7 +4273,7 @@ function render() {
                                     class="px-4 py-2 text-sm border-2 rounded-lg outline-none font-medium">
                                 <option value="tous" ${state.tempSelectedCategory === 'tous' ? 'selected' : ''}>📁 Toutes catégories</option>
                                 ${state.categories.map(cat => `
-                                    <option value="${cat.nom}" ${state.tempSelectedCategory === cat.nom ? 'selected' : ''}>
+                                    <option value="${cat.id}" ${state.tempSelectedCategory === cat.id ? 'selected' : ''}>
                                         ${cat.icon} ${cat.nom}
                                     </option>
                                 `).join('')}
