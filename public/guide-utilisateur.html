@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Utilisateur - Systeme d'Archivage MES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .nav-guide {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .nav-guide a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-guide a:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 {
+            color: #4a5568;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section p {
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+        }
+
+        .level-0 { border-left-color: #e53e3e; }
+        .level-1 { border-left-color: #38a169; }
+        .level-2 { border-left-color: #3182ce; }
+        .level-3 { border-left-color: #805ad5; }
+
+        .level-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .level-0 h4 { color: #e53e3e; }
+        .level-1 h4 { color: #38a169; }
+        .level-2 h4 { color: #3182ce; }
+        .level-3 h4 { color: #805ad5; }
+
+        .level-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .level-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #4a5568;
+        }
+
+        .level-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #38a169;
+            font-weight: bold;
+        }
+
+        .step-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .step-content p {
+            color: #718096;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-box p {
+            color: #78350f;
+            margin: 0;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box p, .info-box li {
+            color: #1e3a8a;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: #065f46;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-box p {
+            color: #064e3b;
+            margin: 0;
+        }
+
+        .workflow-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .workflow-step {
+            display: inline-block;
+            padding: 15px 25px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            margin: 10px;
+            font-weight: 600;
+        }
+
+        .workflow-arrow {
+            display: inline-block;
+            font-size: 2em;
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        .table-permissions {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .table-permissions th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table-permissions td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-permissions tr:hover {
+            background: #f8fafc;
+        }
+
+        .check { color: #38a169; font-weight: bold; }
+        .cross { color: #e53e3e; font-weight: bold; }
+
+        .back-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .screenshot-placeholder {
+            background: #e2e8f0;
+            border: 2px dashed #a0aec0;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: #718096;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .section { padding: 20px; }
+            .step-box { flex-direction: column; }
+            .nav-guide { flex-direction: column; }
+            .workflow-arrow { display: block; transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Guide Utilisateur Complet</h1>
+            <p>Systeme d'Archivage Electronique MES - CERER</p>
+        </div>
+
+        <div class="content">
+            <!-- Navigation -->
+            <nav class="nav-guide">
+                <a href="#introduction">Introduction</a>
+                <a href="#niveaux">Les Niveaux</a>
+                <a href="#premiere-connexion">Premiere Connexion</a>
+                <a href="#configuration">Configuration</a>
+                <a href="#archivage">Archiver un Document</a>
+                <a href="#gestion">Gestion des Documents</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+
+            <!-- SECTION 1: Introduction -->
+            <section id="introduction" class="section">
+                <h2>1. Introduction</h2>
+
+                <p>
+                    Bienvenue dans le <strong>Systeme d'Archivage Electronique MES</strong> du CERER.
+                    Cette application permet de stocker, organiser et gerer tous vos documents de maniere
+                    securisee et centralisee.
+                </p>
+
+                <div class="info-box">
+                    <h4>Qu'est-ce que cette application ?</h4>
+                    <p>
+                        C'est un systeme d'archivage numerique qui permet de :
+                    </p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Stocker vos documents (PDF, Word, Excel, Images, etc.)</li>
+                        <li>Organiser les documents par categories et services</li>
+                        <li>Partager des documents avec d'autres utilisateurs</li>
+                        <li>Suivre l'historique de chaque document (qui a telecharge, quand, etc.)</li>
+                        <li>Proteger les documents sensibles par verrouillage</li>
+                    </ul>
+                </div>
+
+                <h3>Architecture du systeme</h3>
+                <div class="workflow-diagram">
+                    <span class="workflow-step">Super Admin</span>
+                    <span class="workflow-arrow">→</span>
+                    <span class="workflow-step">Niveau 1 (Primaire)</span>
+                    <span class="workflow-arrow">→</span>
+                    <span class="workflow-step">Niveau 2 (Secondaire)</span>
+                    <span class="workflow-arrow">→</span>
+                    <span class="workflow-step">Niveau 3 (Tertiaire)</span>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Les Niveaux -->
+            <section id="niveaux" class="section">
+                <h2>2. Les Differents Niveaux d'Utilisateurs</h2>
+
+                <p>
+                    L'application utilise un systeme hierarchique avec 4 niveaux d'acces.
+                    Chaque niveau a des permissions specifiques.
+                </p>
+
+                <!-- Niveau 0 -->
+                <div class="level-card level-0">
+                    <h4>Niveau 0 - Super Administrateur</h4>
+                    <p><strong>Role :</strong> Gestionnaire global du systeme</p>
+                    <ul>
+                        <li>Creer et gerer TOUS les utilisateurs (niveaux 1, 2 et 3)</li>
+                        <li>Creer et gerer les departements</li>
+                        <li>Creer et gerer les services</li>
+                        <li>Creer et gerer les categories de documents</li>
+                        <li>Voir toutes les statistiques et activites</li>
+                        <li>Superviser l'ensemble du systeme</li>
+                        <li>Acces au tableau de bord Super Admin</li>
+                    </ul>
+                    <div class="warning-box" style="margin-top: 15px;">
+                        <h4>Acces special</h4>
+                        <p>Le Super Admin se connecte via une page speciale : <code>/super-admin-login.html</code></p>
+                    </div>
+                </div>
+
+                <!-- Niveau 1 -->
+                <div class="level-card level-1">
+                    <h4>Niveau 1 - Utilisateur Primaire (Chef de Service)</h4>
+                    <p><strong>Role :</strong> Responsable de l'archivage dans son service</p>
+                    <ul>
+                        <li>Creer des dossiers et archiver des documents</li>
+                        <li>Creer des categories de documents pour son service</li>
+                        <li>Creer des services dans son departement</li>
+                        <li>Partager des documents avec d'autres utilisateurs</li>
+                        <li>Verrouiller des documents (empecher modifications)</li>
+                        <li>Supprimer des documents</li>
+                        <li>Telecharger des documents</li>
+                        <li>Voir l'historique complet des documents</li>
+                    </ul>
+                    <div class="success-box" style="margin-top: 15px;">
+                        <h4>Responsabilite cle</h4>
+                        <p>Le Niveau 1 doit d'abord creer les categories et services avant que les autres niveaux puissent archiver.</p>
+                    </div>
+                </div>
+
+                <!-- Niveau 2 -->
+                <div class="level-card level-2">
+                    <h4>Niveau 2 - Utilisateur Secondaire</h4>
+                    <p><strong>Role :</strong> Utilisateur avance avec droits etendus</p>
+                    <ul>
+                        <li>Creer des dossiers et archiver des documents</li>
+                        <li>Partager des documents avec d'autres utilisateurs</li>
+                        <li>Telecharger des documents</li>
+                        <li>Modifier les dossiers qu'il a crees</li>
+                        <li>Voir l'historique des documents</li>
+                    </ul>
+                    <div class="info-box" style="margin-top: 15px;">
+                        <h4>Limitations</h4>
+                        <p>Ne peut pas verrouiller ou supprimer definitivement des documents. Ne peut pas creer de categories ou services.</p>
+                    </div>
+                </div>
+
+                <!-- Niveau 3 -->
+                <div class="level-card level-3">
+                    <h4>Niveau 3 - Utilisateur Tertiaire (Consultation)</h4>
+                    <p><strong>Role :</strong> Utilisateur basique, principalement en lecture</p>
+                    <ul>
+                        <li>Consulter les documents partages avec lui</li>
+                        <li>Telecharger les documents auxquels il a acces</li>
+                        <li>Voir ses propres dossiers</li>
+                    </ul>
+                    <div class="info-box" style="margin-top: 15px;">
+                        <h4>Acces limite</h4>
+                        <p>Ce niveau est ideal pour les utilisateurs qui ont seulement besoin de consulter des documents sans les modifier.</p>
+                    </div>
+                </div>
+
+                <!-- Tableau recapitulatif -->
+                <h3>Tableau Recapitulatif des Permissions</h3>
+                <table class="table-permissions">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Super Admin</th>
+                            <th>Niveau 1</th>
+                            <th>Niveau 2</th>
+                            <th>Niveau 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Creer des utilisateurs</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Creer des departements</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Creer des services</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Creer des categories</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Archiver des documents</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Partager des documents</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Telecharger des documents</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                        </tr>
+                        <tr>
+                            <td>Verrouiller des documents</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                        <tr>
+                            <td>Supprimer des documents</td>
+                            <td class="check">OUI</td>
+                            <td class="check">OUI</td>
+                            <td class="cross">NON</td>
+                            <td class="cross">NON</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SECTION 3: Premiere Connexion -->
+            <section id="premiere-connexion" class="section">
+                <h2>3. Premiere Connexion</h2>
+
+                <p>
+                    Lorsque le Super Admin cree votre compte, il vous fournit un <strong>nom d'utilisateur</strong>
+                    et un <strong>mot de passe temporaire</strong>. Voici comment vous connecter pour la premiere fois.
+                </p>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Acceder a la page de connexion</h4>
+                        <p>
+                            Ouvrez votre navigateur web (Chrome, Firefox, Edge) et allez sur l'adresse de l'application.
+                            <br><br>
+                            <strong>Pour les utilisateurs normaux :</strong> <code>https://votre-application.com/</code>
+                            <br>
+                            <strong>Pour le Super Admin :</strong> <code>https://votre-application.com/super-admin-login.html</code>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Entrer vos identifiants</h4>
+                        <p>
+                            Saisissez le <strong>nom d'utilisateur</strong> et le <strong>mot de passe temporaire</strong>
+                            que le Super Admin vous a fournis, puis cliquez sur <strong>"Se connecter"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Changer votre mot de passe (OBLIGATOIRE)</h4>
+                        <p>
+                            A la premiere connexion, vous serez <strong>oblige de changer votre mot de passe</strong>.
+                            C'est une mesure de securite importante.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Regles pour le nouveau mot de passe</h4>
+                    <p>
+                        Votre nouveau mot de passe doit respecter ces criteres :
+                    </p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Minimum 8 caracteres</li>
+                        <li>Au moins une lettre majuscule (A-Z)</li>
+                        <li>Au moins une lettre minuscule (a-z)</li>
+                        <li>Au moins un chiffre (0-9)</li>
+                        <li>Au moins un caractere special (@, #, $, %, etc.)</li>
+                    </ul>
+                    <p style="margin-top: 10px;">
+                        <strong>Exemple de mot de passe valide :</strong> <code>MonMotDePasse@2024</code>
+                    </p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Acces au tableau de bord</h4>
+                        <p>
+                            Apres avoir change votre mot de passe, vous serez redirige vers votre tableau de bord.
+                            Felicitations, vous etes connecte !
+                        </p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>Conseil de securite</h4>
+                    <p>
+                        Ne partagez jamais votre mot de passe avec qui que ce soit. Si vous oubliez votre mot de passe,
+                        contactez le Super Admin pour le reinitialiser.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Configuration initiale -->
+            <section id="configuration" class="section">
+                <h2>4. Configuration Initiale (Niveau 1)</h2>
+
+                <div class="warning-box">
+                    <h4>IMPORTANT - Avant d'archiver des documents</h4>
+                    <p>
+                        Avant de pouvoir archiver des documents, le <strong>Niveau 1</strong> ou le <strong>Super Admin</strong>
+                        doit d'abord creer les <strong>categories</strong> et les <strong>services</strong>.
+                        Sans cela, il sera impossible d'enregistrer un dossier.
+                    </p>
+                </div>
+
+                <h3>4.1 Creer une Categorie</h3>
+                <p>
+                    Les categories permettent de classer les documents par type (Factures, Contrats, Rapports, etc.).
+                </p>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Acceder au menu Categories</h4>
+                        <p>
+                            Dans le menu lateral gauche, cliquez sur <strong>"Categories"</strong>
+                            ou cherchez l'icone de gestion des categories.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Cliquer sur "Nouvelle Categorie"</h4>
+                        <p>
+                            Cliquez sur le bouton <strong>"+ Nouvelle Categorie"</strong> pour ouvrir le formulaire de creation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Remplir les informations</h4>
+                        <p>
+                            <strong>Nom :</strong> Le nom de la categorie (ex: "Factures", "Contrats", "Rapports annuels")<br>
+                            <strong>Description :</strong> Une breve description de ce que contient cette categorie
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Enregistrer</h4>
+                        <p>
+                            Cliquez sur <strong>"Enregistrer"</strong> pour creer la categorie.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>Exemples de categories courantes</h4>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li><strong>Factures</strong> - Documents de facturation</li>
+                        <li><strong>Contrats</strong> - Accords et conventions</li>
+                        <li><strong>Rapports</strong> - Rapports d'activite</li>
+                        <li><strong>Correspondance</strong> - Lettres et courriers</li>
+                        <li><strong>RH</strong> - Documents ressources humaines</li>
+                        <li><strong>Technique</strong> - Documentation technique</li>
+                    </ul>
+                </div>
+
+                <h3>4.2 Creer un Service</h3>
+                <p>
+                    Les services representent les differentes unites organisationnelles (Service Comptabilite, Service Technique, etc.).
+                </p>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Acceder au menu Services</h4>
+                        <p>
+                            Dans le menu lateral, cliquez sur <strong>"Services"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Cliquer sur "Nouveau Service"</h4>
+                        <p>
+                            Cliquez sur le bouton <strong>"+ Nouveau Service"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Remplir les informations</h4>
+                        <p>
+                            <strong>Nom du service :</strong> Le nom du service (ex: "Comptabilite", "Informatique")<br>
+                            <strong>Departement :</strong> Selectionnez le departement auquel appartient ce service
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Enregistrer</h4>
+                        <p>
+                            Cliquez sur <strong>"Enregistrer"</strong> pour creer le service.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>Configuration terminee !</h4>
+                    <p>
+                        Une fois les categories et services crees, tous les utilisateurs (Niveau 1, 2 et 3)
+                        peuvent commencer a archiver des documents.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 5: Archiver un document -->
+            <section id="archivage" class="section">
+                <h2>5. Archiver un Document</h2>
+
+                <p>
+                    L'archivage se fait en deux etapes : d'abord creer un <strong>dossier</strong>,
+                    puis y ajouter des <strong>documents</strong> (fichiers).
+                </p>
+
+                <h3>5.1 Creer un Dossier</h3>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Cliquer sur "Nouveau Dossier"</h4>
+                        <p>
+                            Sur le tableau de bord, cliquez sur le bouton <strong>"Nouveau Dossier"</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Remplir les informations du dossier</h4>
+                        <p>
+                            <strong>Titre du dossier :</strong> Un nom descriptif (ex: "Factures Janvier 2024")<br>
+                            <strong>Description :</strong> Details supplementaires sur le contenu<br>
+                            <strong>Categorie :</strong> Selectionnez la categorie appropriee<br>
+                            <strong>Service :</strong> Selectionnez votre service<br>
+                            <strong>Departement :</strong> Selectionnez votre departement
+                        </p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Attention</h4>
+                    <p>
+                        Si les listes <strong>Categorie</strong> ou <strong>Service</strong> sont vides,
+                        c'est que le Niveau 1 ou le Super Admin ne les a pas encore creees.
+                        Contactez votre responsable.
+                    </p>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Ajouter des fichiers</h4>
+                        <p>
+                            Cliquez sur la zone <strong>"Deposer des fichiers ici"</strong> ou faites glisser vos fichiers.
+                            <br><br>
+                            <strong>Formats acceptes :</strong> PDF, Word (.doc, .docx), Excel (.xls, .xlsx), Images (PNG, JPG), etc.
+                            <br>
+                            <strong>Taille maximale :</strong> 50 Mo par fichier
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Enregistrer le dossier</h4>
+                        <p>
+                            Cliquez sur <strong>"Enregistrer"</strong> ou <strong>"Creer le dossier"</strong>.
+                            Le dossier et ses documents sont maintenant archives.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>5.2 Ajouter des Documents a un Dossier Existant</h3>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Ouvrir le dossier</h4>
+                        <p>
+                            Sur le tableau de bord, trouvez le dossier et cliquez dessus pour l'ouvrir.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Ajouter un fichier</h4>
+                        <p>
+                            Cliquez sur <strong>"Ajouter un document"</strong> et selectionnez le fichier a ajouter.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h4>Document archive !</h4>
+                    <p>
+                        Votre document est maintenant stocke de maniere securisee dans le systeme.
+                        Vous pouvez le retrouver a tout moment via la recherche ou en parcourant vos dossiers.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Gestion des documents -->
+            <section id="gestion" class="section">
+                <h2>6. Gestion des Documents</h2>
+
+                <h3>6.1 Consulter un Document</h3>
+                <p>
+                    Cliquez sur le bouton <strong>"Consulter"</strong> (icone oeil) pour visualiser le document
+                    directement dans votre navigateur.
+                </p>
+
+                <h3>6.2 Telecharger un Document</h3>
+                <p>
+                    Cliquez sur le bouton <strong>"Telecharger"</strong> (icone fleche vers le bas) pour
+                    sauvegarder le document sur votre ordinateur.
+                </p>
+
+                <div class="info-box">
+                    <h4>Tracabilite</h4>
+                    <p>
+                        Chaque telechargement est enregistre dans l'historique du document.
+                        Le Niveau 1 et le Super Admin peuvent voir qui a telecharge quoi et quand.
+                    </p>
+                </div>
+
+                <h3>6.3 Partager un Document</h3>
+                <p>
+                    Le partage permet a d'autres utilisateurs d'acceder a un document.
+                </p>
+
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Cliquer sur "Partager"</h4>
+                        <p>Cliquez sur le bouton <strong>"Partager"</strong> du document.</p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Selectionner les destinataires</h4>
+                        <p>Choisissez les utilisateurs avec qui vous souhaitez partager le document.</p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Confirmer le partage</h4>
+                        <p>Cliquez sur <strong>"Partager"</strong> pour confirmer.</p>
+                    </div>
+                </div>
+
+                <h3>6.4 Verrouiller un Document (Niveau 1 uniquement)</h3>
+                <p>
+                    Le verrouillage empeche toute modification ou suppression du document.
+                </p>
+
+                <div class="warning-box">
+                    <h4>Attention</h4>
+                    <p>
+                        Seul le Niveau 1 qui a verrouille le document peut le deverrouiller.
+                        Utilisez cette fonction pour les documents sensibles ou definitifs.
+                    </p>
+                </div>
+
+                <h3>6.5 Voir l'Historique d'un Document</h3>
+                <p>
+                    Cliquez sur le bouton <strong>"Historique"</strong> pour voir les 20 dernieres actions
+                    effectuees sur le document :
+                </p>
+                <ul style="padding-left: 30px; margin-top: 10px;">
+                    <li>Qui a cree le document</li>
+                    <li>Qui l'a telecharge et quand</li>
+                    <li>Qui l'a partage et avec qui</li>
+                    <li>Qui l'a verrouille/deverrouille</li>
+                </ul>
+
+                <h3>6.6 Supprimer un Document (Niveau 1 uniquement)</h3>
+                <p>
+                    La suppression deplace le document vers la corbeille.
+                    Le Super Admin peut le restaurer si necessaire.
+                </p>
+
+                <div class="warning-box">
+                    <h4>Attention</h4>
+                    <p>
+                        Un document verrouille ne peut pas etre supprime.
+                        Il faut d'abord le deverrouiller.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 7: FAQ -->
+            <section id="faq" class="section">
+                <h2>7. Questions Frequentes (FAQ)</h2>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>Je ne peux pas creer de dossier, les categories sont vides</h4>
+                        <p>
+                            C'est normal si aucune categorie n'a ete creee. Contactez votre responsable
+                            Niveau 1 ou le Super Admin pour qu'il cree les categories necessaires.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>J'ai oublie mon mot de passe</h4>
+                        <p>
+                            Contactez le Super Admin. Il peut reinitialiser votre mot de passe
+                            depuis son tableau de bord.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>Je ne vois pas certains documents</h4>
+                        <p>
+                            Vous ne voyez que les documents qui vous ont ete partages ou ceux que vous avez crees.
+                            Si vous avez besoin d'acces a d'autres documents, demandez a leur proprietaire de les partager avec vous.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>Le document ne se telecharge pas</h4>
+                        <p>
+                            Verifiez votre connexion internet. Si le probleme persiste,
+                            il peut y avoir un probleme avec le fichier. Contactez le support technique.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>Je ne peux pas modifier un dossier</h4>
+                        <p>
+                            Si le dossier est verrouille (icone cadenas), vous ne pouvez pas le modifier.
+                            Seul le Niveau 1 qui l'a verrouille peut le deverrouiller.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-number">?</div>
+                    <div class="step-content">
+                        <h4>Comment contacter le support ?</h4>
+                        <p>
+                            Pour toute assistance technique, contactez le Super Admin ou
+                            l'equipe informatique du CERER.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bouton retour -->
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/" class="back-btn">Retour a l'application</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
