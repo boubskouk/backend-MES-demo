@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le système d'archivage C.E.R.E.R intègre désormais **plusieurs éditeurs et visualiseurs** pour les documents Office (Word, Excel, PowerPoint). Ce guide vous explique comment utiliser chaque option.
+Le système d'archivage MES intègre désormais **plusieurs éditeurs et visualiseurs** pour les documents Office (Word, Excel, PowerPoint). Ce guide vous explique comment utiliser chaque option.
 
 ---
 

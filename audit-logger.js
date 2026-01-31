@@ -1,5 +1,5 @@
 // ============================================
-// SYSTÈME D'AUDIT LOGS - ARCHIVAGE C.E.R.E.R
+// SYSTÈME D'AUDIT LOGS - ARCHIVAGE MES
 // ============================================
 
 const winston = require('winston');
@@ -30,7 +30,7 @@ const auditLogger = winston.createLogger({
         winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
         winston.format.json()
     ),
-    defaultMeta: { service: 'cerer-archivage' },
+    defaultMeta: { service: 'mes-archivage' },
     transports: [
         // Tous les événements d'audit
         new winston.transports.File({

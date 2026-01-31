@@ -16,7 +16,7 @@ node server.js
 
 **Résultat attendu :**
 ```
-✅ SERVEUR ARCHIVAGE C.E.R.E.R DÉMARRÉ (MCD)
+✅ SERVEUR ARCHIVAGE MES DÉMARRÉ (MCD)
 🔡 http://localhost:4000
 ```
 
@@ -409,7 +409,7 @@ createTestUsers();
 ```bash
 # Vérifier que le serveur tourne
 # Dans le terminal, vous devez voir :
-✅ SERVEUR ARCHIVAGE C.E.R.E.R DÉMARRÉ
+✅ SERVEUR ARCHIVAGE MES DÉMARRÉ
 ```
 
 ### Problème : "Les demandes ne s'affichent pas"
@@ -464,5 +464,5 @@ Si tous les tests sont ✅, votre système de partage et de validation est **par
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date : 2025-10-31**

@@ -1,5 +1,5 @@
 /**
- * NOUVEAU DASHBOARD GED CERER - JavaScript
+ * NOUVEAU DASHBOARD GED MES - JavaScript
  * Navigation hiérarchique + Pagination + Tri
  */
 

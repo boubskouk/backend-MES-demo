@@ -13,7 +13,7 @@ node server.js
 
 **Attendez de voir :**
 ```
-✅ SERVEUR ARCHIVAGE C.E.R.E.R DÉMARRÉ
+✅ SERVEUR ARCHIVAGE MES DÉMARRÉ
 🔡 http://localhost:4000
 ```
 

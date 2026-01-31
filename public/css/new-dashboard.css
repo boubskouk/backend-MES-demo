@@ -1,5 +1,5 @@
 /* ============================================
-   NOUVEAU DASHBOARD GED CERER - STYLES
+   NOUVEAU DASHBOARD GED MES - STYLES
    ============================================ */
 
 * {
@@ -31,7 +31,7 @@ body {
     z-index: 100;
 }
 
-/* Logo et texte CERER */
+/* Logo et texte MES */
 .topbar-logo {
     display: flex;
     align-items: center;

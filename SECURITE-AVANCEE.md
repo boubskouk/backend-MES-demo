@@ -1,4 +1,4 @@
-# 🔐 SÉCURITÉ AVANCÉE - ARCHIVAGE C.E.R.E.R
+# 🔐 SÉCURITÉ AVANCÉE - ARCHIVAGE MES
 
 **Version:** 3.0
 **Date:** Novembre 2025
@@ -225,7 +225,7 @@ openssl req -x509 -newkey rsa:4096 \
   -keyout ssl/key.pem \
   -out ssl/cert.pem \
   -days 365 -nodes \
-  -subj "/C=SN/ST=Dakar/L=Dakar/O=CERER/CN=localhost"
+  -subj "/C=SN/ST=Dakar/L=Dakar/O=MES/CN=localhost"
 ```
 
 ⚠️ **ATTENTION:** Les certificats auto-signés ne doivent être utilisés qu'en développement
@@ -776,6 +776,6 @@ Configurez des alertes pour :
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Version:** 3.0
 **Contact:** jacquesboubacar.koukoui@gmail.com

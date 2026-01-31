@@ -1,4 +1,4 @@
-# 📋 Guide d'Adaptation au MCD - Application d'Archivage C.E.R.E.R
+# 📋 Guide d'Adaptation au MCD - Application d'Archivage MES
 
 ## 🎯 Vue d'ensemble
 
@@ -221,7 +221,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 
 async function migrate() {
     const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('cerer_archivage');
+    const db = client.db('mes_archivage');
     
     // 1. Récupérer les rôles et départements
     const primaryRole = await db.collection('roles').findOne({ libelle: 'primaire' });
@@ -424,7 +424,7 @@ async function testPrimaryAccess() {
 
 ```bash
 # Export MongoDB
-mongodump --db cerer_archivage --out ./backup
+mongodump --db mes_archivage --out ./backup
 ```
 
 ### Étape 2 : Remplacer le Serveur
@@ -453,7 +453,7 @@ node migration.js
 ```bash
 node server.js
 # ou avec PM2
-pm2 start server.js --name cerer-archivage
+pm2 start server.js --name mes-archivage
 ```
 
 ### Étape 5 : Vérifications
@@ -628,7 +628,7 @@ Pour toute question sur l'adaptation au MCD :
 
 1. **Vérifier les logs** : `tail -f logs/server.log`
 2. **Tester les permissions** : Utiliser les tests fournis
-3. **Consulter MongoDB** : `mongo cerer_archivage`
+3. **Consulter MongoDB** : `mongo mes_archivage`
 4. **Réinitialiser** : Supprimer la DB et relancer (dev uniquement)
 
 ---

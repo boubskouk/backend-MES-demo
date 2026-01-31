@@ -1,5 +1,5 @@
 // ============================================
-// CONFIGURATION JWT - ARCHIVAGE C.E.R.E.R
+// CONFIGURATION JWT - ARCHIVAGE MES
 // ============================================
 
 const jwt = require('jsonwebtoken');
@@ -39,8 +39,8 @@ function generateAccessToken(user) {
 
     return jwt.sign(payload, JWT_SECRET, {
         expiresIn: ACCESS_TOKEN_EXPIRY,
-        issuer: 'cerer-archivage',
-        audience: 'cerer-users'
+        issuer: 'mes-archivage',
+        audience: 'mes-users'
     });
 }
 
@@ -58,8 +58,8 @@ function generateRefreshToken(user) {
 
     return jwt.sign(payload, JWT_REFRESH_SECRET, {
         expiresIn: REFRESH_TOKEN_EXPIRY,
-        issuer: 'cerer-archivage',
-        audience: 'cerer-users'
+        issuer: 'mes-archivage',
+        audience: 'mes-users'
     });
 }
 
@@ -87,8 +87,8 @@ function generateTokens(user) {
 function verifyAccessToken(token) {
     try {
         const decoded = jwt.verify(token, JWT_SECRET, {
-            issuer: 'cerer-archivage',
-            audience: 'cerer-users'
+            issuer: 'mes-archivage',
+            audience: 'mes-users'
         });
 
         // Vérifier que c'est bien un access token
@@ -123,8 +123,8 @@ function verifyAccessToken(token) {
 function verifyRefreshToken(token) {
     try {
         const decoded = jwt.verify(token, JWT_REFRESH_SECRET, {
-            issuer: 'cerer-archivage',
-            audience: 'cerer-users'
+            issuer: 'mes-archivage',
+            audience: 'mes-users'
         });
 
         // Vérifier que c'est bien un refresh token

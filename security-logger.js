@@ -1,5 +1,5 @@
 // ============================================
-// SYSTÈME DE LOGS DE SÉCURITÉ - GED CERER
+// SYSTÈME DE LOGS DE SÉCURITÉ - GED MES
 // ============================================
 
 // Niveaux de gravité

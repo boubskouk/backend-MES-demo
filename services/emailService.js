@@ -51,7 +51,7 @@ function generateWelcomeEmailHTML(userData) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue sur la plateforme GED CERER</title>
+    <title>Bienvenue sur la plateforme GED MES</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
     <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -61,7 +61,7 @@ function generateWelcomeEmailHTML(userData) {
                     <!-- En-tête -->
                     <tr>
                         <td style="padding: 40px 30px; background: linear-gradient(135deg, #0284c7 0%, #059669 100%); text-align: center;">
-                            <h1 style="margin: 0; color: #ffffff; font-size: 28px;">🎓 Bienvenue sur GED CERER</h1>
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px;">🎓 Bienvenue sur GED MES</h1>
                             <p style="margin: 10px 0 0 0; color: #e0f2fe; font-size: 16px;">Plateforme de Gestion Électronique de Documents</p>
                         </td>
                     </tr>
@@ -72,7 +72,7 @@ function generateWelcomeEmailHTML(userData) {
                             <h2 style="color: #1e293b; margin-top: 0;">Bonjour ${nom},</h2>
 
                             <p style="color: #475569; font-size: 16px; line-height: 1.6;">
-                                Votre compte a été créé avec succès sur la plateforme GED CERER, réservée aux universités sénégalaises.
+                                Votre compte a été créé avec succès sur la plateforme GED MES, réservée aux universités sénégalaises.
                             </p>
 
                             ${university ? `
@@ -136,7 +136,7 @@ function generateWelcomeEmailHTML(userData) {
                                 Cet email a été envoyé automatiquement. Merci de ne pas y répondre.
                             </p>
                             <p style="margin: 10px 0 0 0; color: #94a3b8; font-size: 12px;">
-                                © ${new Date().getFullYear()} GED CERER - Plateforme réservée aux universités sénégalaises
+                                © ${new Date().getFullYear()} GED MES - Plateforme réservée aux universités sénégalaises
                             </p>
                         </td>
                     </tr>
@@ -158,7 +158,7 @@ function generateWelcomeEmailText(userData) {
     return `
 Bonjour ${nom},
 
-Votre compte a été créé avec succès sur la plateforme GED CERER.
+Votre compte a été créé avec succès sur la plateforme GED MES.
 
 ${university ? `✓ Université reconnue : ${university}\n` : ''}
 VOS IDENTIFIANTS DE CONNEXION
@@ -180,7 +180,7 @@ PREMIERS PAS
 
 ---
 Cet email a été envoyé automatiquement. Merci de ne pas y répondre.
-© ${new Date().getFullYear()} GED CERER - Plateforme réservée aux universités sénégalaises
+© ${new Date().getFullYear()} GED MES - Plateforme réservée aux universités sénégalaises
     `.trim();
 }
 
@@ -217,11 +217,11 @@ async function sendWelcomeEmail(userData) {
         // Configuration de l'email
         const mailOptions = {
             from: {
-                name: process.env.SMTP_FROM_NAME || 'GED CERER',
+                name: process.env.SMTP_FROM_NAME || 'GED MES',
                 address: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER
             },
             to: userData.email,
-            subject: '🎓 Bienvenue sur la plateforme GED CERER - Vos identifiants',
+            subject: '🎓 Bienvenue sur la plateforme GED MES - Vos identifiants',
             text: generateWelcomeEmailText(userData),
             html: generateWelcomeEmailHTML(userData)
         };

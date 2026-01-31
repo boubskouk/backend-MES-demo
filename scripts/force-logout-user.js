@@ -7,7 +7,7 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 const username = process.argv[2];
 

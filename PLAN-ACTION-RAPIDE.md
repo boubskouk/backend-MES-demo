@@ -319,7 +319,7 @@ sudo systemctl start cerer-archivage
 
 ## 📞 CONTACTS
 
-- **Service Informatique C.E.R.E.R**: informatique@cerer.sn
+- **Service Informatique MES**: informatique@mes.gouv.sn
 - **Support UCAD**: support@ucad.sn
 - **Urgences**: +221 XX XXX XX XX
 

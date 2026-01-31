@@ -1,4 +1,4 @@
-# 📖 Guide Utilisateurs - Système d'Archivage CERER
+# 📖 Guide Utilisateurs - Système d'Archivage MES
 
 **Version Bêta** - Documentation complète pour tous les niveaux d'utilisateurs
 
@@ -17,7 +17,7 @@
 
 ## Introduction
 
-Le système d'archivage CERER est une plateforme de **Gestion Électronique de Documents** (GED) conçue pour organiser, stocker et gérer les documents universitaires de manière sécurisée et efficace.
+Le système d'archivage du MES est une plateforme de **Gestion Électronique de Documents** (GED) conçue pour organiser, stocker et gérer les documents de manière sécurisée et efficace.
 
 ### 🎯 Système de Niveaux
 
@@ -425,7 +425,7 @@ R : Videz les cookies de votre navigateur et reconnectez-vous.
 - Contactez le Super Administrateur (Niveau 0)
 
 **Pour les Super Administrateurs** :
-- Email support technique : support@cerer.edu.sn
+- Email support technique : support@mes.gouv.sn
 - Documentation technique : `GUIDE-TECHNIQUE.md`
 
 ---
@@ -441,5 +441,5 @@ R : Videz les cookies de votre navigateur et reconnectez-vous.
 
 ---
 
-**🎓 Système d'Archivage CERER** - Gestion Électronique de Documents
+**🎓 Système d'Archivage MES** - Gestion Électronique de Documents
 *Pour toute question, consultez ce guide ou contactez votre superviseur.*

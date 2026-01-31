@@ -1,8 +1,8 @@
-# 📋 PRÉSENTATION - SYSTÈME D'ARCHIVAGE C.E.R.E.R
+# 📋 PRÉSENTATION - SYSTÈME D'ARCHIVAGE MES
 
 ## 🎯 Vue d'ensemble
 
-Le **Système d'Archivage C.E.R.E.R** est une application web moderne de gestion documentaire développée spécifiquement pour répondre aux besoins du Centre d'Études et de Recherches des Énergies Renouvelables.
+Le **Système d'Archivage MES** est une application web moderne de gestion documentaire développée spécifiquement pour répondre aux besoins du Ministère de l'Enseignement Supérieur.
 
 ### Objectifs principaux
 - Centraliser tous les documents de l'organisation
@@ -247,7 +247,7 @@ Chaque document contient :
 ### Design moderne et épuré
 
 #### Page de connexion
-- 🎨 **Design professionnel** avec logo C.E.R.E.R
+- 🎨 **Design professionnel** avec logo MES
 - 🔐 **Authentification sécurisée**
 - 👁️ **Visibilité du mot de passe** (bouton œil)
 - ✅ Validation en temps réel
@@ -441,7 +441,7 @@ Chaque document contient :
 ## 📞 SUPPORT ET MAINTENANCE
 
 ### Développement
-- 💼 **Développé par** le service informatique du C.E.R.E.R
+- 💼 **Développé par** le service informatique du MES
 - 🔄 **Mises à jour** régulières
 - 🐛 **Correction de bugs** rapide
 - 💡 **Nouvelles fonctionnalités** sur demande
@@ -455,7 +455,7 @@ Chaque document contient :
 
 ## 🎯 CONCLUSION
 
-Le **Système d'Archivage C.E.R.E.R** est une solution complète, moderne et sécurisée pour la gestion documentaire.
+Le **Système d'Archivage MES** est une solution complète, moderne et sécurisée pour la gestion documentaire.
 
 ### Points clés à retenir :
 1. ✅ **Sécurité maximale** avec 3 niveaux de permissions
@@ -464,9 +464,9 @@ Le **Système d'Archivage C.E.R.E.R** est une solution complète, moderne et sé
 4. ✅ **Collaboration facilitée** via partage et messagerie
 5. ✅ **Performance optimale** pour une productivité accrue
 
-**Une solution professionnelle développée sur mesure pour répondre aux besoins spécifiques du C.E.R.E.R.**
+**Une solution professionnelle développée sur mesure pour répondre aux besoins spécifiques du MES.**
 
 ---
 
 *Document généré le 27 novembre 2025*
-*Version 2.0 - Système d'Archivage C.E.R.E.R*
+*Version 2.0 - Système d'Archivage MES*

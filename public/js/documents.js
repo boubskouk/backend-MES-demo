@@ -1,5 +1,5 @@
 // ============================================
-// GESTION DES DOCUMENTS - ARCHIVAGE C.E.R.E.R
+// GESTION DES DOCUMENTS - ARCHIVAGE MES
 // ============================================
 
 // Charger tous les documents et catégories
@@ -222,7 +222,7 @@ async function exportData() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `cerer_${state.currentUser}_${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `mes_${state.currentUser}_${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     URL.revokeObjectURL(url);
 

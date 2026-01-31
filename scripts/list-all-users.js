@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const MONGO_URI = "mongodb://localhost:27017/cerer_archivage?retryWrites=true&w=majority";
+const MONGO_URI = "mongodb://localhost:27017/mes_archivage?retryWrites=true&w=majority";
 
 async function listUsers() {
     console.log('🔄 Connexion à la base de données...');
@@ -8,7 +8,7 @@ async function listUsers() {
     const client = await MongoClient.connect(MONGO_URI);
 
     try {
-        const db = client.db('cerer_archivage');
+        const db = client.db('mes_archivage');
         const usersCollection = db.collection('utilisateurs');
 
         console.log('\n📋 Liste de TOUS les utilisateurs :\n');

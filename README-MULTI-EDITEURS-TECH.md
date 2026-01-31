@@ -396,4 +396,4 @@ describe('Multi-Éditeurs', () => {
 
 **Date de création** : Novembre 2025
 **Version** : 1.0.0
-**Auteur** : Système C.E.R.E.R
+**Auteur** : Système MES

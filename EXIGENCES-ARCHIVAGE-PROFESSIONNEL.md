@@ -2,7 +2,7 @@
 
 **Date**: 30 Octobre 2025
 **Contexte**: Migration vers serveurs UCAD ou hébergement professionnel
-**Application**: Système d'Archivage C.E.R.E.R
+**Application**: Système d'Archivage MES
 
 ---
 
@@ -337,7 +337,7 @@ server {
 #### 3. Systemd Service
 ```ini
 [Unit]
-Description=Système d'Archivage C.E.R.E.R
+Description=Système d'Archivage MES
 After=network.target mongodb.service
 
 [Service]
@@ -470,7 +470,7 @@ WantedBy=multi-user.target
 ## 📞 CONTACT ET SUPPORT
 
 Pour questions techniques:
-- Service Informatique C.E.R.E.R
+- Service Informatique MES
 - Email: informatique@cerer.sn
 
 ---

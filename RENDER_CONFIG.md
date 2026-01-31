@@ -16,7 +16,7 @@
 Sur la page de connexion MongoDB Atlas, cherchez **"Connection String Only"** ou utilisez ce format :
 
 ```
-mongodb://USERNAME:PASSWORD@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/cerer_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
+mongodb://USERNAME:PASSWORD@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/mes_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
 ```
 
 **Remplacez** :
@@ -39,7 +39,7 @@ mongodb://USERNAME:PASSWORD@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,clust
 
 | Key | Value |
 |-----|-------|
-| `MONGODB_URI` | `mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/cerer_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority` |
+| `MONGODB_URI` | `mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/mes_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority` |
 | `PORT` | `4000` |
 | `NODE_ENV` | `production` |
 
@@ -60,7 +60,7 @@ mongodb://USERNAME:PASSWORD@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,clust
 🔄 Connexion à MongoDB...
 📍 URI: mongodb://***:***@cluster0-shard-00-00...
 ✅ Connexion à MongoDB réussie
-📊 Base de données: cerer_archivage
+📊 Base de données: mes_archivage
 ```
 
 **❌ Logs d'erreur à éviter** :
@@ -84,7 +84,7 @@ Vous devriez voir :
 ```
 🔄 Connexion à MongoDB...
 ✅ Connexion à MongoDB réussie
-✅ SERVEUR ARCHIVAGE C.E.R.E.R DÉMARRÉ (MCD)
+✅ SERVEUR ARCHIVAGE MES DÉMARRÉ (MCD)
 🔡 http://localhost:4000
 ```
 
@@ -99,7 +99,7 @@ node -e "require('dotenv').config(); console.log('URI:', process.env.MONGODB_URI
 ## 📝 Checklist finale
 
 - [ ] L'URI MongoDB utilise `mongodb://` (PAS `mongodb+srv://`)
-- [ ] Le nom de la base de données est `cerer_archivage` (pas `cerer_archive`)
+- [ ] Le nom de la base de données est `mes_archivage` (pas `cerer_archive`)
 - [ ] L'URI contient les 3 shards (shard-00-00, shard-00-01, shard-00-02)
 - [ ] Le nom d'utilisateur et mot de passe sont corrects
 - [ ] Network Access sur MongoDB Atlas autorise `0.0.0.0/0`

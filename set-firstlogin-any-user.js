@@ -2,7 +2,7 @@
 const { MongoClient } = require('mongodb');
 
 const MONGO_URI = 'mongodb://localhost:27017';
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 // ⚠️ MODIFIER CE USERNAME
 const USERNAME = process.argv[2]; // Récupérer depuis la ligne de commande

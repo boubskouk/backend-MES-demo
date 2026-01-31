@@ -1,4 +1,4 @@
-# Guide MongoDB Atlas Backup - C.E.R.E.R
+# Guide MongoDB Atlas Backup - MES
 
 MongoDB Atlas inclut des **sauvegardes automatiques gratuites** pour tous les clusters. Ce guide vous explique comment les utiliser.
 
@@ -191,7 +191,7 @@ Pour les clusters payants, vous pouvez :
 mongosh "mongodb+srv://cluster0-restored.mongodb.net"
 
 # Vérifiez les données
-use cerer_archivage
+use mes_archivage
 db.documents.countDocuments()
 db.users.find().limit(5)
 ```
@@ -379,9 +379,9 @@ Documentez :
 - Chat en direct : https://cloud.mongodb.com (icône en bas à droite)
 - Forum communautaire : https://www.mongodb.com/community/forums/
 
-### Contact C.E.R.E.R
+### Contact MES
 
-- Email : admin@cerer.sn
+- Email : admin@mes.gouv.sn
 
 ---
 

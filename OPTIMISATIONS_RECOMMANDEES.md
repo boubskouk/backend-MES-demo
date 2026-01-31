@@ -1,4 +1,4 @@
-# Optimisations Recommandées - Système d'Archivage C.E.R.E.R
+# Optimisations Recommandées - Système d'Archivage MES
 
 Liste priorisée des optimisations pour améliorer les performances et la capacité.
 

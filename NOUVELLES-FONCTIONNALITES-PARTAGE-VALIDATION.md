@@ -4,7 +4,7 @@
 
 ## 📋 Résumé des changements
 
-Implémentation de trois nouvelles fonctionnalités majeures pour le système d'archivage C.E.R.E.R :
+Implémentation de trois nouvelles fonctionnalités majeures pour le système d'archivage MES :
 
 1. **Partage horizontal** : Accès aux documents entre utilisateurs du même niveau
 2. **Partage interdépartemental niveau 1** : Partage entre tous les utilisateurs de niveau 1
@@ -390,5 +390,5 @@ Pour toute question ou problème :
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date : 2025-10-31**

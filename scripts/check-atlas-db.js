@@ -6,7 +6,7 @@
 const { MongoClient } = require('mongodb');
 
 // URI Atlas (à mettre à jour si nécessaire)
-const ATLAS_URI = 'mongodb+srv://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0.eq69ixv.mongodb.net/cerer_archivage?retryWrites=true&w=majority';
+const ATLAS_URI = 'mongodb+srv://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0.eq69ixv.mongodb.net/mes_archivage?retryWrites=true&w=majority';
 
 async function checkAtlasDatabase() {
     let client;
@@ -20,7 +20,7 @@ async function checkAtlasDatabase() {
 
         console.log('✅ Connexion réussie!\n');
 
-        const db = client.db('cerer_archivage');
+        const db = client.db('mes_archivage');
 
         // Liste toutes les collections
         const collections = await db.listCollections().toArray();

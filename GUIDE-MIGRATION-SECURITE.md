@@ -237,7 +237,7 @@ openssl req -x509 -newkey rsa:4096 \
   -keyout ssl/key.pem \
   -out ssl/cert.pem \
   -days 365 -nodes \
-  -subj "/C=SN/ST=Dakar/L=Dakar/O=CERER/CN=localhost"
+  -subj "/C=SN/ST=Dakar/L=Dakar/O=MES/CN=localhost"
 ```
 
 **Configurer dans .env:**
@@ -306,7 +306,7 @@ const transporter = nodemailer.createTransport({
 transporter.sendMail({
   from: process.env.SMTP_USER,
   to: 'votre.email@test.com',
-  subject: 'Test SMTP CERER',
+  subject: 'Test SMTP MES',
   text: 'Email de test envoyé avec succès!'
 }).then(() => {
   console.log('✅ Email envoyé!');
@@ -558,6 +558,6 @@ Après cette migration, votre système dispose de:
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Version:** 3.0
 **Date:** Novembre 2025

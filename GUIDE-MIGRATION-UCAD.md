@@ -1,6 +1,6 @@
 # 🚀 Guide de Migration vers Serveurs UCAD
 
-**Application**: Système d'Archivage C.E.R.E.R
+**Application**: Système d'Archivage MES
 **Objectif**: Déploiement professionnel conforme aux normes
 
 ---
@@ -658,7 +658,7 @@ systemctl reload nginx
 #### Créer `/etc/systemd/system/cerer-archivage.service`
 ```ini
 [Unit]
-Description=Système d'Archivage C.E.R.E.R
+Description=Système d'Archivage MES
 Documentation=https://github.com/cerer/archivage
 After=network.target mongodb.service
 

@@ -30,7 +30,7 @@ const execPromise = util.promisify(exec);
 // ============================================
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = process.env.MONGODB_DB_NAME || 'cerer_archivage';
+const DB_NAME = process.env.MONGODB_DB_NAME || 'mes_archivage';
 const BACKUP_DIR = process.env.BACKUP_DIR || path.join(__dirname, '../backups');
 
 // ============================================

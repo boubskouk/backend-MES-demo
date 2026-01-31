@@ -362,7 +362,7 @@ async function exportData() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `cerer_${state.currentUser}_${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `mes_${state.currentUser}_${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     URL.revokeObjectURL(url);
     showNotification('✅ Exporté');
@@ -654,10 +654,10 @@ function render() {
                 <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md animate-fade-in">
                     <div class="text-center mb-8">
                         <div class="flex justify-center mb-4">
-                            <img src="/logo_white.png" alt="Logo C.E.R.E.R" class="w-20 h-20 animate-float" style="filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.3));" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img src="/logo_white.png" alt="Logo MES" class="w-20 h-20 animate-float" style="filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.3));" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div class="logo-icon" style="display: none;">🗄️</div>
                         </div>
-                        <h1 class="logo-text mb-2">Archivage C.E.R.E.R</h1>
+                        <h1 class="logo-text mb-2">Archivage MES</h1>
                         <p class="text-gray-600 font-medium">Système de gestion documentaire</p>
                     </div>
                     
@@ -730,7 +730,7 @@ function render() {
                             
                             <div class="mt-6 pt-4 border-t border-gray-200">
                                 <p class="text-center text-xs text-gray-500">
-                                    Logiciel d'archivage développé par le service informatique du C.E.R.E.R
+                                    Logiciel d'archivage développé par le service informatique du MES
                                 </p>
                             </div>
                         </div>
@@ -751,9 +751,9 @@ function render() {
                 <div class="max-w-7xl mx-auto px-4 py-3">
                     <div class="flex justify-between items-center">
                         <div class="logo-container">
-                            <img src="/logo_white.png" alt="Logo C.E.R.E.R" class="w-10 h-10" style="filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));">
+                            <img src="/logo_white.png" alt="Logo MES" class="w-10 h-10" style="filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3));">
                             <div>
-                                <h1 class="logo-text" style="font-size: 1rem;">C.E.R.E.R</h1>
+                                <h1 class="logo-text" style="font-size: 1rem;">MES</h1>
                                 <p class="text-xs text-gray-600">Bonjour, <strong>${state.currentUser}</strong></p>
                             </div>
                         </div>

@@ -12,7 +12,7 @@
 Ouvrez votre **terminal Windows** (PowerShell ou CMD) et tapez:
 
 ```bash
-cd "E:\site et apps\archivage cerer\backend"
+cd "E:\site et apps\archivage mes\backend"
 git add .
 git commit -m "🚀 Setup CI/CD avec GitHub Actions + Render"
 git push origin main
@@ -34,7 +34,7 @@ git push origin main
 ➡️ **Cliquez sur**: "New +" en haut à droite
 ➡️ **Choisissez**: "Web Service"
 ➡️ **Connectez** votre compte GitHub si demandé
-➡️ **Sélectionnez**: `boubskouk/cerer-archivage`
+➡️ **Sélectionnez**: `boubskouk/mes-archivage`
 
 #### Étape 2.3: Configuration automatique
 Render va **détecter automatiquement** votre fichier `render.yaml`!
@@ -50,7 +50,7 @@ Render va **détecter automatiquement** votre fichier `render.yaml`!
 
 #### Une fois le service créé:
 
-1. **Dans le Dashboard Render**, cliquez sur votre service `cerer-archivage`
+1. **Dans le Dashboard Render**, cliquez sur votre service `mes-archivage`
 2. **Menu gauche** → Cliquez sur "Environment"
 3. **Trouvez** la variable `MONGODB_URI`
 4. **Cliquez** sur "Edit"
@@ -89,13 +89,13 @@ git push
 ## 📊 SURVEILLER VOS DÉPLOIEMENTS
 
 ### Voir les tests GitHub Actions:
-👉 https://github.com/boubskouk/cerer-archivage/actions
+👉 https://github.com/boubskouk/mes-archivage/actions
 
 ### Voir le déploiement Render:
 👉 https://dashboard.render.com
 
 ### Votre application en ligne:
-👉 https://cerer-archivage.onrender.com (ou votre domaine personnalisé)
+👉 https://mes-archivage.onrender.com (ou votre domaine personnalisé)
 
 ---
 
@@ -141,4 +141,4 @@ Félicitations! Votre CI/CD est configuré. 🎉
 ---
 
 **Créé le**: 28 décembre 2025
-**Pour**: Archivage C.E.R.E.R
+**Pour**: Archivage MES

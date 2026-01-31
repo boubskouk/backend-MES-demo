@@ -1,5 +1,5 @@
 // ============================================
-// CONFIGURATION HTTPS - ARCHIVAGE C.E.R.E.R
+// CONFIGURATION HTTPS - ARCHIVAGE MES
 // ============================================
 
 const https = require('https');

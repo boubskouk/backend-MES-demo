@@ -20,16 +20,16 @@ require('dotenv').config();
 
 // ✅ URI MongoDB depuis variable d'environnement avec fallback local
 const MONGO_URI = process.env.MONGODB_URI ||
-    "mongodb://localhost:27017/cerer_archivage?retryWrites=true&w=majority";
+    "mongodb://localhost:27017/mes_archivage?retryWrites=true&w=majority";
 
-const DB_NAME = process.env.MONGODB_DB_NAME || 'cerer_archivage';
+const DB_NAME = process.env.MONGODB_DB_NAME || 'mes_archivage';
 ```
 
 ### 2. **.env** - URI au format standard
 
 ```bash
 # Format STANDARD (mongodb:// au lieu de mongodb+srv://)
-MONGODB_URI=mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/cerer_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
+MONGODB_URI=mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/mes_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
 ```
 
 ### 3. **.env.example** - Template pour documentation
@@ -65,7 +65,7 @@ npm install dotenv  # ✅ Installé
 4. Éditez `MONGODB_URI` et remplacez par :
 
 ```
-mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/cerer_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
+mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.eq69ixv.mongodb.net:27017,cluster0-shard-00-01.eq69ixv.mongodb.net:27017,cluster0-shard-00-02.eq69ixv.mongodb.net:27017/mes_archivage?ssl=true&replicaSet=atlas-hfq5gc-shard-0&authSource=admin&retryWrites=true&w=majority
 ```
 
 5. **Save Changes**
@@ -81,8 +81,8 @@ mongodb://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0-shard-00-00.e
 🔄 Connexion à MongoDB...
 📍 URI: mongodb://***:***@cluster0-shard-00-00.eq69ixv.mongodb.net:27017...
 ✅ Connexion à MongoDB réussie
-📊 Base de données: cerer_archivage
-✅ SERVEUR ARCHIVAGE C.E.R.E.R DÉMARRÉ (MCD)
+📊 Base de données: mes_archivage
+✅ SERVEUR ARCHIVAGE MES DÉMARRÉ (MCD)
 ```
 
 ### Anciens logs (erreur ❌)

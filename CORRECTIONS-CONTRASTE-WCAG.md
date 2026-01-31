@@ -1,4 +1,4 @@
-# ✅ CORRECTIONS DE CONTRASTE WCAG AA - ARCHIVAGE C.E.R.E.R
+# ✅ CORRECTIONS DE CONTRASTE WCAG AA - ARCHIVAGE MES
 
 **Date:** 22 Novembre 2025
 **Version:** 1.0
@@ -826,6 +826,6 @@ Après: 98/100 (Excellent)
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Conforme aux normes WCAG 2.1 Niveau AA**
 **Testé et validé le 22 Novembre 2025**

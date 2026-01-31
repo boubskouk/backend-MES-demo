@@ -12,7 +12,7 @@ const bcrypt = require('bcrypt');
 const readline = require('readline');
 
 const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
-const DB_NAME = process.env.MONGODB_DB_NAME || 'cerer_archivage';
+const DB_NAME = process.env.MONGODB_DB_NAME || 'mes_archivage';
 
 const rl = readline.createInterface({
     input: process.stdin,

@@ -132,7 +132,7 @@ SMTP_USER=votre.email@gmail.com
 SMTP_PASS=votre_mot_de_passe_application
 
 # Expéditeur
-SMTP_FROM_NAME=GED CERER
+SMTP_FROM_NAME=GED MES
 SMTP_FROM_EMAIL=noreply@cerer.sn
 
 # URL frontend
@@ -147,7 +147,7 @@ FRONTEND_URL=http://localhost:4000
 
 ### Contenu de l'email
 
-**Sujet :** 🎓 Bienvenue sur la plateforme GED CERER - Vos identifiants
+**Sujet :** 🎓 Bienvenue sur la plateforme GED MES - Vos identifiants
 
 **Contenu :**
 - Message de bienvenue personnalisé avec nom complet
@@ -160,7 +160,7 @@ FRONTEND_URL=http://localhost:4000
 **Design :**
 - Email HTML responsive
 - Version texte brut (fallback)
-- Couleurs GED CERER (bleu/vert)
+- Couleurs GED MES (bleu/vert)
 - Icons et mise en forme professionnelle
 
 ### Comportement
@@ -372,7 +372,7 @@ async function login(username, password) {
       <!-- En-tête -->
       <div class="modal-header">
         <h2>🎉 Bienvenue {{ nom }} !</h2>
-        <p>Première connexion à la plateforme GED CERER</p>
+        <p>Première connexion à la plateforme GED MES</p>
       </div>
 
       <!-- Corps -->

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // ============================================
-// GÉNÉRATEUR DE SECRETS - ARCHIVAGE C.E.R.E.R
+// GÉNÉRATEUR DE SECRETS - ARCHIVAGE MES
 // ============================================
 
 const crypto = require('crypto');
@@ -130,7 +130,7 @@ function updateEnvFile(filePath, secrets) {
 
 function createEnvFile(filePath, secrets) {
     const envContent = `# ============================================
-# CONFIGURATION - ARCHIVAGE C.E.R.E.R
+# CONFIGURATION - ARCHIVAGE MES
 # ============================================
 
 # MongoDB

@@ -1,4 +1,4 @@
-# Analyse de Capacité - Système d'Archivage C.E.R.E.R
+# Analyse de Capacité - Système d'Archivage MES
 
 Évaluation de la capacité de l'application à gérer des utilisateurs simultanés.
 

@@ -1,12 +1,12 @@
 # ============================================
-# CONFIGURATION RENDER - ARCHIVAGE C.E.R.E.R
+# CONFIGURATION RENDER - ARCHIVAGE MES
 # ============================================
 # Ce fichier configure automatiquement votre application sur Render
 
 services:
   # Service Web - Application Node.js
   - type: web
-    name: cerer-archivage
+    name: mes-archivage
     runtime: node
     plan: free  # Plan gratuit - Changez en "starter" pour éviter les mises en veille
     region: frankfurt  # Europe - Plus proche du Sénégal
@@ -27,7 +27,7 @@ services:
         sync: false  # Vous devrez le configurer manuellement
 
       - key: MONGODB_DB_NAME
-        value: cerer_archivage
+        value: mes_archivage
 
       # Session - À GÉNÉRER (voir instructions)
       - key: SESSION_SECRET

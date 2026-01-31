@@ -220,7 +220,7 @@ logs/
 ### Résultats des tests automatisés
 
 ```
-🔒 TEST DE SÉCURITÉ - ARCHIVAGE C.E.R.E.R
+🔒 TEST DE SÉCURITÉ - ARCHIVAGE MES
 ═══════════════════════════════════════════════════════════════
 
 ✅ TEST 1: Modules de sécurité (5/5)
@@ -540,7 +540,7 @@ node scripts/generate-secrets.js --force
 
 ### Reconnaissance
 
-**Le système d'archivage CERER dispose maintenant d'une sécurité de niveau entreprise, prête pour un déploiement en production dans un environnement universitaire ou professionnel.**
+**Le système d'archivage MES dispose maintenant d'une sécurité de niveau entreprise, prête pour un déploiement en production dans un environnement universitaire ou professionnel.**
 
 ---
 
@@ -548,7 +548,7 @@ node scripts/generate-secrets.js --force
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Version:** 3.0
 **Date:** 22 Novembre 2025
 **Contact:** jacquesboubacar.koukoui@gmail.com

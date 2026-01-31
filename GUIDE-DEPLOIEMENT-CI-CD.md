@@ -1,4 +1,4 @@
-# Guide de Déploiement CI/CD - Application d'Archivage CERER
+# Guide de Déploiement CI/CD - Application d'Archivage MES
 
 **Date de création** : 27 décembre 2025
 **Objectif** : Mettre en place un système CI/CD pour éviter les problèmes de synchronisation entre les bases de données locale et production

@@ -1,5 +1,5 @@
 /**
- * Configuration PM2 pour le système d'archivage C.E.R.E.R
+ * Configuration PM2 pour le système d'archivage MES
  *
  * Utilisation:
  *   pm2 start ecosystem.config.js
@@ -13,7 +13,7 @@
 module.exports = {
   apps: [{
     // Informations de base
-    name: 'archivage-cerer',
+    name: 'archivage-mes',
     script: './server.js',
 
     // Mode cluster pour haute disponibilité
@@ -84,10 +84,10 @@ module.exports = {
   deploy: {
     production: {
       // Utilisateur sur le serveur distant
-      user: 'cerer',
+      user: 'mes',
 
       // Hôte du serveur
-      host: 'serveur.ucad.sn',
+      host: 'serveur.mes.gouv.sn',
 
       // Port SSH
       ssh_options: 'StrictHostKeyChecking=no',
@@ -96,10 +96,10 @@ module.exports = {
       ref: 'origin/main',
 
       // Dépôt Git
-      repo: 'https://github.com/votre-repo/archivage-cerer.git',
+      repo: 'https://github.com/votre-repo/archivage-mes.git',
 
       // Chemin sur le serveur
-      path: '/home/cerer/apps/archivage-cerer',
+      path: '/home/mes/apps/archivage-mes',
 
       // Commandes à exécuter après le déploiement
       'post-deploy': 'cd backend && npm install --production && pm2 reload ecosystem.config.js --env production',

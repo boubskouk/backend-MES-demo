@@ -1625,7 +1625,7 @@ function renderCreateUserModal() {
                         <div class="form-group">
                             <label for="newEmail">Email *</label>
                             <input type="email" id="newEmail" name="email" required
-                                   placeholder="Ex: jean.dupont@cerer.sn">
+                                   placeholder="Ex: jean.dupont@mes.gouv.sn">
                         </div>
                         <div class="form-group">
                             <label for="newRole">Rôle *</label>

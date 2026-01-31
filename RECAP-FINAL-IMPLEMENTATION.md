@@ -343,6 +343,6 @@ Vous disposez maintenant d'un système complet de :
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date : 2025-10-31**
 **Version : 2.0.0**

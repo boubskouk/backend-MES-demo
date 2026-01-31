@@ -1,6 +1,6 @@
-# GED CERER - Système d'Archivage
+# GED MES - Système d'Archivage
 
-Plateforme de Gestion Électronique de Documents pour le C.E.R.E.R (Centre d'Études et de Recherches sur les Énergies Renouvelables).
+Plateforme de Gestion Électronique de Documents pour le Ministère de l'Enseignement Supérieur (MES).
 
 ---
 
@@ -289,7 +289,7 @@ Tous les scripts de test et maintenance sont dans `scripts_archive/`
 
 ## LICENCE
 
-Projet privé - C.E.R.E.R
+Projet privé - MES
 Tous droits réservés
 
 ---

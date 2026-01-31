@@ -235,7 +235,7 @@ Tous les scripts de test et maintenance sont dans `scripts_archive/`
 
 ## 🎉 CONCLUSION
 
-Le système GED CERER est maintenant **propre**, **organisé** et **prêt à l'emploi**.
+Le système GED MES est maintenant **propre**, **organisé** et **prêt à l'emploi**.
 
 - **Démarrage :** `start.bat`
 - **URL :** http://localhost:4000
@@ -247,7 +247,7 @@ Le seul point à finaliser est la configuration Gmail pour l'envoi d'emails, mai
 
 ---
 
-**Projet :** GED CERER
+**Projet :** GED MES
 **Version :** 1.0
 **Date :** 15 novembre 2025
 **Status :** Production Ready

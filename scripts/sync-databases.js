@@ -18,10 +18,10 @@ const LOCAL_URI = 'mongodb://localhost:27017';
 // URI de la base de données PRODUCTION (MongoDB Atlas)
 // À récupérer depuis votre fichier .env ou à saisir ici
 const PRODUCTION_URI = process.env.MONGODB_ATLAS_URI ||
-    'mongodb+srv://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0.eq69ixv.mongodb.net/cerer_archivage?retryWrites=true&w=majority';
+    'mongodb+srv://jacquesboubacarkoukoui_db_user:um6pz5uhsXkNGdOe@cluster0.eq69ixv.mongodb.net/mes_archivage?retryWrites=true&w=majority';
 
 // Nom de la base de données
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 // Collections à synchroniser
 const COLLECTIONS = [

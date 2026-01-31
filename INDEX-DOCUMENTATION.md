@@ -1,5 +1,5 @@
 # 📚 INDEX DE LA DOCUMENTATION
-## Système de Partage et Validation - C.E.R.E.R
+## Système de Partage et Validation - MES
 
 ---
 
@@ -241,6 +241,6 @@ node create-test-users.js
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date : 2025-10-31**
 **Version : 2.0.0**

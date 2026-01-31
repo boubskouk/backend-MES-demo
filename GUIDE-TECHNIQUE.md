@@ -1,4 +1,4 @@
-# 🔧 Guide Technique - Système d'Archivage CERER
+# 🔧 Guide Technique - Système d'Archivage MES
 
 **Documentation complète pour développeurs et administrateurs système**
 
@@ -132,8 +132,8 @@ Response (JSON)
 #### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/votre-org/archivage-cerer.git
-cd archivage-cerer/backend
+git clone https://github.com/votre-org/archivage-mes.git
+cd archivage-mes/backend
 ```
 
 #### 2. Installer les dépendances
@@ -152,8 +152,8 @@ cp .env.example .env
 Éditez `.env` :
 ```env
 # MongoDB
-MONGODB_URI=mongodb://localhost:27017/cerer_archivage
-MONGODB_DB_NAME=cerer_archivage
+MONGODB_URI=mongodb://localhost:27017/mes_archivage
+MONGODB_DB_NAME=mes_archivage
 
 # Serveur
 PORT=4000
@@ -169,7 +169,7 @@ SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_USER=votre.email@gmail.com
 SMTP_PASS=votre_mot_de_passe_application
-SMTP_FROM=GED CERER <votre.email@gmail.com>
+SMTP_FROM=GED MES <votre.email@gmail.com>
 ```
 
 #### 4. Démarrer MongoDB
@@ -238,7 +238,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/cerer_archivage
+      - MONGODB_URI=mongodb://mongo:27017/mes_archivage
       - NODE_ENV=production
     depends_on:
       - mongo
@@ -271,12 +271,12 @@ docker-compose up -d
 
 ```env
 # URI de connexion complète
-MONGODB_URI=mongodb://localhost:27017/cerer_archivage
+MONGODB_URI=mongodb://localhost:27017/mes_archivage
 # ou pour MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/cerer_archivage
+# MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/mes_archivage
 
 # Nom de la base de données
-MONGODB_DB_NAME=cerer_archivage
+MONGODB_DB_NAME=mes_archivage
 ```
 
 #### Serveur
@@ -303,7 +303,7 @@ SESSION_SECRET=votre_secret_aleatoire_tres_long_minimum_64_caracteres
 SESSION_MAX_AGE=86400000  # 24 heures
 
 # Nom du cookie
-SESSION_NAME=cerer.sid
+SESSION_NAME=mes.sid
 
 # Domaine du cookie (production)
 SESSION_DOMAIN=.votre-domaine.com
@@ -323,7 +323,7 @@ SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_USER=votre.email@gmail.com
 SMTP_PASS=xxxx xxxx xxxx xxxx  # Mot de passe d'application
-SMTP_FROM=GED CERER <votre.email@gmail.com>
+SMTP_FROM=GED MES <votre.email@gmail.com>
 ```
 
 **Pour autres fournisseurs** :
@@ -536,7 +536,7 @@ db.sessions.createIndex({ expires: 1 }, { expireAfterSeconds: 0 });
 node scripts/backup-database.js
 
 # Ou avec mongodump
-mongodump --uri="mongodb://localhost:27017/cerer_archivage" --out=./backups/$(date +%Y%m%d)
+mongodump --uri="mongodb://localhost:27017/mes_archivage" --out=./backups/$(date +%Y%m%d)
 ```
 
 #### Restauration
@@ -546,7 +546,7 @@ mongodump --uri="mongodb://localhost:27017/cerer_archivage" --out=./backups/$(da
 node scripts/restore-database.js
 
 # Ou avec mongorestore
-mongorestore --uri="mongodb://localhost:27017/cerer_archivage" ./backups/20251227
+mongorestore --uri="mongodb://localhost:27017/mes_archivage" ./backups/20251227
 ```
 
 #### Sauvegarde Automatique
@@ -1165,7 +1165,7 @@ taskkill /PID <PID> /F  # Windows
 
 3. Testez la connexion :
    ```bash
-   mongo mongodb://localhost:27017/cerer_archivage
+   mongo mongodb://localhost:27017/mes_archivage
    ```
 
 4. Pour MongoDB Atlas, vérifiez :
@@ -1310,11 +1310,11 @@ app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
 ## Licence
 
-**Projet Privé - C.E.R.E.R**
+**Projet Privé - MES**
 Tous droits réservés
 
 ---
 
 **Documentation mise à jour** : 27 Décembre 2025
 **Version** : 3.0.0 Bêta
-**Contact Technique** : support@cerer.edu.sn
+**Contact Technique** : support@mes.gouv.sn

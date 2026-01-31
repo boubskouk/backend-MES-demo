@@ -1,6 +1,6 @@
 # Checklist de Déploiement - Serveur UCAD
 
-Liste de vérification rapide pour le déploiement du système d'archivage C.E.R.E.R.
+Liste de vérification rapide pour le déploiement du système d'archivage MES.
 
 ---
 
@@ -41,7 +41,7 @@ ssh admin@serveur.ucad.sn
 
 ```bash
 # Télécharger le script d'installation
-wget https://raw.githubusercontent.com/votre-repo/archivage-cerer/main/backend/scripts/install-server.sh
+wget https://raw.githubusercontent.com/votre-repo/archivage-mes/main/backend/scripts/install-server.sh
 
 # Rendre exécutable
 chmod +x install-server.sh
@@ -77,8 +77,8 @@ sudo ufw status        # Doit montrer les ports 22, 80, 443 ouverts
 
 ```bash
 cd ~/apps
-git clone https://github.com/votre-repo/archivage-cerer.git
-cd archivage-cerer/backend
+git clone https://github.com/votre-repo/archivage-mes.git
+cd archivage-mes/backend
 ```
 
 - [ ] Code source cloné
@@ -103,7 +103,7 @@ nano .env
 **Variables à configurer obligatoirement :**
 
 - [ ] `MONGODB_URI` - URI MongoDB Atlas
-- [ ] `MONGODB_DB_NAME` - Nom de la base (cerer_archivage)
+- [ ] `MONGODB_DB_NAME` - Nom de la base (mes_archivage)
 - [ ] `PORT` - Port de l'application (4000)
 - [ ] `NODE_ENV` - Environnement (production)
 - [ ] `SESSION_SECRET` - Généré avec crypto
@@ -200,7 +200,7 @@ curl -I https://archivage.ucad.sn
 ### Démarrer avec PM2
 
 ```bash
-cd ~/apps/archivage-cerer/backend
+cd ~/apps/archivage-mes/backend
 pm2 start ecosystem.config.js --env production
 pm2 save
 ```
@@ -212,7 +212,7 @@ pm2 save
 
 ```bash
 pm2 status
-pm2 logs archivage-cerer --lines 50
+pm2 logs archivage-mes --lines 50
 curl http://localhost:4000/health
 curl https://archivage.ucad.sn
 ```
@@ -236,10 +236,10 @@ crontab -e
 
 ```cron
 # Sauvegarde quotidienne à 2h
-0 2 * * * cd ~/apps/archivage-cerer/backend && node scripts/backup-database.js >> ~/logs/backup.log 2>&1
+0 2 * * * cd ~/apps/archivage-mes/backend && node scripts/backup-database.js >> ~/logs/backup.log 2>&1
 
 # Vérification backups hebdomadaire
-0 9 * * 0 cd ~/apps/archivage-cerer/backend && node scripts/check-atlas-backups.js >> ~/logs/backup-check.log 2>&1
+0 9 * * 0 cd ~/apps/archivage-mes/backend && node scripts/check-atlas-backups.js >> ~/logs/backup-check.log 2>&1
 ```
 
 - [ ] Tâches cron configurées
@@ -254,7 +254,7 @@ crontab -e
 
 ```bash
 # Logs application
-pm2 logs archivage-cerer
+pm2 logs archivage-mes
 
 # Logs Nginx
 sudo tail -f /var/log/nginx/archivage-ucad-access.log
@@ -345,7 +345,7 @@ sudo tail -f /var/log/nginx/archivage-ucad-error.log
 
 | Contact | Email | Téléphone |
 |---------|-------|-----------|
-| **Admin C.E.R.E.R** | admin@cerer.sn | +221 XX XXX XX XX |
+| **Admin MES** | admin@mes.gouv.sn | +221 XX XXX XX XX |
 | **Service Info UCAD** | dsi@ucad.sn | +221 33 824 69 81 |
 | **Support MongoDB** | support.mongodb.com | - |
 

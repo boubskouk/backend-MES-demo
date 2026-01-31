@@ -44,7 +44,7 @@ Les Super Administrateurs (niveau 0) ont **TOUS les pouvoirs** sur le système :
 ### Étape 1 : Ouvrir le terminal
 
 ```bash
-cd "E:\site et apps\archivage cerer\backend"
+cd "E:\site et apps\archivage mes\backend"
 ```
 
 ### Étape 2 : Lancer le script
@@ -91,7 +91,7 @@ Le script va vous demander :
 - Format email valide (exemple@domaine.com)
 - **Doit être unique** (pas de doublon)
 - Sera converti en minuscules automatiquement
-- Exemples : `admin@cerer.sn`, `superadmin@example.com`
+- Exemples : `admin@mes.gouv.sn`, `superadmin@example.com`
 
 #### 🔐 4. Mot de passe
 
@@ -123,7 +123,7 @@ Le script va vous demander :
    ========================================
    Username  : admin_principal
    Nom       : Jean Dupont
-   Email     : admin@cerer.sn
+   Email     : admin@mes.gouv.sn
    Rôle      : Super Admin (Niveau 0)
    ========================================
 
@@ -141,7 +141,7 @@ Le script va vous demander :
    ========================================
    ID        : 507f1f77bcf86cd799439011
    Username  : admin_principal
-   Email     : admin@cerer.sn
+   Email     : admin@mes.gouv.sn
    ========================================
 
    🔐 Vous pouvez maintenant vous connecter avec ces identifiants.
@@ -158,11 +158,11 @@ Le script affichera d'abord la liste :
    ========================================
    1. Username : admin
       Nom      : Admin Principal
-      Email    : admin@cerer.sn
+      Email    : admin@mes.gouv.sn
 
    2. Username : admin2
       Nom      : Admin Secondaire
-      Email    : admin2@cerer.sn
+      Email    : admin2@mes.gouv.sn
 
    ========================================
 
@@ -194,7 +194,7 @@ Vous pouvez ensuite créer un Super Admin supplémentaire normalement.
 ### Étape 1 : Ouvrir le terminal
 
 ```bash
-cd "E:\site et apps\archivage cerer\backend"
+cd "E:\site et apps\archivage mes\backend"
 ```
 
 ### Étape 2 : Lancer le script
@@ -214,17 +214,17 @@ Le script affiche la liste de tous les Super Admins :
 
    1. Username : admin
       Nom      : Admin Principal
-      Email    : admin@cerer.sn
+      Email    : admin@mes.gouv.sn
       ID       : 507f1f77bcf86cd799439011
 
    2. Username : admin2
       Nom      : Admin Secondaire
-      Email    : admin2@cerer.sn
+      Email    : admin2@mes.gouv.sn
       ID       : 507f1f77bcf86cd799439012
 
    3. Username : admin_compromis
       Nom      : Admin Compromis
-      Email    : compromis@cerer.sn
+      Email    : compromis@mes.gouv.sn
       ID       : 507f1f77bcf86cd799439013
 
    ========================================
@@ -243,7 +243,7 @@ Le script affiche la liste de tous les Super Admins :
    ========================================
    Username : admin_compromis
    Nom      : Admin Compromis
-   Email    : compromis@cerer.sn
+   Email    : compromis@mes.gouv.sn
    ID       : 507f1f77bcf86cd799439013
    ========================================
 
@@ -383,7 +383,7 @@ npm run create-superadmin
    - Exemples : `Super@Admin2024!`, `C3r3r#Adm1n!2024`
 
 2. **Emails professionnels**
-   - Utilisez des emails de domaine professionnel (@cerer.sn)
+   - Utilisez des emails de domaine professionnel (@mes.gouv.sn)
    - Évitez les emails personnels (@gmail.com, @yahoo.fr)
 
 3. **Noms d'utilisateur uniques**

@@ -35,7 +35,7 @@ node test-domaine-universitaire.js
 **Fonctionnalité :**
 - Email de bienvenue envoyé automatiquement après création de compte
 - Contient les identifiants de connexion (username, password, email)
-- Design HTML professionnel aux couleurs GED CERER
+- Design HTML professionnel aux couleurs GED MES
 - Nom de l'université affiché dans l'email
 
 **Fichiers :**

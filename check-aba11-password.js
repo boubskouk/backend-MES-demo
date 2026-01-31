@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');
 
 const MONGO_URI = 'mongodb://localhost:27017';
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 async function checkAba11Password() {
     const client = await MongoClient.connect(MONGO_URI);

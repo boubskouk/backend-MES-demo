@@ -69,7 +69,7 @@ Le menu interactif s'affiche :
 
 ```
 =======================================================================
-  🔄 SYNCHRONISATION DES BASES DE DONNÉES - C.E.R.E.R
+  🔄 SYNCHRONISATION DES BASES DE DONNÉES - MES
 =======================================================================
 
 Options disponibles:

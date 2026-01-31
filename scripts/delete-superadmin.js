@@ -1,8 +1,8 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const readline = require('readline');
 
-const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/cerer_archivage?retryWrites=true&w=majority";
-const DB_NAME = process.env.MONGODB_DB_NAME || 'cerer_archivage';
+const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/mes_archivage?retryWrites=true&w=majority";
+const DB_NAME = process.env.MONGODB_DB_NAME || 'mes_archivage';
 
 // Interface pour lire les entrées utilisateur
 const rl = readline.createInterface({

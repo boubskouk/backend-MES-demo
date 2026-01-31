@@ -22,7 +22,7 @@ const readline = require('readline');
 
 // Configuration
 const MONGO_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
-const DB_NAME = process.env.MONGODB_DB_NAME || 'cerer_archivage';
+const DB_NAME = process.env.MONGODB_DB_NAME || 'mes_archivage';
 
 // Interface pour les questions
 const rl = readline.createInterface({

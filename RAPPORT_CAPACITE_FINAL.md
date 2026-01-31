@@ -1,4 +1,4 @@
-# Rapport de Capacité Final - Système d'Archivage C.E.R.E.R
+# Rapport de Capacité Final - Système d'Archivage MES
 
 **Date :** 30 Novembre 2025
 **Système :** Application d'archivage documentaire pour l'UCAD
@@ -470,7 +470,7 @@ TOTAL : 215-265€/mois
 
 ### Contacts Techniques
 
-**Équipe C.E.R.E.R :**
+**Équipe MES :**
 - Email : admin@cerer.sn
 - Support technique : À définir
 

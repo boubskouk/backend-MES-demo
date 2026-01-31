@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 const MONGO_URI = 'mongodb://localhost:27017';
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 async function listLevel1Users() {
     const client = await MongoClient.connect(MONGO_URI);

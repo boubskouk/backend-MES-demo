@@ -1,12 +1,12 @@
 // ============================================
-// SCRIPT DE MIGRATION - MCD ARCHIVAGE C.E.R.E.R
+// SCRIPT DE MIGRATION - MCD ARCHIVAGE MES
 // ============================================
 // Ce script migre les données existantes vers le nouveau modèle avec rôles et départements
 
 const { MongoClient, ObjectId } = require('mongodb');
 
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-const DB_NAME = 'cerer_archivage';
+const DB_NAME = 'mes_archivage';
 
 async function migrate() {
     console.log('🚀 Démarrage de la migration...\n');
@@ -110,31 +110,31 @@ async function migrate() {
                 role: primaryRole._id, 
                 dept: directionDept._id,
                 nom: 'Fatima Sall',
-                email: 'fatima@cerer.sn'
+                email: 'fatima@mes.gouv.sn'
             },
             'awa': { 
                 role: secondaryRole._id, 
                 dept: directionDept._id,
                 nom: 'Awa Diop',
-                email: 'awa@cerer.sn'
+                email: 'awa@mes.gouv.sn'
             },
             'deguene': { 
                 role: tertiaryRole._id, 
                 dept: comptaDept._id,
                 nom: 'Deguene Ndiaye',
-                email: 'deguene@cerer.sn'
+                email: 'deguene@mes.gouv.sn'
             },
             'jbk': { 
                 role: primaryRole._id, 
                 dept: comptaDept._id,
                 nom: 'JBK',
-                email: 'jbk@cerer.sn'
+                email: 'jbk@mes.gouv.sn'
             },
             'demo': { 
                 role: tertiaryRole._id, 
                 dept: directionDept._id,
                 nom: 'Utilisateur Demo',
-                email: 'demo@cerer.sn'
+                email: 'demo@mes.gouv.sn'
             }
         };
         
@@ -168,7 +168,7 @@ async function migrate() {
                             idRole: tertiaryRole._id,
                             idDepartement: directionDept._id,
                             nom: user.username,
-                            email: `${user.username}@cerer.sn`
+                            email: `${user.username}@mes.gouv.sn`
                         } 
                     }
                 );
@@ -327,7 +327,7 @@ async function getDeptName(departementsCollection, deptId) {
 
 // Exécution
 console.log('╔═══════════════════════════════════════════════════════════╗');
-console.log('║   MIGRATION MCD - APPLICATION D\'ARCHIVAGE C.E.R.E.R     ║');
+console.log('║   MIGRATION MCD - APPLICATION D\'ARCHIVAGE MES     ║');
 console.log('╚═══════════════════════════════════════════════════════════╝\n');
 
 migrate().then(() => {

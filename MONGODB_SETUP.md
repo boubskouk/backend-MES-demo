@@ -31,7 +31,7 @@ L'erreur `querySrv ENOTFOUND` signifie que le serveur Render ne peut pas résoud
 
 8. **Ajoutez** le nom de la base de données après le dernier `/` et avant le `?` :
    ```
-   mongodb://username:password@cluster0-shard-00-00.xxxxx.mongodb.net:27017,cluster0-shard-00-01.xxxxx.mongodb.net:27017,cluster0-shard-00-02.xxxxx.mongodb.net:27017/cerer_archivage?replicaSet=atlas-xxxx-shard-0&ssl=true&authSource=admin
+   mongodb://username:password@cluster0-shard-00-00.xxxxx.mongodb.net:27017,cluster0-shard-00-01.xxxxx.mongodb.net:27017,cluster0-shard-00-02.xxxxx.mongodb.net:27017/mes_archivage?replicaSet=atlas-xxxx-shard-0&ssl=true&authSource=admin
    ```
 
 ### Étape 2: Configurer sur Render.com
@@ -80,19 +80,19 @@ Dans les logs, vous devriez voir :
 🔄 Connexion à MongoDB...
 📍 Connexion avec URI Standard...
 ✅ Connexion à MongoDB réussie
-📊 Base de données: cerer_archivage
+📊 Base de données: mes_archivage
 ```
 
 ## 📝 Exemple complet d'URI
 
 ### ❌ Ancien format (ne fonctionne pas sur Render)
 ```
-mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/cerer_archivage?retryWrites=true&w=majority
+mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/mes_archivage?retryWrites=true&w=majority
 ```
 
 ### ✅ Nouveau format (fonctionne sur Render)
 ```
-mongodb://username:password@cluster0-shard-00-00.xxxxx.mongodb.net:27017,cluster0-shard-00-01.xxxxx.mongodb.net:27017,cluster0-shard-00-02.xxxxx.mongodb.net:27017/cerer_archivage?replicaSet=atlas-xxxx-shard-0&ssl=true&authSource=admin
+mongodb://username:password@cluster0-shard-00-00.xxxxx.mongodb.net:27017,cluster0-shard-00-01.xxxxx.mongodb.net:27017,cluster0-shard-00-02.xxxxx.mongodb.net:27017/mes_archivage?replicaSet=atlas-xxxx-shard-0&ssl=true&authSource=admin
 ```
 
 ## 🆘 Dépannage
@@ -106,8 +106,8 @@ mongodb://username:password@cluster0-shard-00-00.xxxxx.mongodb.net:27017,cluster
 - Attendez quelques minutes que les changements se propagent
 
 ### Erreur: "Database not found"
-- Le nom de la base de données doit être `cerer_archivage`
-- Vérifiez qu'il est bien placé dans l'URI : `.../cerer_archivage?...`
+- Le nom de la base de données doit être `mes_archivage`
+- Vérifiez qu'il est bien placé dans l'URI : `.../mes_archivage?...`
 
 ## 📞 Support
 

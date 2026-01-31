@@ -1,4 +1,4 @@
-# 📝 Guide d'Édition de Documents - Archivage C.E.R.E.R
+# 📝 Guide d'Édition de Documents - Archivage MES
 
 ## 🎯 Fonctionnalité Implémentée
 

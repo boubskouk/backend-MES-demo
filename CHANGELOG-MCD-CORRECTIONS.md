@@ -1,4 +1,4 @@
-# 🔧 Corrections MCD - Archivage C.E.R.E.R
+# 🔧 Corrections MCD - Archivage MES
 
 **Date**: 30 Octobre 2025
 **Version**: 2.1.0 → 2.2.0 (MCD corrigé)
@@ -267,7 +267,7 @@ Avant de déployer, vérifier:
 
 ```bash
 # Sauvegarder la base de données
-mongodump --db cerer_archivage --out ./backup-$(date +%Y%m%d)
+mongodump --db mes_archivage --out ./backup-$(date +%Y%m%d)
 ```
 
 ### Étape 2: Remplacer le serveur

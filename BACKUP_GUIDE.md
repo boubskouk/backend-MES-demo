@@ -1,6 +1,6 @@
 # Guide de Sauvegarde et Restauration MongoDB
 
-Ce guide explique comment utiliser les scripts de sauvegarde automatique de la base de données MongoDB pour le système d'archivage C.E.R.E.R.
+Ce guide explique comment utiliser les scripts de sauvegarde automatique de la base de données MongoDB pour le système d'archivage MES.
 
 ## 📋 Table des matières
 
@@ -55,7 +55,7 @@ Assurez-vous que votre fichier `.env` contient :
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/
 
 # Nom de la base de données
-MONGODB_DB_NAME=cerer_archivage
+MONGODB_DB_NAME=mes_archivage
 
 # Optionnel: Dossier de sauvegarde personnalisé
 # BACKUP_DIR=/chemin/vers/backups
@@ -111,7 +111,7 @@ SAUVEGARDE MONGODB - DÉMARRAGE
 ============================================
 
 📅 Date: 30/11/2025 14:30:00
-🗄️  Base de données: cerer_archivage
+🗄️  Base de données: mes_archivage
 📁 Dossier de sauvegarde: E:\...\backend\backups
 
 🔄 Sauvegarde en cours...
@@ -169,7 +169,7 @@ crontab -e
 
 ```bash
 # Sauvegarde quotidienne à 3h00
-0 3 * * * cd /chemin/vers/backend && /usr/bin/node scripts/backup-database.js && echo "Sauvegarde MongoDB terminée - $(date)" | mail -s "Backup Success" admin@cerer.sn
+0 3 * * * cd /chemin/vers/backend && /usr/bin/node scripts/backup-database.js && echo "Sauvegarde MongoDB terminée - $(date)" | mail -s "Backup Success" admin@mes.gouv.sn
 ```
 
 #### 3. Vérifier les tâches cron
@@ -212,7 +212,7 @@ Utilisez le **Planificateur de tâches** Windows.
 
 1. Cliquez sur **"Créer une tâche..."** (dans le panneau de droite)
 2. **Onglet Général** :
-   - Nom : `MongoDB Backup - CERER`
+   - Nom : `MongoDB Backup - MES`
    - Description : `Sauvegarde quotidienne de la base MongoDB`
    - Sélectionnez **"Exécuter même si l'utilisateur n'est pas connecté"**
 
@@ -446,7 +446,7 @@ console.log(`✅ Dernière sauvegarde: ${latestBackup.name} (il y a ${ageHours.t
 3. **Chiffrer les sauvegardes sensibles**
    ```bash
    # Exemple avec GPG
-   tar -czf - backups/ | gpg -e -r admin@cerer.sn > backup.tar.gz.gpg
+   tar -czf - backups/ | gpg -e -r admin@mes.gouv.sn > backup.tar.gz.gpg
    ```
 
 4. **Sauvegardes externes**
@@ -458,7 +458,7 @@ console.log(`✅ Dernière sauvegarde: ${latestBackup.name} (il y a ${ageHours.t
 ## 📞 Support
 
 Pour toute question ou problème :
-- Email : admin@cerer.sn
+- Email : admin@mes.gouv.sn
 - Documentation MongoDB : https://docs.mongodb.com/database-tools/
 
 ---

@@ -1,6 +1,6 @@
 # Guide de Déploiement - Serveur UCAD
 
-Guide complet pour déployer le système d'archivage C.E.R.E.R sur le serveur de l'**Université Cheikh Anta Diop (UCAD)**.
+Guide complet pour déployer le système d'archivage MES sur le serveur de l'**Université Cheikh Anta Diop (UCAD)**.
 
 ---
 
@@ -227,8 +227,8 @@ pm2 startup systemd
 cd ~
 
 # Créer un dossier pour les applications
-mkdir -p /home/cerer/apps
-cd /home/cerer/apps
+mkdir -p /home/mes/apps
+cd /home/mes/apps
 
 # Cloner votre dépôt Git
 git clone https://github.com/votre-repo/archivage-cerer.git
@@ -309,7 +309,7 @@ SMTP_USER=ged@ucad.sn
 SMTP_PASS=MOT_DE_PASSE_EMAIL
 
 # Expéditeur des emails
-SMTP_FROM_NAME=GED C.E.R.E.R - UCAD
+SMTP_FROM_NAME=GED MES - UCAD
 SMTP_FROM_EMAIL=ged@ucad.sn
 
 # URL du frontend (domaine UCAD)
@@ -319,7 +319,7 @@ FRONTEND_URL=https://archivage.ucad.sn
 # SAUVEGARDES
 # ============================================
 # Dossier de sauvegarde
-BACKUP_DIR=/home/cerer/backups
+BACKUP_DIR=/home/mes/backups
 BACKUP_RETENTION_COUNT=30
 
 # MongoDB Atlas API (pour vérification backups)
@@ -466,7 +466,7 @@ server {
 
     # Fichiers statiques (si vous avez un dossier public)
     location /public {
-        alias /home/cerer/apps/archivage-cerer/backend/public;
+        alias /home/mes/apps/archivage-cerer/backend/public;
         expires 30d;
         add_header Cache-Control "public, immutable";
     }
@@ -571,7 +571,7 @@ curl -I https://archivage.ucad.sn
 
 ```bash
 # Se positionner dans le dossier de l'application
-cd /home/cerer/apps/archivage-cerer/backend
+cd /home/mes/apps/archivage-cerer/backend
 
 # Démarrer l'application avec PM2
 pm2 start server.js --name "archivage-cerer" --env production
@@ -603,9 +603,9 @@ module.exports = {
       NODE_ENV: 'production',
       PORT: 4000
     },
-    error_file: '/home/cerer/logs/err.log',
-    out_file: '/home/cerer/logs/out.log',
-    log_file: '/home/cerer/logs/combined.log',
+    error_file: '/home/mes/logs/err.log',
+    out_file: '/home/mes/logs/out.log',
+    log_file: '/home/mes/logs/combined.log',
     time: true,
     max_memory_restart: '1G',
     autorestart: true,
@@ -621,7 +621,7 @@ module.exports = {
 
 ```bash
 # Créer le dossier logs
-mkdir -p /home/cerer/logs
+mkdir -p /home/mes/logs
 
 # Arrêter l'application actuelle
 pm2 delete archivage-cerer
@@ -740,10 +740,10 @@ sudo fail2ban-client status sshd
 
 ```bash
 # Créer le dossier
-mkdir -p /home/cerer/backups
+mkdir -p /home/mes/backups
 
 # Donner les permissions
-chmod 700 /home/cerer/backups
+chmod 700 /home/mes/backups
 ```
 
 ### Étape 2 : Configurer la sauvegarde quotidienne
@@ -757,20 +757,20 @@ crontab -e
 
 ```bash
 # Sauvegarde MongoDB quotidienne à 2h du matin
-0 2 * * * cd /home/cerer/apps/archivage-cerer/backend && /usr/bin/node scripts/backup-database.js >> /home/cerer/logs/backup.log 2>&1
+0 2 * * * cd /home/mes/apps/archivage-cerer/backend && /usr/bin/node scripts/backup-database.js >> /home/mes/logs/backup.log 2>&1
 
 # Vérification des backups Atlas hebdomadaire (dimanche à 9h)
-0 9 * * 0 cd /home/cerer/apps/archivage-cerer/backend && /usr/bin/node scripts/check-atlas-backups.js >> /home/cerer/logs/backup-check.log 2>&1
+0 9 * * 0 cd /home/mes/apps/archivage-cerer/backend && /usr/bin/node scripts/check-atlas-backups.js >> /home/mes/logs/backup-check.log 2>&1
 
 # Nettoyage des logs mensuels (1er du mois à 3h)
-0 3 1 * * find /home/cerer/logs -name "*.log" -mtime +30 -delete
+0 3 1 * * find /home/mes/logs -name "*.log" -mtime +30 -delete
 ```
 
 ### Étape 3 : Sauvegarde du code source
 
 ```bash
 # Créer un script de sauvegarde
-nano /home/cerer/scripts/backup-code.sh
+nano /home/mes/scripts/backup-code.sh
 ```
 
 **Contenu :**
@@ -780,8 +780,8 @@ nano /home/cerer/scripts/backup-code.sh
 
 # Sauvegarde du code source
 DATE=$(date +%Y%m%d_%H%M%S)
-BACKUP_DIR="/home/cerer/backups/code"
-APP_DIR="/home/cerer/apps/archivage-cerer"
+BACKUP_DIR="/home/mes/backups/code"
+APP_DIR="/home/mes/apps/archivage-cerer"
 
 # Créer le dossier de backup
 mkdir -p $BACKUP_DIR
@@ -792,7 +792,7 @@ tar -czf $BACKUP_DIR/backup_code_$DATE.tar.gz \
     --exclude='backups' \
     --exclude='logs' \
     --exclude='.git' \
-    -C /home/cerer/apps archivage-cerer
+    -C /home/mes/apps archivage-cerer
 
 # Garder seulement les 10 dernières sauvegardes
 ls -t $BACKUP_DIR/backup_code_*.tar.gz | tail -n +11 | xargs -r rm
@@ -802,11 +802,11 @@ echo "Sauvegarde du code terminée: backup_code_$DATE.tar.gz"
 
 ```bash
 # Rendre le script exécutable
-chmod +x /home/cerer/scripts/backup-code.sh
+chmod +x /home/mes/scripts/backup-code.sh
 
 # Ajouter au crontab (hebdomadaire, dimanche à 1h)
 crontab -e
-# Ajouter: 0 1 * * 0 /home/cerer/scripts/backup-code.sh >> /home/cerer/logs/code-backup.log 2>&1
+# Ajouter: 0 1 * * 0 /home/mes/scripts/backup-code.sh >> /home/mes/logs/code-backup.log 2>&1
 ```
 
 ---
@@ -817,7 +817,7 @@ crontab -e
 
 ```bash
 # Créer le dossier logs
-mkdir -p /home/cerer/logs
+mkdir -p /home/mes/logs
 
 # Rotation des logs Nginx
 sudo nano /etc/logrotate.d/nginx
@@ -856,7 +856,7 @@ pm2 set pm2-logrotate:compress true
 ### Étape 3 : Créer un script de monitoring
 
 ```bash
-nano /home/cerer/scripts/health-check.sh
+nano /home/mes/scripts/health-check.sh
 ```
 
 **Contenu :**
@@ -890,11 +890,11 @@ fi
 
 ```bash
 # Rendre exécutable
-chmod +x /home/cerer/scripts/health-check.sh
+chmod +x /home/mes/scripts/health-check.sh
 
 # Ajouter au crontab (toutes les 5 minutes)
 crontab -e
-# Ajouter: */5 * * * * /home/cerer/scripts/health-check.sh >> /home/cerer/logs/health-check.log 2>&1
+# Ajouter: */5 * * * * /home/mes/scripts/health-check.sh >> /home/mes/logs/health-check.log 2>&1
 ```
 
 ---
@@ -908,7 +908,7 @@ crontab -e
 ssh cerer@serveur.ucad.sn
 
 # 2. Aller dans le dossier de l'application
-cd /home/cerer/apps/archivage-cerer
+cd /home/mes/apps/archivage-cerer
 
 # 3. Sauvegarder l'état actuel
 pm2 save
@@ -947,7 +947,7 @@ journalctl -u pm2-cerer -n 50
 cat .env
 
 # Tester manuellement
-cd /home/cerer/apps/archivage-cerer/backend
+cd /home/mes/apps/archivage-cerer/backend
 NODE_ENV=production node server.js
 ```
 
@@ -1012,7 +1012,7 @@ sudo systemctl reload nginx
 
 ## 📞 Contacts et support
 
-### Équipe technique C.E.R.E.R
+### Équipe technique MES
 - Email : admin@cerer.sn
 - Téléphone : +221 XX XXX XX XX
 

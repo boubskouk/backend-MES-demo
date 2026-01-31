@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 (async () => {
     const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('cerer_archivage');
+    const db = client.db('mes_archivage');
 
     console.log('\n=== TEST FILTRE ACTIONS JBK ===\n');
 

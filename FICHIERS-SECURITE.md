@@ -430,6 +430,6 @@ backend/
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date:** 22 Novembre 2025
 **Version:** 3.0

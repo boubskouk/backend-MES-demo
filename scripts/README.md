@@ -1,4 +1,4 @@
-# 🛠️ SCRIPTS UTILITAIRES - ARCHIVAGE C.E.R.E.R
+# 🛠️ SCRIPTS UTILITAIRES - ARCHIVAGE MES
 
 Ce dossier contient des scripts utilitaires pour la gestion et la sécurité du système.
 
@@ -367,4 +367,4 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**

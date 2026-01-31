@@ -392,7 +392,7 @@ function renderPageTitle() {
 
     return `
         <h1>
-            Système d'archivage C.E.R.E.R
+            Système d'archivage MES
             ${pendingCount > 0 ? `<span class="badge badge-warning">${pendingCount} demande(s)</span>` : ''}
         </h1>
     `;
@@ -576,5 +576,5 @@ function renderDeletionRequestCard(request) {
 
 ---
 
-**Développé par le Service Informatique du C.E.R.E.R**
+**Développé par le Service Informatique du MES**
 **Date : 2025-10-31**

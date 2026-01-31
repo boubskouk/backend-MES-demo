@@ -176,13 +176,13 @@ done
 
 ```bash
 # Avec PM2
-pm2 restart archivage-cerer
+pm2 restart archivage-mes
 
 # Ou rechargement sans downtime
-pm2 reload archivage-cerer
+pm2 reload archivage-mes
 
 # Vérifier les logs
-pm2 logs archivage-cerer --lines 50
+pm2 logs archivage-mes --lines 50
 ```
 
 ### Vérification Post-Déploiement
@@ -192,7 +192,7 @@ pm2 logs archivage-cerer --lines 50
 pm2 status
 
 # 2. Vérifier les logs (pas d'erreurs)
-pm2 logs archivage-cerer --lines 20
+pm2 logs archivage-mes --lines 20
 
 # 3. Tester l'application
 curl https://archivage.ucad.sn/health
@@ -231,7 +231,7 @@ touchAfter: 60  // Revenir à 60 secondes
 ### 3. Redémarrer
 
 ```bash
-pm2 restart archivage-cerer
+pm2 restart archivage-mes
 ```
 
 ---
@@ -252,7 +252,7 @@ pm2 restart archivage-cerer
 grep "RATE_LIMIT_EXCEEDED" logs/security.log
 
 # Sessions
-mongo cerer_archivage --eval "db.sessions.count()"
+mongo mes_archivage --eval "db.sessions.count()"
 
 # Erreurs générales
 grep "error" logs/error.log
@@ -293,7 +293,7 @@ grep "error" logs/error.log
 - Claude Code (Assistant IA)
 
 **Validation :**
-- Équipe technique C.E.R.E.R
+- Équipe technique MES
 - Service informatique UCAD
 
 **Documentation :**

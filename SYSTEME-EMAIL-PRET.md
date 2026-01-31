@@ -20,8 +20,8 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=jacquesboubacar.koukoui@gmail.com
 SMTP_PASS=qisr uucs lhwp gdvy
-SMTP_FROM_NAME=GED CERER
-SMTP_FROM_EMAIL=noreply@cerer.sn
+SMTP_FROM_NAME=GED MES
+SMTP_FROM_EMAIL=noreply@mes.gouv.sn
 ```
 
 **Statut :** ✅ Configuré et actif
@@ -47,9 +47,9 @@ Mot de passe : temp1234
 
 ```
 ┌─────────────────────────────────────────────────┐
-│ De : GED CERER <noreply@cerer.sn>              │
+│ De : GED MES <noreply@mes.gouv.sn>              │
 │ À : amadou.diop@ucad.sn                        │
-│ Sujet : 🎓 Bienvenue sur GED CERER             │
+│ Sujet : 🎓 Bienvenue sur GED MES             │
 ├─────────────────────────────────────────────────┤
 │                                                 │
 │ Bonjour Amadou Diop,                           │
