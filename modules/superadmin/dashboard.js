@@ -11,6 +11,7 @@ const os = require('os');
 // Collections
 let usersCollection;
 let documentsCollection;
+let dossiersCollection;
 let rolesCollection;
 let departementsCollection;
 let auditLogsCollection;
@@ -21,6 +22,7 @@ let auditLogsCollection;
 function init(collections) {
     usersCollection = collections.users;
     documentsCollection = collections.documents;
+    dossiersCollection = collections.dossiers;
     rolesCollection = collections.roles;
     departementsCollection = collections.departements;
     auditLogsCollection = collections.auditLogs;
@@ -83,48 +85,88 @@ async function getGlobalStats() {
             dateCreation: { $gte: thisMonthStart }
         });
 
-        // Statistiques documents
-        const totalDocuments = await documentsCollection.countDocuments({});
+        // Statistiques documents (depuis les dossiers)
+        // Compter les documents dans les tableaux documents[] et fichiers[] des dossiers
+        const dossiers = await dossiersCollection.find({
+            $or: [
+                { deleted: { $exists: false } },
+                { deleted: false }
+            ]
+        }).toArray();
 
-        const docsCreatedToday = await documentsCollection.countDocuments({
-            createdAt: { $gte: today }
-        });
+        let totalDocuments = 0;
+        let docsCreatedToday = 0;
+        let docsCreatedThisWeek = 0;
+        let docsCreatedThisMonth = 0;
 
-        const docsCreatedThisWeek = await documentsCollection.countDocuments({
-            createdAt: { $gte: thisWeekStart }
-        });
+        for (const dossier of dossiers) {
+            const docs = dossier.documents || dossier.fichiers || [];
+            totalDocuments += docs.length;
 
-        const docsCreatedThisMonth = await documentsCollection.countDocuments({
-            createdAt: { $gte: thisMonthStart }
-        });
+            for (const doc of docs) {
+                const docDate = new Date(doc.dateAjout || dossier.createdAt);
+                if (docDate >= today) docsCreatedToday++;
+                if (docDate >= thisWeekStart) docsCreatedThisWeek++;
+                if (docDate >= thisMonthStart) docsCreatedThisMonth++;
+            }
+        }
 
-        // Documents par département
-        const docsByDepartment = await documentsCollection.aggregate([
+        // Documents par département (depuis dossiers)
+        const docsByDepartment = await dossiersCollection.aggregate([
             {
-                $lookup: {
-                    from: 'departements',
-                    localField: 'idDepartement',
-                    foreignField: '_id',
-                    as: 'dept'
+                $match: {
+                    $or: [
+                        { deleted: { $exists: false } },
+                        { deleted: false }
+                    ]
                 }
             },
-            { $unwind: { path: '$dept', preserveNullAndEmptyArrays: true } },
+            {
+                $project: {
+                    departement: '$departementArchivage',
+                    nombreDocuments: {
+                        $add: [
+                            { $size: { $ifNull: ['$documents', []] } },
+                            { $size: { $ifNull: ['$fichiers', []] } }
+                        ]
+                    }
+                }
+            },
             {
                 $group: {
-                    _id: '$dept.nom',
-                    count: { $sum: 1 }
+                    _id: '$departement',
+                    count: { $sum: '$nombreDocuments' }
                 }
             },
             { $sort: { count: -1 } },
             { $limit: 10 }
         ]).toArray();
 
-        // Documents par catégorie
-        const docsByCategory = await documentsCollection.aggregate([
+        // Documents par catégorie (depuis dossiers)
+        const docsByCategory = await dossiersCollection.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { deleted: { $exists: false } },
+                        { deleted: false }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    categorie: 1,
+                    nombreDocuments: {
+                        $add: [
+                            { $size: { $ifNull: ['$documents', []] } },
+                            { $size: { $ifNull: ['$fichiers', []] } }
+                        ]
+                    }
+                }
+            },
             {
                 $group: {
                     _id: '$categorie',
-                    count: { $sum: 1 }
+                    count: { $sum: '$nombreDocuments' }
                 }
             },
             { $sort: { count: -1 } },

@@ -828,7 +828,12 @@ async function loadTrends(type, period) {
  * Afficher le graphique des utilisateurs
  */
 function displayUsersChart(data) {
-    const ctx = document.getElementById('usersChart').getContext('2d');
+    const chartElement = document.getElementById('usersChart');
+    if (!chartElement) {
+        console.log('⚠️ Element usersChart non trouvé, graphique ignoré');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
 
     // Détruire l'ancien graphique s'il existe
     if (usersChart) {
@@ -877,7 +882,12 @@ function displayUsersChart(data) {
  * Afficher le graphique des documents
  */
 function displayDocumentsChart(data) {
-    const ctx = document.getElementById('documentsChart').getContext('2d');
+    const chartElement = document.getElementById('documentsChart');
+    if (!chartElement) {
+        console.log('⚠️ Element documentsChart non trouvé, graphique ignoré');
+        return;
+    }
+    const ctx = chartElement.getContext('2d');
 
     // Détruire l'ancien graphique s'il existe
     if (documentsChart) {
